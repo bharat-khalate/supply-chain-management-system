@@ -5,6 +5,15 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   pageExtensions: ["ts", "tsx"],
   experimental: {},
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
+  },
+  
 };
 
 export default nextConfig;

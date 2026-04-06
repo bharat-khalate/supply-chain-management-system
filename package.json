@@ -8,8 +8,9 @@
     "start": "next start",
     "lint": "eslint"
   },
-   "dependencies": {
+  "dependencies": {
     "@mui/icons-material": "^7.3.9",
+    "@svgr/webpack": "^8.1.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.10",
     "bcryptjs": "^3.0.3",
