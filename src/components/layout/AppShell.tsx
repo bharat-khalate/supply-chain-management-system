@@ -30,7 +30,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className="flex min-h-screen bg-[#F6FAFE]">
             <Sidebar open={open} setOpen={setOpen} />
             
-            <main className="h-screen flex-1 overflow-y-auto scrollbar-hide">
+            <main className="h-screen flex-1 overflow-y-auto scrollbar-hide md:ms-64">
                 <div className="p-4 md:hidden flex items-center justify-between bg-white">
                     <button
                         onClick={() => setOpen(true)}

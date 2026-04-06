@@ -8,6 +8,7 @@ import DashboardHeader from "@/components/ui/Header";
 import TableHeader from "@/components/ui/TableHeader";
 import TableFooter from "@/components/ui/TableFooter";
 import {EditIcon, DeleteIcon, ViewIcon} from "@icons/actions"
+import { enquiries, IEnquiry } from "@/utils/Data";
 
 interface ICategory {
   _id: string;
@@ -43,14 +44,7 @@ export default function ProductsPage() {
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
-  const authHeader = () => {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : "";
-    return {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    };
-  };
+
 
 
 
@@ -78,146 +72,30 @@ export default function ProductsPage() {
 
 
 
-  interface ICustomer {
-    vendorAndOrigin: string;
-    location: string;
-    code: string;
-    type: "ENTERPRISE" | "RETAIL";
-    contactPerson: string;
-    isActive: boolean;
-  }
 
-  const vendors: IVendor[] = [
-    {
-      id: "1",
-      name: "Nordic Velour Co.",
-      origin: "Portugal, EU",
-      code: "VND001",
-      type: "Manufacturer",
-      category: "Fabric",
-      status: "Active",
-    },
-    {
-      id: "2",
-      name: "Apex Manufacturing",
-      origin: "Ho Chi Minh, VN",
-      code: "VND002",
-      type: "Supplier",
-      category: "Uniforms",
-      status: "Active",
-    },
-    {
-      id: "3",
-      name: "BlueWeave Textiles",
-      origin: "Istanbul, TR",
-      code: "VND003",
-      type: "Manufacturer",
-      category: "Fabric",
-      status: "Active",
-    },
-    {
-      id: "4",
-      name: "Urban Stitch Ltd.",
-      origin: "London, UK",
-      code: "VND004",
-      type: "Supplier",
-      category: "Garments",
-      status: "Inactive",
-    },
-    {
-      id: "5",
-      name: "Golden Loom Mills",
-      origin: "Surat, IN",
-      code: "VND005",
-      type: "Manufacturer",
-      category: "Silk Fabric",
-      status: "Active",
-    },
-    {
-      id: "6",
-      name: "Pacific Apparel",
-      origin: "Bangkok, TH",
-      code: "VND006",
-      type: "Supplier",
-      category: "Uniforms",
-      status: "Active",
-    },
-    {
-      id: "7",
-      name: "CottonCraft Industries",
-      origin: "Karachi, PK",
-      code: "VND007",
-      type: "Manufacturer",
-      category: "Cotton Fabric",
-      status: "Active",
-    },
-    {
-      id: "8",
-      name: "EverThread Corp.",
-      origin: "Shanghai, CN",
-      code: "VND008",
-      type: "Supplier",
-      category: "Workwear",
-      status: "Inactive",
-    },
-    {
-      id: "9",
-      name: "Heritage Looms",
-      origin: "Milan, IT",
-      code: "VND009",
-      type: "Manufacturer",
-      category: "Luxury Fabric",
-      status: "Active",
-    },
-    {
-      id: "10",
-      name: "Prime Uniform Supply",
-      origin: "Dubai, UAE",
-      code: "VND010",
-      type: "Supplier",
-      category: "Uniforms",
-      status: "Active",
-    },
-  ];
 
-  const columns: Column<IVendor>[] = [
+  const columns: Column<IEnquiry>[] = [
     {
-      key: "vendorAndOrigin",
-      header: "Vendor & Origin",
+      key: "enquiryId",
+      header: "Enquiry Id",
       render: (r) => {
-        const initials = r.name
-          .split(" ")
-          .map((w) => w[0])
-          .join("")
-          .slice(0, 2)
-          .toUpperCase();
-
+        
         return (
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 flex items-center justify-center rounded bg-blue-100 text-blue-700 font-semibold">
-              {initials}
-            </div>
-
-            <div className="flex flex-col">
-              <span className="font-medium">{r.name}</span>
-              <span className="text-xs text-gray-500 flex items-center gap-1">
-                📍 {r.origin}
-              </span>
-            </div>
+            <span className="font-medium">{r.enquiryId}</span>
           </div>
         );
       },
     },
 
     {
-      key: "code",
-      header: "Code",
+      key: "date",
+      header: "Date",
     },
 
     {
-      key: "type",
-      header: "Type",
-      render: (r) => <span className="capitalize">{r.type.toLowerCase()}</span>,
+      key: "customerName",
+      header: "Customer Name",
     },
 
     {
@@ -226,7 +104,16 @@ export default function ProductsPage() {
     },
 
     {
-      key: "isActive",
+      key: "qty",
+      header: "QTY",
+    },
+    {
+      key: "expPrice",
+      header: "EXP Price",
+    },
+
+    {
+      key: "status",
       header: "Active",
       render: (r) => (
         <span
@@ -262,20 +149,20 @@ export default function ProductsPage() {
       <DashboardHeader />
       <div className="flex items-center justify-between my-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#0040A1]">Vendors Overview</h1>
+          <h1 className="text-2xl font-bold text-[#0040A1]">Sales Enquiry</h1>
           
         </div>
         <button
           onClick={openCreate}
           className="bg-gradient-to-br from-[#0040A1] to-[#0056D2] text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm font-medium"
         >
-          + OnBoard Buyer
+          + Add Sales Enquiry
         </button>
       </div>
 
       <DataTable
         columns={columns}
-        data={vendors}
+        data={enquiries}
         loading={loading}
         emptyMessage="No Buyers yet."
         Header={TableHeader}
