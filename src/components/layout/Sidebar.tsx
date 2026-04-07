@@ -20,7 +20,7 @@ import {
   SettingsIcon,
   MastersIcon,
   LogOutIcon
-} from "@icons/dashboardicons";
+} from "@icons/sidebaricons";
 
 
 

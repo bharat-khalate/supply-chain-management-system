@@ -8,6 +8,42 @@ export type IEnquiry = {
   status: "Active" | "Pending" | "Closed";
 };
 
+export type ISample = {
+  sampleId: string;
+  date: string;
+  enquiryId: string;
+  customerName: string;
+  productCategory: string;
+  status: "Active" | "Pending" | "Completed";
+};
+
+export type ITOrder = {
+  orderId: string;
+  date: string;
+  qty: number;
+  customerName: string;
+  deliveryDate: string;
+  status: "Active" | "Inactive";
+};
+export interface ICustomer {
+  vendorAndOrigin: string;
+  location: string;
+  code: string;
+  type: "ENTERPRISE" | "RETAIL";
+  contactPerson: string;
+  isActive: boolean;
+}
+export interface IVendor {
+  id: string;
+  name: string;
+  origin: string;
+  code: string;
+  type: "Manufacturer" | "Supplier";
+  category: string;
+  status: "Active" | "Inactive";
+}
+
+
 
 export const enquiries: IEnquiry[] = [
   {
@@ -104,17 +140,6 @@ export const enquiries: IEnquiry[] = [
 
 
 
-export type ISample = {
-  sampleId: string;
-  date: string;
-  enquiryId: string;
-  customerName: string;
-  productCategory: string;
-  status: "Active" | "Pending" | "Completed";
-};
-
-
-
 
 export const sampleRecords: ISample[] = [
   {
@@ -200,14 +225,7 @@ export const sampleRecords: ISample[] = [
 ];
 
 
-export type ITOrder = {
-  orderId: string;
-  date: string;
-  qty: number;
-  customerName: string;
-  deliveryDate: string;
-  status: "Active" | "Inactive";
-};
+
 
 
 
@@ -218,7 +236,7 @@ export const orders: ITOrder[] = [
     qty: 2000,
     customerName: "Amit Sharma",
     deliveryDate: "15/4/2026",
-    status: "Active",
+    status: "Inactive",
   },
   {
     orderId: "ORD002",
@@ -274,7 +292,7 @@ export const orders: ITOrder[] = [
     qty: 6200,
     customerName: "Neha Kapoor",
     deliveryDate: "28/3/2026",
-    status: "Active",
+    status: "Inactive",
   },
   {
     orderId: "ORD009",
@@ -293,3 +311,189 @@ export const orders: ITOrder[] = [
     status: "Inactive",
   },
 ];
+
+
+
+
+
+export const BuyersData: ICustomer[] = [
+  {
+    vendorAndOrigin: "Reliance Retail",
+    location: "Portugal, EU",
+    code: "CUST001",
+    type: "ENTERPRISE",
+    contactPerson: "Amit Sharma",
+    isActive: false,
+  },
+  {
+    vendorAndOrigin: "Tata Consumer Products",
+    location: "Mumbai, India",
+    code: "CUST002",
+    type: "ENTERPRISE",
+    contactPerson: "Rahul Mehta",
+    isActive: true,
+  },
+  {
+    vendorAndOrigin: "ITC Limited",
+    location: "Kolkata, India",
+    code: "CUST003",
+    type: "ENTERPRISE",
+    contactPerson: "Sneha Verma",
+    isActive: true,
+  },
+  {
+    vendorAndOrigin: "Nestle",
+    location: "Vevey, Switzerland",
+    code: "CUST004",
+    type: "ENTERPRISE",
+    contactPerson: "Daniel Costa",
+    isActive: false,
+  },
+  {
+    vendorAndOrigin: "Unilever",
+    location: "London, UK",
+    code: "CUST005",
+    type: "ENTERPRISE",
+    contactPerson: "Priya Nair",
+    isActive: false,
+  },
+  {
+    vendorAndOrigin: "Adani Wilmar",
+    location: "Ahmedabad, India",
+    code: "CUST006",
+    type: "ENTERPRISE",
+    contactPerson: "Karan Patel",
+    isActive: true,
+  },
+  {
+    vendorAndOrigin: "PepsiCo",
+    location: "New York, USA",
+    code: "CUST007",
+    type: "ENTERPRISE",
+    contactPerson: "Emily Johnson",
+    isActive: false,
+  },
+  {
+    vendorAndOrigin: "Britannia Industries",
+    location: "Bangalore, India",
+    code: "CUST008",
+    type: "ENTERPRISE",
+    contactPerson: "Ankit Gupta",
+    isActive: true,
+  },
+  {
+    vendorAndOrigin: "Amul",
+    location: "Anand, India",
+    code: "CUST009",
+    type: "ENTERPRISE",
+    contactPerson: "Rohit Shah",
+    isActive: true,
+  },
+  {
+    vendorAndOrigin: "Danone",
+    location: "Paris, France",
+    code: "CUST010",
+    type: "ENTERPRISE",
+    contactPerson: "Claire Dubois",
+    isActive: false,
+  },
+];
+
+
+
+
+
+
+
+ export const vendors: IVendor[] = [
+    {
+      id: "1",
+      name: "Nordic Velour Co.",
+      origin: "Portugal, EU",
+      code: "VND001",
+      type: "Manufacturer",
+      category: "Fabric",
+      status: "Active",
+    },
+    {
+      id: "2",
+      name: "Apex Manufacturing",
+      origin: "Ho Chi Minh, VN",
+      code: "VND002",
+      type: "Supplier",
+      category: "Uniforms",
+      status: "Inactive",
+    },
+    {
+      id: "3",
+      name: "BlueWeave Textiles",
+      origin: "Istanbul, TR",
+      code: "VND003",
+      type: "Manufacturer",
+      category: "Fabric",
+      status: "Active",
+    },
+    {
+      id: "4",
+      name: "Urban Stitch Ltd.",
+      origin: "London, UK",
+      code: "VND004",
+      type: "Supplier",
+      category: "Garments",
+      status: "Inactive",
+    },
+    {
+      id: "5",
+      name: "Golden Loom Mills",
+      origin: "Surat, IN",
+      code: "VND005",
+      type: "Manufacturer",
+      category: "Silk Fabric",
+      status: "Active",
+    },
+    {
+      id: "6",
+      name: "Pacific Apparel",
+      origin: "Bangkok, TH",
+      code: "VND006",
+      type: "Supplier",
+      category: "Uniforms",
+      status: "Inactive",
+    },
+    {
+      id: "7",
+      name: "CottonCraft Industries",
+      origin: "Karachi, PK",
+      code: "VND007",
+      type: "Manufacturer",
+      category: "Cotton Fabric",
+      status: "Active",
+    },
+    {
+      id: "8",
+      name: "EverThread Corp.",
+      origin: "Shanghai, CN",
+      code: "VND008",
+      type: "Supplier",
+      category: "Workwear",
+      status: "Inactive",
+    },
+    {
+      id: "9",
+      name: "Heritage Looms",
+      origin: "Milan, IT",
+      code: "VND009",
+      type: "Manufacturer",
+      category: "Luxury Fabric",
+      status: "Active",
+    },
+    {
+      id: "10",
+      name: "Prime Uniform Supply",
+      origin: "Dubai, UAE",
+      code: "VND010",
+      type: "Supplier",
+      category: "Uniforms",
+      status: "Active",
+    },
+  ];

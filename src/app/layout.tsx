@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import '@/app/globals.css';
+import Store from '@/store/Store'
+import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
-  title: 'Clean Architecture App',
-  description: 'Next.js application built with clean architecture principles',
+  title: 'Atelier ERP',
+  description: 'Supply Chain Management Dashboard',
 };
 
 export default function RootLayout({
@@ -13,7 +15,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Toaster
+          position="bottom-right"
+        />
+        <Store>{children}</Store></body>
     </html>
   );
 }
