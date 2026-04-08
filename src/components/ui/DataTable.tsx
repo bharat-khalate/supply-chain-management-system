@@ -18,7 +18,7 @@ interface DataTableProps<T extends object> {
   onEdit?: (row: T) => void;
   onDelete?: (row: T) => void;
   idKey?: keyof T;
-  Header?: React.ComponentType;
+  Header?: React.ReactNode;
   Footer?: React.ComponentType;
 }
 
@@ -42,7 +42,7 @@ export function DataTable<T extends object>({
 
   return (
     <div className="overflow-x-auto rounded-xl shadow  ring-black ring-opacity-5">
-      {Header && <Header />}
+      {Header && Header}
       <table className="min-w-full divide-y divide-gray-200 shadow-2xl bg-white">
         <thead className="bg-gray-50">
           <tr>

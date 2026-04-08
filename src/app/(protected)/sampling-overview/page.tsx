@@ -7,7 +7,7 @@ import { Modal } from "@/components/ui/Modal";
 import DashboardHeader from "@/components/ui/Header";
 import TableHeader from "@/components/ui/TableHeader";
 import TableFooter from "@/components/ui/TableFooter";
-import { EditIcon, DeleteIcon, ViewIcon } from "@icons/actions"
+import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
 import { ISample, sampleRecords } from "@/utils/Data";
 import { useSelector } from "react-redux"
 import { useAppDispatch } from "@/lib/hooks"
@@ -136,7 +136,7 @@ export default function ProductsPage() {
         data={sample}
         loading={loading}
         emptyMessage="No Buyers yet."
-        Header={TableHeader}
+        // Header={TableHeader}
         Footer={TableFooter}
       // onEdit={openEdit}
       // onDelete={handleDelete}
