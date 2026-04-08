@@ -5,7 +5,7 @@ import { DataTable, type Column } from "@/components/ui/DataTable";
 import DashboardHeader from "@/components/ui/Header";
 import TableHeader from "@/components/ui/TableHeader";
 import TableFooter from "@/components/ui/TableFooter";
-import { EditIcon, DeleteIcon, ViewIcon } from "@icons/actions"
+import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
 import { IVendor, vendors } from "@/utils/Data";
 import { useAppDispatch } from "@/lib/hooks";
 import { useSelector } from "react-redux";
@@ -149,7 +149,7 @@ export default function ProductsPage() {
         data={vendor}
         loading={loading}
         emptyMessage="No Buyers yet."
-        Header={TableHeader}
+        // Header={TableHeader}
         Footer={TableFooter}
       // onEdit={openEdit}
       // onDelete={handleDelete}

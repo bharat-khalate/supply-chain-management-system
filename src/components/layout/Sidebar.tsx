@@ -19,7 +19,8 @@ import {
   SupportTicketsIcon,
   SettingsIcon,
   MastersIcon,
-  LogOutIcon
+  LogOutIcon,
+  RightArrowIcon
 } from "@icons/sidebaricons";
 
 
@@ -27,7 +28,7 @@ import {
 
 
 import { usePathname, useRouter } from "next/navigation";
-import { ChevronRight } from "lucide-react";
+
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: DashboardIcon },
@@ -36,7 +37,7 @@ const navItems = [
     label: "Masters",
     icon: MastersIcon,
     hasSubmenu: true,
-    suffixIcon: ChevronRight,
+    suffixIcon: RightArrowIcon,
   },
   { href: "/vendors", label: "Vendors/Manufacturer", icon: VendorsIcon },
   { href: "/buyers", label: "Buyers", icon: BuyersIcon, isActive: true },

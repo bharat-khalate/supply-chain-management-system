@@ -1,19 +1,20 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { DataTable, type Column } from "@/components/ui/DataTable";
 import { Modal } from "@/components/ui/Modal";
 import DashboardHeader from "@/components/ui/Header";
 
-import TableHeader from "@/components/ui/TableHeader";
+import TableHeader, { FilterFields } from "@/components/ui/TableHeader";
 import TableFooter from "@/components/ui/TableFooter";
-import { DeleteIcon, EditIcon, ViewIcon } from "@icons/actions";
+import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { addCustomer, removeCustomer } from '@/store/slice';
 import { ICustomer } from "@/utils/Data";
 import { RootState } from "@/store/Store";
 import toast from "react-hot-toast";
+import Chip from "@mui/material/Chip";
 
 
 export default function ProductsPage() {
@@ -21,6 +22,103 @@ export default function ProductsPage() {
   const dispatch = useDispatch();
 
   const buyersData = useSelector((store: RootState) => store.customerSlice);
+  const [filterValues, setFilterValues] = useState<Record<string, string | string[]>>({});
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+
+  const updateURL = (filters: Record<string, string | string[]>) => {
+
+    const params = new URLSearchParams(searchParams.toString());
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        if (value.length === 0) {
+          params.delete(key);
+        } else {
+          params.set(key, value.join(",")); // checkbox array
+        }
+      } else {
+        if (!value) {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      }
+    });
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+
+
+
+
+  const onChange = (key: string, value: string | string[]) => {
+    setFilterValues((prev) => {
+
+      const isEmptyString = value === "";
+      const isEmptyArray = Array.isArray(value) && value.length === 0;
+
+      if (isEmptyString || isEmptyArray) {
+        const updated = { ...prev };
+        delete updated[key];
+        return updated;
+      }
+
+      return { ...prev, [key]: value };
+    });
+  };
+
+  const onApply = () => { console.log(filterValues); updateURL(filterValues); }
+
+  useEffect(() => {
+    const values: Record<string, string | string[]> = {};
+
+    searchParams.forEach((value, key) => {
+      if (value.includes(",")) {
+        values[key] = value.split(",");
+      } else {
+        values[key] = value;
+      }
+    });
+
+    (async () => { setFilterValues(values); onApply(); })();
+  }, []);
+
+
+
+
+
+
+  const onClear = () => { setFilterValues({}); router.replace(pathname) };
+
+  const filterFields: FilterFields[] = [{
+    key: "name",
+    type: "text",
+    label: "Name"
+  },
+  {
+    key: "code",
+    type: "select",
+    label: "Code",
+    options: [{ label: "CUST0001", value: "CUST0001" }]
+
+  },
+  {
+    key: "status",
+    type: "check",
+    label: "Status",
+    options: [{ label: "ACTIVE", value: "active" }, { label: "INACTIVE", value: "inActive" }]
+  },
+  {
+    key: "available",
+    type: "check",
+    label: "Available",
+    options: [{ label: "AVAILABLE", value: "available" }, { label: "UNAVAILABLE", value: "unAvailable" }]
+  }
+  ]
 
   const openCreate = () => {
     dispatch(addCustomer({
@@ -87,12 +185,30 @@ export default function ProductsPage() {
       key: "isActive",
       header: "Active",
       render: (r) => (
-        <span
-          className={`px-2 py-1 text-sm rounded ${r.isActive ? "text-green-600" : "text-gray-400"
-            }`}
-        >
-          {r.isActive ? "Active" : "Inactive"}
-        </span>
+        r.isActive ?
+          (<Chip
+            label="Active"
+            color="success"
+
+            size="small"
+            variant="outlined"
+          />)
+          :
+          (
+            <Chip
+              label="Inactive"
+              color="default"
+
+              size="small"
+              variant="outlined"
+            />
+          )
+        // <span
+        //   className={`px-2 py-1 text-sm rounded ${r.isActive ? "text-green-600" : "text-gray-400"
+        //     }`}
+        // >
+        //   {r.isActive ? "Active" : "Inactive"}
+        // </span>
       ),
     },
 
@@ -136,7 +252,7 @@ export default function ProductsPage() {
         data={buyersData}
         loading={false}
         emptyMessage="No Buyers yet."
-        Header={TableHeader}
+        Header={<TableHeader values={filterValues} onApply={onApply} onClear={onClear} onChange={onChange} filters={filterFields} />}
         Footer={TableFooter}
       // onEdit={openEdit}
       // onDelete={handleDelete}

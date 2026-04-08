@@ -1,5 +1,4 @@
-import React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { LeftIcon, RightIcon } from "@icons/table-icons/footer"
 
 const TableFooter = () => {
   return (
@@ -13,18 +12,18 @@ const TableFooter = () => {
       <div className="flex items-center gap-1">
         {/* Previous Button - Disabled state */}
         <button className="p-2 text-gray-300 cursor-not-allowed" disabled>
-          <ChevronLeft size={18} />
+          <LeftIcon size={18} />
         </button>
 
         {/* Page Numbers */}
         <button className="w-8 h-8 flex items-center justify-center bg-[#0038a8] text-white rounded text-sm font-semibold">
           1
         </button>
-        
+
 
         {/* Next Button */}
         <button className="p-2 text-gray-700 hover:bg-gray-100 rounded transition-colors">
-          <ChevronRight size={18} />
+          <RightIcon size={18} />
         </button>
       </div>
     </div>

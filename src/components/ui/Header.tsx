@@ -1,4 +1,4 @@
-import { Search, Bell, User } from "lucide-react";
+import { HeaderBellIcon, HeaderSearchIcon, HeaderUserIcon } from "@icons/header-icons";
 
 export default function DashboardHeader() {
   return (
@@ -7,7 +7,7 @@ export default function DashboardHeader() {
 
         {/* Search */}
         <div className="flex items-center bg-gray-200 rounded-md px-3 py-2 w-[420px]">
-          <Search size={18} className="text-gray-500 mr-2" />
+          <HeaderSearchIcon size={18} className="text-gray-500 mr-2" />
           <input
             type="text"
             placeholder="Search buyers, regions, or segments..."
@@ -19,7 +19,7 @@ export default function DashboardHeader() {
         <div className="flex items-center gap-6">
 
           {/* Notification */}
-          <Bell className="text-gray-600 cursor-pointer" />
+          <HeaderBellIcon className="text-gray-600 cursor-pointer" />
 
           {/* Divider */}
           <div className="h-6 w-px bg-gray-300" />
@@ -33,7 +33,7 @@ export default function DashboardHeader() {
 
             {/* Avatar */}
             <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-              <User size={20} />
+              <HeaderUserIcon size={20} />
             </div>
           </div>
 
