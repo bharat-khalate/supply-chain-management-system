@@ -15,8 +15,6 @@ import { addOrder, getAllOrders, removeOrder } from "@/store/slice";
 import toast from "react-hot-toast";
 
 
-
-
 export default function ProductsPage() {
     const router = useRouter();
     const dispatch = useAppDispatch();
@@ -50,11 +48,6 @@ export default function ProductsPage() {
         dispatch(removeOrder(orderId));
         toast.success("Order Deleted.")
     }
-
-
-
-
-
 
 
     const columns: Column<ITOrder>[] = [
