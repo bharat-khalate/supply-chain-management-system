@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Sidebar } from './Sidebar';
+import DashboardHeader from '../common/Header';
 
 export function AppShell({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -29,7 +30,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     return (
         <div className="flex min-h-screen bg-[#F6FAFE]">
             <Sidebar open={open} setOpen={setOpen} />
-            
+
             <main className="h-screen flex-1 overflow-y-auto scrollbar-hide md:ms-64">
                 <div className="p-4 md:hidden flex items-center justify-between bg-white">
                     <button
@@ -46,7 +47,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                         <span>🚪</span>
                     </button>
                 </div>
-                <div className="md:max-w-7xl md:mx-auto px-6 py-8">{children}</div>
+                <div className="md:max-w-7xl md:mx-auto px-6 py-8">
+                    <DashboardHeader />
+                    {children}
+                </div>
             </main>
         </div>
     );

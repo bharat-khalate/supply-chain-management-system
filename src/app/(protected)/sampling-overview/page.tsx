@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { DataTable, type Column } from "@/components/ui/DataTable";
-import { Modal } from "@/components/ui/Modal";
-import DashboardHeader from "@/components/ui/Header";
-import TableHeader from "@/components/ui/TableHeader";
-import TableFooter from "@/components/ui/TableFooter";
+import { DataTable, type Column } from "@/components/common/DataTable";
+import { Modal } from "@/components/common/Modal";
+import DashboardHeader from "@/components/common/Header";
+import TableHeader from "@/components/common/TableHeader";
+import TableFooter from "@/components/common/TableFooter";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
 import { ISample, sampleRecords } from "@/utils/Data";
 import { useSelector } from "react-redux"
@@ -117,7 +117,7 @@ export default function ProductsPage() {
 
   return (
     <div>
-      <DashboardHeader />
+     
       <div className="flex items-center justify-between my-6">
         <div>
           <h1 className="text-2xl font-bold text-[#0040A1]">Sampling Overview</h1>

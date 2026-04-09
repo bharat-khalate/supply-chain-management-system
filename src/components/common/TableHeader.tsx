@@ -127,13 +127,6 @@ const TableHeader = ({
 
             })
           }
-
-
-
-
-
-
-
         </div>
 
         {/* Buttons */}

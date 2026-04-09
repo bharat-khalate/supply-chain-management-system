@@ -8,6 +8,13 @@ type AppCardProps = CardProps & {
     children: React.ReactNode;
 };
 
+
+
+type AppCardHeaderProps = CardHeaderProps & {
+  children?: React.ReactNode;
+};
+
+
 export function AppCard({ children, ...props }: AppCardProps) {
     return (
         <MuiCard
@@ -28,8 +35,10 @@ export function AppCardContent({ ...props }: CardContentProps) {
     return <CardContent {...props} />;
 }
 
-export function AppCardHeader({ ...props }: CardHeaderProps) {
-    return <CardHeader {...props} />;
+
+
+export function AppCardHeader({ children, ...props }: AppCardHeaderProps) {
+  return <CardHeader title={children} {...props} />;
 }
 
 
@@ -47,3 +56,5 @@ const Card = Object.assign(AppCard, {
 });
 
 export default Card;
+
+

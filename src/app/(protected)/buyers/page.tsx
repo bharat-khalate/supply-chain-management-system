@@ -2,26 +2,27 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { DataTable, type Column } from "@/components/ui/DataTable";
-import { Modal } from "@/components/ui/Modal";
-import DashboardHeader from "@/components/ui/Header";
+import { DataTable, type Column } from "@/components/common/DataTable";
+import { Modal } from "@/components/common/Modal";
+import DashboardHeader from "@/components/common/Header";
 
-import TableHeader, { FilterFields } from "@/components/ui/TableHeader";
-import TableFooter from "@/components/ui/TableFooter";
+import TableHeader, { FilterFields } from "@/components/common/TableHeader";
+import TableFooter from "@/components/common/TableFooter";
 import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
-import { useSelector, useDispatch } from "react-redux";
-import { addCustomer, removeCustomer } from '@/store/slice';
-import { ICustomer } from "@/utils/Data";
+import { useSelector } from "react-redux";
+import { addBuyer, removeBuyer } from '@/store/slice';
+import { buyers, IBuyer } from "@/utils/Data";
 import { RootState } from "@/store/Store";
 import toast from "react-hot-toast";
-import Chip from "@mui/material/Chip";
+import { Badge } from "@mui/material";
+import { useAppDispatch } from "@/lib/hooks";
 
 
 export default function ProductsPage() {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const buyersData = useSelector((store: RootState) => store.customerSlice);
+  const buyersData: IBuyer[] = useSelector((store: RootState) => store.buyerSlice.data);
   const [filterValues, setFilterValues] = useState<Record<string, string | string[]>>({});
   const router = useRouter();
   const pathname = usePathname();
@@ -56,6 +57,11 @@ export default function ProductsPage() {
 
 
   const onChange = (key: string, value: string | string[]) => {
+
+
+
+
+
     setFilterValues((prev) => {
 
       const isEmptyString = value === "";
@@ -100,7 +106,7 @@ export default function ProductsPage() {
     label: "Name"
   },
   {
-    key: "code",
+    key: "id",
     type: "select",
     label: "Code",
     options: [{ label: "CUST0001", value: "CUST0001" }]
@@ -120,28 +126,17 @@ export default function ProductsPage() {
   }
   ]
 
-  const openCreate = () => {
-    dispatch(addCustomer({
-      vendorAndOrigin: "Reliance Retail",
-      location: "Portugal, EU",
-      code: "CUST001",
-      type: "ENTERPRISE",
-      contactPerson: "Amit Sharma",
-      isActive: true,
-    }));
-    toast.success("Booyah! Onboarded Customer")
-  };
 
   const deleteCustomer = (customerId: string) => {
-    dispatch(removeCustomer(customerId));
+    dispatch(removeBuyer(customerId));
     toast.success("Customer removed")
   }
-  const columns: Column<ICustomer>[] = [
+  const columns: Column<IBuyer>[] = [
     {
       key: "vendorAndOrigin",
       header: "Vendor & Origin",
       render: (r) => {
-        const initials = r.vendorAndOrigin
+        const initials = r.buyerName
           .split(" ")
           .map((w) => w[0])
           .join("")
@@ -155,9 +150,9 @@ export default function ProductsPage() {
             </div>
 
             <div className="flex flex-col">
-              <span className="font-medium">{r.vendorAndOrigin}</span>
+              <span className="font-medium">{r.buyerName}</span>
               <span className="text-xs text-gray-500 flex items-center gap-1">
-                📍 {r.location}
+                📍 {r.buyerAddress}
               </span>
             </div>
           </div>
@@ -166,14 +161,17 @@ export default function ProductsPage() {
     },
 
     {
-      key: "code",
+      key: "id",
       header: "Code",
+      render: (r) => <div className="truncate w-32" title={r.id}>
+        {r.id}
+      </div>
     },
 
     {
       key: "type",
       header: "Type",
-      render: (r) => <span className="capitalize">{r.type.toLowerCase()}</span>,
+      render: (r) => <span className="capitalize">{r.buyerType.toLowerCase()}</span>,
     },
 
     {
@@ -185,23 +183,13 @@ export default function ProductsPage() {
       key: "isActive",
       header: "Active",
       render: (r) => (
-        r.isActive ?
-          (<Chip
-            label="Active"
-            color="success"
-
-            size="small"
-            variant="outlined"
-          />)
+        r.status == "Active" ?
+          (
+            <Badge className="bg-green-100 text-green-700">Active</Badge>
+          )
           :
           (
-            <Chip
-              label="Inactive"
-              color="default"
-
-              size="small"
-              variant="outlined"
-            />
+            <Badge className="bg-red-100 text-red-700">inActive</Badge>
           )
         // <span
         //   className={`px-2 py-1 text-sm rounded ${r.isActive ? "text-green-600" : "text-gray-400"
@@ -224,7 +212,7 @@ export default function ProductsPage() {
             <EditIcon />
           </span>
           <span title="Delete">
-            <DeleteIcon onClick={() => deleteCustomer(r.code)} />
+            <DeleteIcon onClick={() => deleteCustomer(r.id)} />
           </span>
         </div>
       ),
@@ -232,16 +220,17 @@ export default function ProductsPage() {
   ];
 
   return (
-    <div>
-      <DashboardHeader />
+    <div >
+
       <div className="flex items-center justify-between my-6">
         <div>
           <h1 className="text-2xl font-bold text-[#0040A1]">Buyers Overview</h1>
 
         </div>
         <button
-          onClick={openCreate}
-          className="bg-gradient-to-br from-[#0040A1] to-[#0056D2] text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm font-medium"
+          onClick={() => router.push(`${pathname}/add`)}
+          className="bg-gradient-to-br from-[#0040A1] to-[#0056D2] text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm font-medium cursor-pointer"
+
         >
           + OnBoard Buyer
         </button>
