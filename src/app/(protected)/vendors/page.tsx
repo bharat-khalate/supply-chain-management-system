@@ -4,7 +4,6 @@
 import { DataTable, type Column } from "@/components/ui/DataTable";
 import DashboardHeader from "@/components/ui/Header";
 import TableHeader from "@/components/ui/TableHeader";
-import TableFooter from "@/components/ui/TableFooter";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
 import { IVendor, vendors } from "@/utils/Data";
 import { useAppDispatch } from "@/lib/hooks";
@@ -149,8 +148,7 @@ export default function ProductsPage() {
         data={vendor}
         loading={loading}
         emptyMessage="No Buyers yet."
-        // Header={TableHeader}
-        Footer={TableFooter}
+      // Header={TableHeader}
       // onEdit={openEdit}
       // onDelete={handleDelete}
       />

@@ -1,13 +1,10 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { DataTable, type Column } from "@/components/ui/DataTable";
-import { Modal } from "@/components/ui/Modal";
 import DashboardHeader from "@/components/ui/Header";
-
 import TableHeader, { FilterFields } from "@/components/ui/TableHeader";
-import TableFooter from "@/components/ui/TableFooter";
 import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { addCustomer, removeCustomer } from '@/store/slice';
@@ -52,9 +49,6 @@ export default function ProductsPage() {
   };
 
 
-
-
-
   const onChange = (key: string, value: string | string[]) => {
     setFilterValues((prev) => {
 
@@ -86,11 +80,6 @@ export default function ProductsPage() {
 
     (async () => { setFilterValues(values); onApply(); })();
   }, []);
-
-
-
-
-
 
   const onClear = () => { setFilterValues({}); router.replace(pathname) };
 
@@ -246,14 +235,12 @@ export default function ProductsPage() {
           + OnBoard Buyer
         </button>
       </div>
-
       <DataTable
         columns={columns}
         data={buyersData}
         loading={false}
         emptyMessage="No Buyers yet."
         Header={<TableHeader values={filterValues} onApply={onApply} onClear={onClear} onChange={onChange} filters={filterFields} />}
-        Footer={TableFooter}
       // onEdit={openEdit}
       // onDelete={handleDelete}
       />
