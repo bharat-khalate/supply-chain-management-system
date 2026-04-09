@@ -133,7 +133,7 @@ export default function ProductsPage() {
                 previousPage={() => console.log("prev")}
                 nextPage={() => console.log("next")}
                 handleLimitChange={(val) => console.log("limit:", val)}
-            />ś
+            />
         </div>
     );
 }
