@@ -7,7 +7,6 @@ export type IEnquiry = {
   expPrice: number;
   status: "Active" | "Pending" | "Closed";
 };
-
 export type ISample = {
   sampleId: string;
   date: string;
@@ -16,7 +15,6 @@ export type ISample = {
   productCategory: string;
   status: "Active" | "Pending" | "Completed";
 };
-
 export type ITOrder = {
   orderId: string;
   date: string;
@@ -42,8 +40,6 @@ export interface IVendor {
   category: string;
   status: "Active" | "Inactive";
 }
-
-
 
 export const enquiries: IEnquiry[] = [
   {
@@ -138,9 +134,6 @@ export const enquiries: IEnquiry[] = [
   }
 ];
 
-
-
-
 export const sampleRecords: ISample[] = [
   {
     sampleId: "SMPE001",
@@ -223,11 +216,6 @@ export const sampleRecords: ISample[] = [
     status: "Pending"
   }
 ];
-
-
-
-
-
 
 export const orders: ITOrder[] = [
   {
@@ -312,10 +300,6 @@ export const orders: ITOrder[] = [
   },
 ];
 
-
-
-
-
 export const BuyersData: ICustomer[] = [
   {
     vendorAndOrigin: "Reliance Retail",
@@ -398,12 +382,6 @@ export const BuyersData: ICustomer[] = [
     isActive: false,
   },
 ];
-
-
-
-
-
-
 
  export const vendors: IVendor[] = [
     {
