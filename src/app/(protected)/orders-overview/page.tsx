@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { DataTable, type Column } from "@/components/ui/DataTable";
-import DashboardHeader from "@/components/ui/Header";
+import { DataTable, type Column } from "@/components/common/table/DataTable";
+
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
 import { ITOrder } from "@/utils/Data";
 import { useAppDispatch } from "@/lib/hooks";
