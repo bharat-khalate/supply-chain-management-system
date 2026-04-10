@@ -8,15 +8,12 @@ import DashboardHeader from "@/components/layout/Header";
 import TableHeader from "@/components/common/table/TableHeader";
 import TableFooter from "@/components/common/table/TableFooter";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
-import { ISample, sampleRecords } from "@/utils/Data";
+import { ISample } from "@/utils/Data";
 import { useSelector } from "react-redux"
 import { useAppDispatch } from "@/lib/hooks"
 import { addSample, getAllSample, removeSample } from "@/store/slice";
 import { RootState } from "@/store/Store";
 import toast from "react-hot-toast";
-
-
-
 
 export default function ProductsPage() {
 
@@ -74,15 +71,10 @@ export default function ProductsPage() {
       key: "customerName",
       header: "Customer Name",
     },
-
-
-
     {
       key: "productCategory",
       header: "Product Category",
     },
-
-
     {
       key: "status",
       header: "Active",
@@ -95,7 +87,6 @@ export default function ProductsPage() {
         </span>
       ),
     },
-
     {
       key: "actions",
       header: "Actions",
@@ -136,13 +127,10 @@ export default function ProductsPage() {
         data={sample}
         loading={loading}
         emptyMessage="No Buyers yet."
-        // Header={TableHeader}
-        Footer={TableFooter}
+      // Header={TableHeader}
       // onEdit={openEdit}
       // onDelete={handleDelete}
       />
-
-
     </div>
   );
 }

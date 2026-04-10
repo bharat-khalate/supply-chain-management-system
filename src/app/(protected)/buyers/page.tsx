@@ -179,7 +179,6 @@ export default function ProductsPage() {
           )}
         </button>
       </div>
-
       <DataTable
         columns={columns}
         data={buyersData}

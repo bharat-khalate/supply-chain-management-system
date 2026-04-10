@@ -1,20 +1,16 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { DataTable, type Column } from "@/components/common/table/DataTable";
-import DashboardHeader from "@/components/layout/Header";
-import TableHeader from "@/components/common/table/TableHeader";
-import TableFooter from "@/components/common/table/TableFooter";
+import { DataTable, type Column } from "@/components/ui/DataTable";
+import DashboardHeader from "@/components/ui/Header";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
 import { ITOrder } from "@/utils/Data";
 import { useAppDispatch } from "@/lib/hooks";
-import { useSelector, UseSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@/store/Store";
 import { useEffect } from "react";
 import { addOrder, getAllOrders, removeOrder } from "@/store/slice";
 import toast from "react-hot-toast";
-
-
 
 
 export default function ProductsPage() {
@@ -25,13 +21,6 @@ export default function ProductsPage() {
     useEffect(() => {
         dispatch(getAllOrders());
     }, [])
-
-
-
-
-
-
-
 
     const openCreate = () => {
         const order: ITOrder = {
@@ -50,12 +39,6 @@ export default function ProductsPage() {
         dispatch(removeOrder(orderId));
         toast.success("Order Deleted.")
     }
-
-
-
-
-
-
 
     const columns: Column<ITOrder>[] = [
         {
@@ -140,13 +123,17 @@ export default function ProductsPage() {
                 data={orders}
                 loading={loading}
                 emptyMessage="No Buyers yet."
-                // Header={TableHeader}
-                Footer={TableFooter}
-            // onEdit={openEdit}
-            // onDelete={handleDelete}
+                currentPage={1}
+                lastPage={50}
+                limit={10}
+                totalCount={500}
+                visiblePageCount={3}
+                canPreviousPage={false}
+                canNextPage={true}
+                previousPage={() => console.log("prev")}
+                nextPage={() => console.log("next")}
+                handleLimitChange={(val) => console.log("limit:", val)}
             />
-
-
         </div>
     );
 }

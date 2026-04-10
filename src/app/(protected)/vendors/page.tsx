@@ -149,8 +149,7 @@ export default function ProductsPage() {
         data={vendor}
         loading={loading}
         emptyMessage="No Buyers yet."
-        // Header={TableHeader}
-        Footer={TableFooter}
+      // Header={TableHeader}
       // onEdit={openEdit}
       // onDelete={handleDelete}
       />

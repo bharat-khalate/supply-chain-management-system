@@ -25,11 +25,6 @@ export default function ProductsPage() {
     dispatch(getAllEnquiries())
   }, [])
 
-
-
-
-
-
   const openCreate = () => {
     const enquiry: IEnquiry = {
       enquiryId: "ENQ001",
@@ -44,19 +39,10 @@ export default function ProductsPage() {
     toast.success("Added Enquiry.")
   };
 
-
-
   const deleteEnquiry = (enquiryId: string) => {
     dispatch(removeEnquiry(enquiryId))
     toast.success("Deleted Enquiry.")
   }
-
-
-
-
-
-
-
 
   const columns: Column<IEnquiry>[] = [
     {
@@ -149,13 +135,10 @@ export default function ProductsPage() {
         data={enquiries}
         loading={loading}
         emptyMessage="No Buyers yet."
-        // Header={TableHeader}
-        Footer={TableFooter}
+      // Header={TableHeader}
       // onEdit={openEdit}
       // onDelete={handleDelete}
       />
-
-
     </div>
   );
 }
