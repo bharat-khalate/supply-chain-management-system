@@ -3,12 +3,16 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Sidebar } from './Sidebar';
-import DashboardHeader from '../common/Header';
+import DashboardHeader from './Header';
+import { PagesTopLoader } from 'nextjs-toploader/pages';
+import { useGlobalRedirect } from '@/lib/hooks';
+import NextTopLoader from 'nextjs-toploader';
 
 export function AppShell({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const [ready, setReady] = useState(false);
     const [open, setOpen] = useState(false);
+    const { isRedirecting } = useGlobalRedirect()
 
     // useEffect(() => {
     //     const token = localStorage.getItem('token');
@@ -49,6 +53,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 </div>
                 <div className="md:max-w-7xl md:mx-auto px-6 py-8">
                     <DashboardHeader />
+                    <NextTopLoader />
                     {children}
                 </div>
             </main>

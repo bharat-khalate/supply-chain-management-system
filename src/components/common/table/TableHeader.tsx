@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 
 import { FilterIcon, PrintIcon, DownloadIcon } from '@icons/table-icons/header/index';
 
@@ -18,7 +18,7 @@ export interface FilterFields {
 export type onChange = (key: string, value: string | string[]) => void
 
 export interface TableHeaderProps {
-  filters: FilterFields[];
+  fields: FilterFields[];
   values: Record<string, string | string[]>;
   onChange: onChange;
   onApply: () => void;
@@ -26,7 +26,7 @@ export interface TableHeaderProps {
 }
 
 const TableHeader = ({
-  filters,
+  fields,
   values,
   onChange,
   onApply,
@@ -66,7 +66,7 @@ const TableHeader = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
           {
-            filters.map((filter, idx) => {
+            fields.map((filter, idx) => {
 
               if (filter.render) {
                 return filter.render(filter);
@@ -120,9 +120,6 @@ const TableHeader = ({
                   );
 
                 default: return "";
-
-
-
               }
 
             })
@@ -135,7 +132,7 @@ const TableHeader = ({
             Clear
           </button>
 
-          <button onClick={onApply} className="px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700">
+          <button onClick={() => onApply()} className="px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700">
             Apply
           </button>
         </div>

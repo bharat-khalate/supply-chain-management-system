@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { DataTable, type Column } from "@/components/common/DataTable";
+import { DataTable, type Column } from "@/components/common/table/DataTable";
 import { Modal } from "@/components/common/Modal";
-import DashboardHeader from "@/components/common/Header";
-import TableHeader from "@/components/common/TableHeader";
-import TableFooter from "@/components/common/TableFooter";
+import DashboardHeader from "@/components/layout/Header";
+import TableHeader from "@/components/common/table/TableHeader";
+import TableFooter from "@/components/common/table/TableFooter";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
 import { ISample, sampleRecords } from "@/utils/Data";
 import { useSelector } from "react-redux"

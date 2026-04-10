@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { buyers, IBuyer } from "@/utils/Data";
+import { RootState } from "../Store";
 
 // --- Thunks ---
 
@@ -20,16 +21,31 @@ export const fetchBuyers = createAsyncThunk<
     }
 );
 
-// 2. Add Customer
+// 2. Add Buyer
 export const addBuyer = createAsyncThunk(
     "buyers/addBuyer",
-    async (newCustomer: IBuyer) => {
-        // Replace with: const response = await api.post('/buyers', newCustomer)
-        return newCustomer;
+    async (newBuyer: IBuyer) => {
+        // Replace with: const response = await api.post('/buyers', newBuyer)
+        return newBuyer;
     }
 );
 
-// 3. Remove Customer
+
+
+export const filterBuyer = createAsyncThunk<IBuyer[], Record<string, string | string[]>>("buyer/filterBuyer", async (query: Record<string, string | string[]>) => {
+    // replace with: const response=await api.post(`buyers/filter/`,query);
+    return [{
+        id: "Filtered data",
+        buyerName: "Filtered data",
+        buyerAddress: "Filtered Data",
+        buyerType: "Misc",
+        phone: "Filtered Data",
+        email: "Filtered Data",
+        status: "Active"
+    }] as IBuyer[]
+})
+
+// 3. Remove Buyer
 export const removeBuyer = createAsyncThunk(
     "buyers/removeBuyer",
     async (id: string) => {
@@ -47,7 +63,7 @@ interface BuyerState {
 }
 
 const initialState: BuyerState = {
-    data: buyers,
+    data: [],
     loading: false,
     error: null,
 };
@@ -76,9 +92,18 @@ const slice = createSlice({
             .addCase(removeBuyer.fulfilled, (state, action) => {
                 state.data = state.data.filter((c) => c.id !== action.payload);
             })
+            //filterCase
+            .addCase(filterBuyer.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(filterBuyer.fulfilled, (state, action) => {
+                state.data = action.payload;
+                state.loading = false;
+            })
             // Error Handling
             .addMatcher(
                 (action) => action.type.endsWith("/rejected"),
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (state, action: any) => {
                     state.loading = false;
                     state.error = action.error.message || "Something went wrong";
@@ -86,5 +111,9 @@ const slice = createSlice({
             );
     },
 });
+
+export const useBuyerData = (store: RootState) => store.buyerSlice.data;
+export const useBuyerLoader = (store: RootState) => store.buyerSlice.loading;
+export const useBuyerError = (store: RootState) => store.buyerSlice.error;
 
 export default slice.reducer;

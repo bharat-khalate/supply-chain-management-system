@@ -19,7 +19,7 @@ import {
     FieldLabel,
 } from "@/components/ui/field";
 
-import { Input, TextField, MenuItem, Checkbox, FormControlLabel } from "@mui/material";
+import { Input, TextField, MenuItem,  } from "@mui/material";
 import toast from "react-hot-toast";
 
 export const buyerSchema = z.object({
@@ -103,7 +103,7 @@ export default function OnBoardVendor() {
             <div className="flex items-center justify-start my-6">
                 <div className="flex flex-col gap-3">
                     <AppBreadcrumb items={breadCrumbItems} />
-                    <h1 className="text-2xl font-bold text-[#0040A1]">Orders Overview</h1>
+                    <h1 className="text-2xl font-bold text-[#0040A1]">Add Buyer</h1>
 
                 </div>
 
@@ -137,7 +137,6 @@ export default function OnBoardVendor() {
                                 render={({ field, fieldState }) => (
                                     <Field data-invalid={fieldState.invalid}>
                                         <FieldLabel>Buyer Name</FieldLabel>
-
                                         <Input
                                             {...field}
                                             placeholder="Enter buyer name"

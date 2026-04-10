@@ -1,129 +1,69 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { DataTable, type Column } from "@/components/common/DataTable";
-import { Modal } from "@/components/common/Modal";
-import DashboardHeader from "@/components/common/Header";
 
-import TableHeader, { FilterFields } from "@/components/common/TableHeader";
-import TableFooter from "@/components/common/TableFooter";
+import { usePathname, useRouter } from "next/navigation";
+import { DataTable, type Column } from "@/components/common/table/DataTable";
+import TableHeader, { FilterFields } from "@/components/common/table/TableHeader";
+import TableFooter from "@/components/common/table/TableFooter";
 import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
 import { useSelector } from "react-redux";
-import { addBuyer, removeBuyer } from '@/store/slice';
-import { buyers, IBuyer } from "@/utils/Data";
-import { RootState } from "@/store/Store";
+import { IBuyer } from "@/utils/Data";
 import toast from "react-hot-toast";
 import { Badge } from "@mui/material";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useGlobalRedirect } from "@/lib/hooks";
+import { fetchBuyers, filterBuyer, useBuyerData, useBuyerLoader, removeBuyer } from "@/store/slice";
+import { useQueryFilters } from "@/lib/hooks";
+import AppBadge from "@/components/common/AppBadge";
+import AppDotLoader from "@/components/common/AppDotLoader";
 
 
 export default function ProductsPage() {
 
   const dispatch = useAppDispatch();
-
-  const buyersData: IBuyer[] = useSelector((store: RootState) => store.buyerSlice.data);
-  const [filterValues, setFilterValues] = useState<Record<string, string | string[]>>({});
-  const router = useRouter();
+  const buyersData: IBuyer[] = useSelector(useBuyerData);
+  const loading = useSelector(useBuyerLoader);
+  const { isRedirecting, navigate } = useGlobalRedirect();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-
-  const updateURL = (filters: Record<string, string | string[]>) => {
-
-    const params = new URLSearchParams(searchParams.toString());
-
-    Object.entries(filters).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        if (value.length === 0) {
-          params.delete(key);
-        } else {
-          params.set(key, value.join(",")); // checkbox array
-        }
-      } else {
-        if (!value) {
-          params.delete(key);
-        } else {
-          params.set(key, value);
-        }
-      }
-    });
-
-    router.push(`${pathname}?${params.toString()}`);
-  };
+  const {
+    filterValues,
+    handleInputChange,
+    applyFilters,
+    clearFilters } = useQueryFilters(filterBuyer, fetchBuyers);
 
 
 
 
+  const filterFields: FilterFields[] = [
+    //   {
+    //   key: "name",
+    //   type: "text",
+    //   label: "Name"
+    // },
+    {
+      key: "id",
+      type: "select",
+      label: "Code",
+      options: Array.from(
+        new Set(buyersData.map((b) => b.buyerType))
+      ).map((type) => ({
+        label: type,
+        value: type,
+      }))
 
-  const onChange = (key: string, value: string | string[]) => {
-
-
-
-
-
-    setFilterValues((prev) => {
-
-      const isEmptyString = value === "";
-      const isEmptyArray = Array.isArray(value) && value.length === 0;
-
-      if (isEmptyString || isEmptyArray) {
-        const updated = { ...prev };
-        delete updated[key];
-        return updated;
-      }
-
-      return { ...prev, [key]: value };
-    });
-  };
-
-  const onApply = () => { console.log(filterValues); updateURL(filterValues); }
-
-  useEffect(() => {
-    const values: Record<string, string | string[]> = {};
-
-    searchParams.forEach((value, key) => {
-      if (value.includes(",")) {
-        values[key] = value.split(",");
-      } else {
-        values[key] = value;
-      }
-    });
-
-    (async () => { setFilterValues(values); onApply(); })();
-  }, []);
-
-
-
-
-
-
-  const onClear = () => { setFilterValues({}); router.replace(pathname) };
-
-  const filterFields: FilterFields[] = [{
-    key: "name",
-    type: "text",
-    label: "Name"
-  },
-  {
-    key: "id",
-    type: "select",
-    label: "Code",
-    options: [{ label: "CUST0001", value: "CUST0001" }]
-
-  },
-  {
-    key: "status",
-    type: "check",
-    label: "Status",
-    options: [{ label: "ACTIVE", value: "active" }, { label: "INACTIVE", value: "inActive" }]
-  },
-  {
-    key: "available",
-    type: "check",
-    label: "Available",
-    options: [{ label: "AVAILABLE", value: "available" }, { label: "UNAVAILABLE", value: "unAvailable" }]
-  }
+    },
+    {
+      key: "status",
+      type: "check",
+      label: "Status",
+      options: Array.from(new Set(buyersData.map((buyer) => buyer.status))).map((status) => ({ label: status.toUpperCase(), value: status }))
+    },
+    // {
+    //   key: "available",
+    //   type: "check",
+    //   label: "Available",
+    //   options: [{ label: "AVAILABLE", value: "available" }, { label: "UNAVAILABLE", value: "unAvailable" }]
+    // }
   ]
 
 
@@ -185,11 +125,11 @@ export default function ProductsPage() {
       render: (r) => (
         r.status == "Active" ?
           (
-            <Badge className="bg-green-100 text-green-700">Active</Badge>
+            <AppBadge className="bg-green-100 text-green-700">Active</AppBadge>
           )
           :
           (
-            <Badge className="bg-red-100 text-red-700">inActive</Badge>
+            <AppBadge className="bg-red-100 text-red-700">inActive</AppBadge>
           )
         // <span
         //   className={`px-2 py-1 text-sm rounded ${r.isActive ? "text-green-600" : "text-gray-400"
@@ -228,23 +168,25 @@ export default function ProductsPage() {
 
         </div>
         <button
-          onClick={() => router.push(`${pathname}/add`)}
-          className="bg-gradient-to-br from-[#0040A1] to-[#0056D2] text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm font-medium cursor-pointer"
-
+          onClick={() => navigate(`${pathname}/add`)}
+          disabled={isRedirecting}
+          className="bg-gradient-to-br from-[#0040A1] to-[#0056D2] text-white px-4 py-2 rounded-lg hover:brightness-110 transition text-sm font-medium cursor-pointer min-w-32 min-h-10 flex items-center justify-center disabled:cursor-not-allowed disabled:opacity-90"
         >
-          + OnBoard Buyer
+          {isRedirecting ? (
+            <AppDotLoader />
+          ) : (
+            <span>+ OnBoard Buyer</span>
+          )}
         </button>
       </div>
 
       <DataTable
         columns={columns}
         data={buyersData}
-        loading={false}
+        loading={loading}
         emptyMessage="No Buyers yet."
-        Header={<TableHeader values={filterValues} onApply={onApply} onClear={onClear} onChange={onChange} filters={filterFields} />}
+        Header={<TableHeader values={filterValues} onApply={applyFilters} onClear={clearFilters} onChange={handleInputChange} fields={filterFields} />}
         Footer={TableFooter}
-      // onEdit={openEdit}
-      // onDelete={handleDelete}
       />
 
     </div>

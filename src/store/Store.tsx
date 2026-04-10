@@ -1,7 +1,7 @@
 'use client'
 
 import { configureStore } from "@reduxjs/toolkit";
-import { buyerSlice, enquirySlice, orderSlice, sampleSlice,  vendorSlice } from "@/store/slice";
+import { buyerSlice, enquirySlice, orderSlice,  sampleSlice, vendorSlice } from "@/store/slice";
 import { Provider } from "react-redux"
 
 
@@ -11,8 +11,8 @@ const store = configureStore({
         buyerSlice: buyerSlice,
         enquirySlice: enquirySlice,
         orderSlice: orderSlice,
-        sampleSlice:sampleSlice,
-        vendorSlice:vendorSlice
+        sampleSlice: sampleSlice,
+        vendorSlice: vendorSlice
     }
 })
 

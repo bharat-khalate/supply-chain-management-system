@@ -4,8 +4,9 @@ import Store from '@/store/Store'
 import { Toaster } from 'react-hot-toast';
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { LoadingProvider } from '@/lib/hooks';
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
   title: 'Atelier ERP',
@@ -23,7 +24,10 @@ export default function RootLayout({
         <Toaster
           position="bottom-right"
         />
-        <Store>{children}</Store></body>
-    </html>
+        <LoadingProvider>
+          <Store>{children}</Store>
+        </LoadingProvider>
+      </body>
+    </html >
   );
 }

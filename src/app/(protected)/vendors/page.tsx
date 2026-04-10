@@ -1,10 +1,10 @@
 "use client";
 
 
-import { DataTable, type Column } from "@/components/common/DataTable";
-import DashboardHeader from "@/components/common/Header";
-import TableHeader from "@/components/common/TableHeader";
-import TableFooter from "@/components/common/TableFooter";
+import { DataTable, type Column } from "@/components/common/table/DataTable";
+import DashboardHeader from "@/components/layout/Header";
+import TableHeader from "@/components/common/table/TableHeader";
+import TableFooter from "@/components/common/table/TableFooter";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
 import { IVendor, vendors } from "@/utils/Data";
 import { useAppDispatch } from "@/lib/hooks";
