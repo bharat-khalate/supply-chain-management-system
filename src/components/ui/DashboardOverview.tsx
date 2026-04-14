@@ -1,13 +1,11 @@
 import { TrendingUp, TrendingDown, Package, AlertTriangle } from "lucide-react";
 import React from "react";
-
 const stats = [
   { label: "Total Vendors", value: "1,240" },
   { label: "Total Buyers", value: "1,240" },
   { label: "Total Manufacturer", value: "48" },
   { label: "Total Logistic Partner", value: "48" },
 ];
-
 const metrics = [
   {
     label: "Total Revenue",
@@ -31,12 +29,10 @@ const metrics = [
     danger: true,
   },
 ];
-
 interface BadgeProps {
   text: string;
   type: "up" | "down" | "critical";
 }
-
 function Badge({ text, type }: BadgeProps) {
   const styles = {
     up: "bg-green-50 text-green-700",
@@ -53,12 +49,10 @@ function Badge({ text, type }: BadgeProps) {
     </span>
   );
 }
-
 interface StatCardProps {
   label: string;
   value: string;
 }
-
 function StatCard({ label, value }: StatCardProps) {
   return (
     <div className="bg-white border border-gray-100 rounded-[8px] p-[24px] min-w-0 overflow-hidden">
@@ -69,7 +63,6 @@ function StatCard({ label, value }: StatCardProps) {
     </div>
   );
 }
-
 interface MetricCardProps {
   label: string;
   value: string;
@@ -81,7 +74,6 @@ interface MetricCardProps {
   icon?: React.ReactNode;
   danger?: boolean;
 }
-
 function MetricCard({ label, value, suffix, badge, icon, danger }: MetricCardProps) {
   return (
     <div
@@ -109,20 +101,17 @@ function MetricCard({ label, value, suffix, badge, icon, danger }: MetricCardPro
     </div>
   );
 }
-
 export default function DashboardOverview() {
   return (
     <div className="font-sans pt-4">
       <h1 className="text-[32px] font-bold text-[#424654] mb-6 tracking-tight">
         Dashboard Overview
       </h1>
-
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         {stats.map((s) => (
           <StatCard key={s.label} {...s} />
         ))}
       </div>
-
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         {metrics.map((m) => (
           <MetricCard key={m.label} {...m} />

@@ -1,27 +1,21 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { DataTable, type Column } from "@/components/common/table/DataTable";
-
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
-import { ITOrder } from "@/utils/Data";
+import { ITOrder } from "@/utils/data";
 import { useAppDispatch } from "@/lib/hooks";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/Store";
+import { RootState } from "@/redux/Store";
 import { useEffect } from "react";
-import { addOrder, getAllOrders, removeOrder } from "@/store/slice";
+import { addOrder, getAllOrders, removeOrder } from "@/redux/slice";
 import toast from "react-hot-toast";
-
-
 export default function ProductsPage() {
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const { orders, loading } = useSelector((store: RootState) => store.orderSlice);
-
+    const { data, loading } = useSelector((store: RootState) => store.orderSlice);
     useEffect(() => {
         dispatch(getAllOrders());
     }, [])
-
     const openCreate = () => {
         const order: ITOrder = {
             orderId: "ORD001",
@@ -34,18 +28,15 @@ export default function ProductsPage() {
         dispatch(addOrder(order));
         toast.success("Order placed.")
     };
-
     const handleDelete = (orderId: string) => {
         dispatch(removeOrder(orderId));
         toast.success("Order Deleted.")
     }
-
     const columns: Column<ITOrder>[] = [
         {
             key: "orderId",
             header: "Order Id",
             render: (r) => {
-
                 return (
                     <div className="flex items-center gap-3">
                         <span className="font-medium">{r.orderId}</span>
@@ -53,23 +44,18 @@ export default function ProductsPage() {
                 );
             },
         },
-
         {
             key: "date",
             header: "Date",
         },
-
         {
             key: "qty",
             header: "QTY",
         },
-
         {
             key: "customerName",
             header: "Customer Name",
         },
-
-
         {
             key: "status",
             header: "Active",
@@ -82,7 +68,6 @@ export default function ProductsPage() {
                 </span>
             ),
         },
-
         {
             key: "actions",
             header: "Actions",
@@ -101,14 +86,11 @@ export default function ProductsPage() {
             ),
         },
     ];
-
     return (
         <div>
-            
             <div className="flex items-center justify-between my-6">
                 <div>
                     <h1 className="text-2xl font-bold text-[#0040A1]">Orders Overview</h1>
-
                 </div>
                 <button
                     onClick={openCreate}
@@ -117,10 +99,9 @@ export default function ProductsPage() {
                     + Add Sales Enquiry
                 </button>
             </div>
-
             <DataTable
                 columns={columns}
-                data={orders}
+                data={data}
                 loading={loading}
                 emptyMessage="No Buyers yet."
                 currentPage={1}

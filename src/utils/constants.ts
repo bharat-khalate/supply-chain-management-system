@@ -1,5 +1,7 @@
 // Application constants
 
+import { FieldConstant } from "@/types/interface";
+
 export const HTTP_STATUS = {
   OK: 200,
   CREATED: 201,
@@ -52,3 +54,39 @@ export const PAGINATION_DEFAULTS = {
 export const TOKEN_EXPIRY = {
   ACCESS_TOKEN: '15m',
 } as const;
+
+
+export const BuyerConstants: Record<string, FieldConstant> = {
+  buyerName: {
+    label: "Name",
+    length: 52,
+  },
+  buyerAddress: {
+    label: "Address",
+    length: 250,
+  },
+  phone: {
+    label: "Phone",
+    length: 15,
+  },
+  email: {
+    label: "Email",
+    length: 150,
+  },
+  contactPerson: {
+    label: "Contact Person",
+    length: 52,
+  },
+  requireMentCategory: {
+    label: "Requirement Category",
+    length: 52,
+  },
+  buyerType: {
+    label: "Buyer Type",
+    length: 52,
+  },
+  status: {
+    label: "status",
+    length: 25
+  }
+}

@@ -1,9 +1,7 @@
 "use client";
-
 import React from "react";
 import { DataTable, type Column } from "@/components/common/table/DataTable";
 import { ExclaimIcon, BoatIcon, SuccessIcon } from "@icons/table-icons/actions";
-
 interface IAlert {
   priority: string;
   priorityStyle: string;
@@ -12,7 +10,6 @@ interface IAlert {
   date: string;
   actionIcon: React.ReactNode;
 }
-
 const alerts: IAlert[] = [
   {
     priority: "High",
@@ -39,7 +36,6 @@ const alerts: IAlert[] = [
     actionIcon: <SuccessIcon />,
   },
 ];
-
 export default function AlertsTable() {
   const columns: Column<IAlert>[] = [
     {
@@ -82,7 +78,6 @@ export default function AlertsTable() {
       ),
     },
   ];
-
   return (
     <div className="bg-white rounded-[8px] border border-gray-100 p-0 pb-[47px] overflow-hidden flex flex-col font-sans h-full">
       <div className="flex items-center justify-between p-[24px]">
@@ -93,7 +88,6 @@ export default function AlertsTable() {
           View All <span className="ml-[2px]">&gt;</span>
         </button>
       </div>
-
       <div className="w-full">
         <DataTable columns={columns} data={alerts} removeWrapperBorder={true} />
       </div>

@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Sidebar } from './Sidebar';
@@ -7,34 +6,14 @@ import DashboardHeader from './Header';
 import { PagesTopLoader } from 'nextjs-toploader/pages';
 import { useGlobalRedirect } from '@/lib/hooks';
 import NextTopLoader from 'nextjs-toploader';
-
 export function AppShell({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const [ready, setReady] = useState(false);
     const [open, setOpen] = useState(false);
     const { isRedirecting } = useGlobalRedirect()
-
-    // useEffect(() => {
-    //     const token = localStorage.getItem('token');
-    //     if (!token) {
-    //         router.replace('/login');
-    //     } else {
-    //         setReady(true);
-    //     }
-    // }, [router]);
-
-    // if (!ready) {
-    //     return (
-    //         <div className="flex items-center justify-center min-h-screen bg-gray-100">
-    //             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600" />
-    //         </div>
-    //     );
-    // }
-
     return (
         <div className="flex min-h-screen bg-[#F6FAFE]">
             <Sidebar open={open} setOpen={setOpen} />
-
             <main className="h-screen flex-1 overflow-y-auto scrollbar-hide md:ms-64">
                 <div className="p-4 md:hidden flex items-center justify-between bg-white">
                     <button

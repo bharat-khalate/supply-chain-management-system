@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
-
 import { FilterIcon, PrintIcon, DownloadIcon } from '@icons/table-icons/header/index';
-
-
-
 export interface option { label: string, value: string }
-
 export interface FilterFields {
   key: string;
   type: "text" | "select" | "check";
@@ -13,10 +8,7 @@ export interface FilterFields {
   label: string;
   render?: (filter: FilterFields) => React.ReactNode;
 }
-
-
 export type onChange = (key: string, value: string | string[]) => void
-
 export interface TableHeaderProps {
   fields: FilterFields[];
   values: Record<string, string | string[]>;
@@ -24,7 +16,6 @@ export interface TableHeaderProps {
   onApply: () => void;
   onClear: () => void;
 }
-
 const TableHeader = ({
   fields,
   values,
@@ -33,8 +24,6 @@ const TableHeader = ({
   onClear
 }: TableHeaderProps) => {
   const [expand, setExpand] = useState<boolean>(false);
-
-
   const handleCheckBoxChange = (key: string, value: string, isChecked: boolean) => {
     const current: string[] = values[key] as string[] || [];
     const updated = isChecked ? [...new Set([...current, value])] : current.filter((val: string) => val !== value);
@@ -48,7 +37,6 @@ const TableHeader = ({
           <FilterIcon size={18} className="text-gray-600" />
           <span className="text-sm font-medium">Filters</span>
         </button>
-
         {/* Right Side: Action Icons */}
         <div className="flex items-center gap-6 pr-2">
           <button className="text-gray-500 hover:text-gray-800 transition-colors">
@@ -64,14 +52,11 @@ const TableHeader = ({
   ${expand ? "opacity-100 scale-y-100 max-h-[400px] p-4 mt-2" : " opacity-0 scale-y-95 max-h-0 p-0"}`}
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-
           {
             fields.map((filter, idx) => {
-
               if (filter.render) {
                 return filter.render(filter);
               }
-
               switch (filter.type) {
                 case "text":
                   return (
@@ -86,7 +71,6 @@ const TableHeader = ({
                       />
                     </div>
                   );
-
                 case "select":
                   return (
                     <div className="flex flex-col" key={filter.key}>
@@ -99,12 +83,10 @@ const TableHeader = ({
                       </select>
                     </div>
                   );
-
                 case "check":
                   return (
                     <div className="flex flex-col" key={filter.key}>
                       <label className="text-sm text-gray-600 mb-2">{filter.label}</label>
-
                       <div className="flex items-center gap-4">
                         {filter.options && filter.options.map((option) => {
                           return (
@@ -114,24 +96,19 @@ const TableHeader = ({
                             </label>
                           )
                         })}
-
                       </div>
                     </div>
                   );
-
                 default: return "";
               }
-
             })
           }
         </div>
-
         {/* Buttons */}
         <div className="flex justify-end gap-3 mt-4">
           <button className="px-4 py-2 text-sm border rounded-md hover:bg-gray-100" onClick={onClear}>
             Clear
           </button>
-
           <button onClick={() => onApply()} className="px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700">
             Apply
           </button>
@@ -140,5 +117,4 @@ const TableHeader = ({
     </div >
   );
 };
-
 export default TableHeader;

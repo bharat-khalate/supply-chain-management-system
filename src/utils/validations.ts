@@ -2,6 +2,8 @@
  * Utility validation functions
  */
 
+import { FormikProps } from "formik";
+
 export const validations = {
   isValidEmail: (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -45,4 +47,33 @@ export const validations = {
 
     return { page: p, limit: l };
   },
+
 };
+
+export const shouldShowError = <T,>(
+  path: string,
+  formik: FormikProps<T>,
+  showValidation: boolean
+) => {
+  const keys = path.split(".");
+  let error: unknown = formik.errors;
+  let touched: unknown = formik.touched;
+
+  for (const key of keys) {
+    if (typeof error === "object" && error !== null && key in error) {
+      error = (error as Record<string, unknown>)[key];
+    } else {
+      error = undefined;
+    }
+
+    if (typeof touched === "object" && touched !== null && key in touched) {
+      touched = (touched as Record<string, unknown>)[key];
+    } else {
+      touched = undefined;
+    }
+  }
+  return (showValidation || touched) && !!error;
+};
+
+
+

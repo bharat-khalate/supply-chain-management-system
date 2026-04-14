@@ -1,9 +1,7 @@
 "use client";
-
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-
 import {
   BuyersIcon,
   VendorsIcon,
@@ -23,12 +21,10 @@ import {
   LogOutIcon,
   RightArrowIcon
 } from "@icons/sidebaricons";
-
 interface SubmenuItem {
   href: string;
   label: string;
 }
-
 interface NavItem {
   href: string;
   label: string;
@@ -38,7 +34,6 @@ interface NavItem {
   suffixIcon?: React.ElementType;
   submenus?: SubmenuItem[];
 }
-
 const navItems: NavItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: DashboardIcon },
   {
@@ -66,18 +61,14 @@ const navItems: NavItem[] = [
   { href: "/support-tickets", label: "Support Tickets", icon: SupportTicketsIcon },
   { href: "/settings", label: "General Settings", icon: SettingsIcon },
 ];
-
 interface SidebarProps {
   open: boolean;
   setOpen: (open: boolean) => void;
 }
-
 export function Sidebar({ open, setOpen }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-
   const [openSubmenus, setOpenSubmenus] = useState<Record<string, boolean>>({});
-
   useEffect(() => {
     const initialOpenStates: Record<string, boolean> = {};
     navItems.forEach((item) => {
@@ -87,16 +78,13 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
     });
     setOpenSubmenus((prev) => ({ ...prev, ...initialOpenStates }));
   }, [pathname]);
-
   const toggleSubmenu = (href: string) => {
     setOpenSubmenus((prev) => ({ ...prev, [href]: !prev[href] }));
   };
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     router.push("/login");
   };
-
   return (
     <>
       {open && (
@@ -118,14 +106,12 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
           </h1>
           <span className="text-sm text-[#64748B]">Supply Chain Management</span>
         </div>
-
         {/* Nav */}
         <nav className="flex-1 px-3 py-4 space-y-1">
           {navItems.map((item) => {
             const IconComponent = item.icon;
             const isActive =
               pathname === item.href || pathname.startsWith(item.href + "/");
-
             if (item.hasSubmenu) {
               const isOpen = openSubmenus[item.href];
               const SuffixIcon = item.suffixIcon;
@@ -188,7 +174,6 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
                 </div>
               );
             }
-
             return (
               <Link
                 key={item.href}
@@ -205,7 +190,6 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
             );
           })}
         </nav>
-
         {/* Logout */}
         <div className="px-3 py-4 ">
           <Link
@@ -213,7 +197,6 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
             href={"/contact"}
           >
             <SupportIcon />
-
             <span className="mb-1">Support</span>
           </Link>
           <button

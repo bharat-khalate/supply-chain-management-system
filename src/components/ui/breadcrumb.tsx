@@ -1,12 +1,8 @@
 import * as React from "react"
 import Link from "next/link"
-
-// simple class merge helper (instead of cn)
 function cn(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(" ")
 }
-
-// simple fallback icons (SVG)
 const ChevronRightIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +16,6 @@ const ChevronRightIcon = () => (
     <path d="m9 18 6-6-6-6" />
   </svg>
 )
-
 const MoreHorizontalIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +29,6 @@ const MoreHorizontalIcon = () => (
     <circle cx="19" cy="12" r="2" />
   </svg>
 )
-
 export function Breadcrumb({
   className,
   ...props
@@ -47,7 +41,6 @@ export function Breadcrumb({
     />
   )
 }
-
 export function BreadcrumbList({
   className,
   ...props
@@ -62,7 +55,6 @@ export function BreadcrumbList({
     />
   )
 }
-
 export function BreadcrumbItem({
   className,
   ...props
@@ -74,11 +66,6 @@ export function BreadcrumbItem({
     />
   )
 }
-
-
-
-
-
 export function BreadcrumbLink({
   href,
   className,
@@ -94,7 +81,6 @@ export function BreadcrumbLink({
       </span>
     )
   }
-
   return (
     <Link
       href={href}
@@ -105,7 +91,6 @@ export function BreadcrumbLink({
     </Link>
   )
 }
-
 export function BreadcrumbPage({
   className,
   ...props
@@ -120,7 +105,6 @@ export function BreadcrumbPage({
     />
   )
 }
-
 export function BreadcrumbSeparator({
   children,
   className,
@@ -137,7 +121,6 @@ export function BreadcrumbSeparator({
     </li>
   )
 }
-
 export function BreadcrumbEllipsis({
   className,
   ...props

@@ -1,17 +1,13 @@
 "use client"
-
 import * as React from "react"
-
 /* simple cn helper */
 function cn(...classes: (string | undefined | false)[]) {
   return classes.filter(Boolean).join(" ")
 }
-
 type SeparatorProps = React.HTMLAttributes<HTMLDivElement> & {
   orientation?: "horizontal" | "vertical"
   decorative?: boolean
 }
-
 function Separator({
   className,
   orientation = "horizontal",
@@ -33,5 +29,4 @@ function Separator({
     />
   )
 }
-
 export { Separator }

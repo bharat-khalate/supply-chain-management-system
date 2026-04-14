@@ -6,20 +6,17 @@ import {
     BreadcrumbLink,
     BreadcrumbSeparator,
     BreadcrumbPage,
-} from "@/components/ui/Breadcrumb"
-
+} from "@/components/ui/BreadCrumb"
 type Item = {
     label: string
     href?: string
 }
-
 export function AppBreadcrumb({ items }: { items: Item[] }) {
     return (
         <Breadcrumb>
             <BreadcrumbList>
                 {items.map((item, i) => {
                     const isLast = i === items.length - 1
-
                     return (
                         <div key={i} className="flex items-center">
                             <BreadcrumbItem>
@@ -31,7 +28,6 @@ export function AppBreadcrumb({ items }: { items: Item[] }) {
                                     </BreadcrumbLink>
                                 )}
                             </BreadcrumbItem>
-
                             {!isLast && <BreadcrumbSeparator />}
                         </div>
                     )

@@ -1,9 +1,17 @@
-export function cn(...inputs: any[]): string {
-  const classes: string[] = []
+type ClassValue =
+  | string
+  | number
+  | null
+  | undefined
+  | false
+  | ClassValue[]
+  | { [key: string]: boolean | undefined | null }
 
+
+export function cn(...inputs: ClassValue[]): string {
+  const classes: string[] = []
   inputs.forEach((input) => {
     if (!input) return
-
     if (typeof input === "string") {
       classes.push(input)
     } else if (Array.isArray(input)) {
@@ -14,6 +22,5 @@ export function cn(...inputs: any[]): string {
       })
     }
   })
-
   return classes.join(" ")
 } 

@@ -1,36 +1,19 @@
 "use client";
-
-
 import { DataTable, type Column } from "@/components/common/table/DataTable";
-import DashboardHeader from "@/components/layout/Header";
-import TableHeader from "@/components/common/table/TableHeader";
-import TableFooter from "@/components/common/table/TableFooter";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
-import { IVendor, vendors } from "@/utils/Data";
+import { IVendor } from "@/utils/data";
 import { useAppDispatch } from "@/lib/hooks";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/Store";
-import { addVendor, getAllVendors, removeVendor } from "@/store/slice";
+import { RootState } from "@/redux/Store";
+import { addVendor, getAllVendors, removeVendor } from "@/redux/slice";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-
-
-
-
-
 export default function ProductsPage() {
-
-  const { vendor, loading } = useSelector((store: RootState) => store.vendorSlice)
+  const { data, loading } = useSelector((store: RootState) => store.vendorSlice)
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(getAllVendors())
   }, [])
-
-
-
-
-
   const openCreate = () => {
     const vendor: IVendor = {
       id: "1",
@@ -43,14 +26,11 @@ export default function ProductsPage() {
     }
     dispatch(addVendor(vendor));
     toast.success("Vendor Created.")
-
   };
-
   const handleRemove = (vendorId: string) => {
     dispatch(removeVendor(vendorId))
     toast.success("Vendor Deleted.")
   }
-
   const columns: Column<IVendor>[] = [
     {
       key: "vendorAndOrigin",
@@ -62,13 +42,11 @@ export default function ProductsPage() {
           .join("")
           .slice(0, 2)
           .toUpperCase();
-
         return (
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 flex items-center justify-center rounded bg-blue-100 text-blue-700 font-semibold">
               {initials}
             </div>
-
             <div className="flex flex-col">
               <span className="font-medium">{r.name}</span>
               <span className="text-xs text-gray-500 flex items-center gap-1">
@@ -79,23 +57,19 @@ export default function ProductsPage() {
         );
       },
     },
-
     {
       key: "code",
       header: "Code",
     },
-
     {
       key: "type",
       header: "Type",
       render: (r) => <span className="capitalize">{r.type.toLowerCase()}</span>,
     },
-
     {
       key: "contactPerson",
       header: "Contact Person",
     },
-
     {
       key: "isActive",
       header: "Active",
@@ -108,7 +82,6 @@ export default function ProductsPage() {
         </span>
       ),
     },
-
     {
       key: "actions",
       header: "Actions",
@@ -127,14 +100,11 @@ export default function ProductsPage() {
       ),
     },
   ];
-
   return (
     <div>
-    
       <div className="flex items-center justify-between my-6">
         <div>
           <h1 className="text-2xl font-bold text-[#0040A1]">Vendors Overview</h1>
-
         </div>
         <button
           onClick={openCreate}
@@ -143,18 +113,12 @@ export default function ProductsPage() {
           + OnBoard Buyer
         </button>
       </div>
-
       <DataTable
         columns={columns}
-        data={vendor}
+        data={data}
         loading={loading}
         emptyMessage="No Buyers yet."
-      // Header={TableHeader}
-      // onEdit={openEdit}
-      // onDelete={handleDelete}
       />
-
-
     </div>
   );
 }

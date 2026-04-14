@@ -31,8 +31,6 @@ export interface ICustomer {
   contactPerson: string;
   isActive: boolean;
 }
-
-
 export interface IBuyer {
   id: string;
   buyerName: string,
@@ -44,8 +42,6 @@ export interface IBuyer {
   requirementCategory: string;
   status: "Active" | "Inactive";
 }
-
-
 export interface IVendor {
   id: string;
   name: string;
@@ -55,7 +51,6 @@ export interface IVendor {
   category: string;
   status: "Active" | "Inactive";
 }
-
 export const enquiries: IEnquiry[] = [
   {
     enquiryId: "ENQ001",
@@ -148,7 +143,6 @@ export const enquiries: IEnquiry[] = [
     status: "Active"
   }
 ];
-
 export const sampleRecords: ISample[] = [
   {
     sampleId: "SMPE001",
@@ -231,7 +225,6 @@ export const sampleRecords: ISample[] = [
     status: "Pending"
   }
 ];
-
 export const orders: ITOrder[] = [
   {
     orderId: "ORD001",
@@ -314,7 +307,6 @@ export const orders: ITOrder[] = [
     status: "Inactive",
   },
 ];
-
 export const BuyersData: ICustomer[] = [
   {
     vendorAndOrigin: "Reliance Retail",
@@ -397,7 +389,6 @@ export const BuyersData: ICustomer[] = [
     isActive: false,
   },
 ];
-
 export const vendors: IVendor[] = [
   {
     id: "1",
@@ -490,7 +481,6 @@ export const vendors: IVendor[] = [
     status: "Active",
   },
 ];
-
 export const buyers: IBuyer[] = [
   {
     id: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",

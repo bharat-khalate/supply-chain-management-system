@@ -1,30 +1,23 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { DataTable, type Column } from "@/components/common/table/DataTable";
 import DashboardHeader from "@/components/layout/Header";
 import TableHeader from "@/components/common/table/TableHeader";
 import TableFooter from "@/components/common/table/TableFooter";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
-import { IEnquiry } from "@/utils/Data";
+import { IEnquiry } from "@/utils/data";
 import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "@/store/Store";
-import { addEnquiry, getAllEnquiries, removeEnquiry } from "@/store/slice";
+import { RootState } from "@/redux/Store";
+import { addEnquiry, getAllEnquiries, removeEnquiry } from "@/redux/slice";
 import { useAppDispatch } from "@/lib/hooks";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-
 export default function ProductsPage() {
-  const router = useRouter();
-
-  const { loading, enquiries } = useSelector((store: RootState) => store.enquirySlice);
+  const { loading, data } = useSelector((store: RootState) => store.enquirySlice);
   const dispatch = useAppDispatch();
-
-
   useEffect(() => {
     dispatch(getAllEnquiries())
   }, [])
-
   const openCreate = () => {
     const enquiry: IEnquiry = {
       enquiryId: "ENQ001",
@@ -38,18 +31,15 @@ export default function ProductsPage() {
     dispatch(addEnquiry(enquiry))
     toast.success("Added Enquiry.")
   };
-
   const deleteEnquiry = (enquiryId: string) => {
     dispatch(removeEnquiry(enquiryId))
     toast.success("Deleted Enquiry.")
   }
-
   const columns: Column<IEnquiry>[] = [
     {
       key: "enquiryId",
       header: "Enquiry Id",
       render: (r) => {
-
         return (
           <div className="flex items-center gap-3">
             <span className="font-medium">{r.enquiryId}</span>
@@ -57,22 +47,18 @@ export default function ProductsPage() {
         );
       },
     },
-
     {
       key: "date",
       header: "Date",
     },
-
     {
       key: "customerName",
       header: "Customer Name",
     },
-
     {
       key: "contactPerson",
       header: "Contact Person",
     },
-
     {
       key: "qty",
       header: "QTY",
@@ -81,7 +67,6 @@ export default function ProductsPage() {
       key: "expPrice",
       header: "EXP Price",
     },
-
     {
       key: "status",
       header: "Active",
@@ -94,7 +79,6 @@ export default function ProductsPage() {
         </span>
       ),
     },
-
     {
       key: "actions",
       header: "Actions",
@@ -113,14 +97,11 @@ export default function ProductsPage() {
       ),
     },
   ];
-
   return (
     <div>
-     
       <div className="flex items-center justify-between my-6">
         <div>
           <h1 className="text-2xl font-bold text-[#0040A1]">Sales Enquiry</h1>
-
         </div>
         <button
           onClick={openCreate}
@@ -129,15 +110,11 @@ export default function ProductsPage() {
           + Add Sales Enquiry
         </button>
       </div>
-
       <DataTable
         columns={columns}
-        data={enquiries}
+        data={data}
         loading={loading}
         emptyMessage="No Buyers yet."
-      // Header={TableHeader}
-      // onEdit={openEdit}
-      // onDelete={handleDelete}
       />
     </div>
   );

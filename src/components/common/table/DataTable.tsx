@@ -1,14 +1,11 @@
 "use client";
-
 import React from "react";
 import { LeftIcon, RightIcon } from "@icons/table-icons/footer";
-
 export interface Column<T> {
   key: keyof T | string;
   header: string;
   render?: (row: T) => React.ReactNode;
 }
-
 interface DataTableProps<T extends object> {
   columns: Column<T>[];
   data: T[];
@@ -30,7 +27,6 @@ interface DataTableProps<T extends object> {
   goToPage?: (page: number) => void;
   visiblePageCount?: number;
 }
-
 export function DataTable<T extends object>({
   columns,
   data,
@@ -59,23 +55,17 @@ export function DataTable<T extends object>({
       </div>
     );
   }
-
   const getVisiblePages = (current: number, total: number, maxVisible: number) => {
     if (total <= maxVisible) return Array.from({ length: total }, (_, i) => i + 1);
-
     let start = Math.max(1, current - Math.floor(maxVisible / 2));
     let end = start + maxVisible - 1;
-
     if (end > total) {
       end = total;
       start = Math.max(1, end - maxVisible + 1);
     }
-
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   };
-
   const visiblePages = lastPage !== undefined && currentPage !== undefined ? getVisiblePages(currentPage, lastPage, visiblePageCount) : [];
-
   return (
     <div className={`rounded-xl ${removeWrapperBorder ? "" : "shadow ring-black ring-opacity-5"}`}>
       {Header && Header}
@@ -153,7 +143,6 @@ export function DataTable<T extends object>({
           <div className="text-sm text-slate-600">
             Showing <span className="font-medium">{totalCount === 0 ? 0 : (currentPage - 1) * limit + 1}</span> to <span className="font-medium">{Math.min(currentPage * limit, totalCount)}</span> of <span className="font-medium">{totalCount}</span>
           </div>
-
           {/* Right Side: Pagination Controls */}
           <div className="flex items-center gap-1">
             {/* Previous Button */}
@@ -164,7 +153,6 @@ export function DataTable<T extends object>({
             >
               <LeftIcon size={18} />
             </button>
-
             {/* Page Numbers */}
             {visiblePages.map((page) => (
               <button
@@ -178,7 +166,6 @@ export function DataTable<T extends object>({
                 {page}
               </button>
             ))}
-
             {/* Next Button */}
             <button
               onClick={nextPage}

@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { DataTable, type Column } from "@/components/common/table/DataTable";
@@ -8,22 +7,18 @@ import DashboardHeader from "@/components/layout/Header";
 import TableHeader from "@/components/common/table/TableHeader";
 import TableFooter from "@/components/common/table/TableFooter";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
-import { ISample } from "@/utils/Data";
+import { ISample } from "@/utils/data";
 import { useSelector } from "react-redux"
 import { useAppDispatch } from "@/lib/hooks"
-import { addSample, getAllSample, removeSample } from "@/store/slice";
-import { RootState } from "@/store/Store";
+import { addSample, getAllSample, removeSample } from "@/redux/slice";
+import { RootState } from "@/redux/Store";
 import toast from "react-hot-toast";
-
 export default function ProductsPage() {
-
-  const { sample, loading } = useSelector((store: RootState) => store.sampleSlice);
+  const { data, loading } = useSelector((store: RootState) => store.sampleSlice);
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(getAllSample());
   }, [])
-
   const openCreate = () => {
     const sample: ISample = {
       sampleId: "SMPE001",
@@ -36,20 +31,15 @@ export default function ProductsPage() {
     dispatch(addSample(sample));
     toast.success("Sample Created.")
   };
-
-
   const handleDelete = (sampleId: string) => {
     dispatch(removeSample(sampleId))
     toast.success("Sample Deleted.")
   }
-
-
   const columns: Column<ISample>[] = [
     {
       key: "sampleId",
       header: "Sample Id",
       render: (r) => {
-
         return (
           <div className="flex items-center gap-3">
             <span className="font-medium">{r.sampleId}</span>
@@ -57,7 +47,6 @@ export default function ProductsPage() {
         );
       },
     },
-
     {
       key: "date",
       header: "Date",
@@ -66,7 +55,6 @@ export default function ProductsPage() {
       key: "enquiryId",
       header: "Enquiry Id",
     },
-
     {
       key: "customerName",
       header: "Customer Name",
@@ -105,14 +93,11 @@ export default function ProductsPage() {
       ),
     },
   ];
-
   return (
     <div>
-     
       <div className="flex items-center justify-between my-6">
         <div>
           <h1 className="text-2xl font-bold text-[#0040A1]">Sampling Overview</h1>
-
         </div>
         <button
           onClick={openCreate}
@@ -121,15 +106,11 @@ export default function ProductsPage() {
           + Add Sales Enquiry
         </button>
       </div>
-
       <DataTable
         columns={columns}
-        data={sample}
+        data={data}
         loading={loading}
         emptyMessage="No Buyers yet."
-      // Header={TableHeader}
-      // onEdit={openEdit}
-      // onDelete={handleDelete}
       />
     </div>
   );

@@ -1,16 +1,12 @@
 "use client"
-
 import * as React from "react"
-
 /* simple cn helper */
 function cn(...classes: (string | undefined | false)[]) {
   return classes.filter(Boolean).join(" ")
 }
-
 type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement> & {
   disabled?: boolean
 }
-
 function Label({
   className,
   disabled,
@@ -28,5 +24,4 @@ function Label({
     />
   )
 }
-
 export { Label }
