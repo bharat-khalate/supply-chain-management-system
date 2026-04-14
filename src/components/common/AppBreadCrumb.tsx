@@ -6,7 +6,7 @@ import {
     BreadcrumbLink,
     BreadcrumbSeparator,
     BreadcrumbPage,
-} from "@/components/ui/breadcrumb"
+} from "@/components/ui/Breadcrumb"
 
 type Item = {
     label: string
@@ -26,7 +26,7 @@ export function AppBreadcrumb({ items }: { items: Item[] }) {
                                 {isLast ? (
                                     <BreadcrumbPage className="text-blue-400">{item.label}</BreadcrumbPage>
                                 ) : (
-                                    <BreadcrumbLink asChild>
+                                    <BreadcrumbLink >
                                         <Link href={item.href || "#"}>{item.label}</Link>
                                     </BreadcrumbLink>
                                 )}

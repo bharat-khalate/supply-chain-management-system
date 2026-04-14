@@ -50,7 +50,8 @@ export function DataTable<T extends object>({
   handleLimitChange,
   goToPage,
   visiblePageCount = 5,
-}: DataTableProps<T>) {
+  removeWrapperBorder = false,
+}: DataTableProps<T> & { removeWrapperBorder?: boolean }) {
   if (loading) {
     return (
       <div className="flex justify-center items-center py-16">
@@ -76,10 +77,10 @@ export function DataTable<T extends object>({
   const visiblePages = lastPage !== undefined && currentPage !== undefined ? getVisiblePages(currentPage, lastPage, visiblePageCount) : [];
 
   return (
-    <div className="rounded-xl shadow ring-black ring-opacity-5">
+    <div className={`rounded-xl ${removeWrapperBorder ? "" : "shadow ring-black ring-opacity-5"}`}>
       {Header && Header}
       <div className="overflow-x-auto w-full">
-        <table className="min-w-full divide-y divide-gray-200 shadow-2xl bg-white">
+        <table className={`min-w-full divide-y divide-gray-200 bg-white ${removeWrapperBorder ? "" : "shadow-2xl"}`}>
           <thead className="bg-gray-50">
             <tr>
               {columns.map((col) => (
@@ -109,11 +110,11 @@ export function DataTable<T extends object>({
               </tr>
             ) : (
               data.map((row, idx) => (
-                <tr key={idx} className="hover:bg-gray-50 transition-colors">
+                <tr key={idx} className={`hover:bg-gray-50 transition-colors ${removeWrapperBorder && idx === data.length - 1 ? 'border-b-0' : ''}`}>
                   {columns.map((col) => (
                     <td
                       key={String(col.key)}
-                      className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap"
+                      className={`px-6 py-4 text-sm text-gray-700 whitespace-nowrap ${removeWrapperBorder && idx === data.length - 1 ? 'border-b-0' : ''}`}
                     >
                       {col.render
                         ? col.render(row)

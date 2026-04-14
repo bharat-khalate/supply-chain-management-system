@@ -1,19 +1,27 @@
 "use client"
 
 import * as React from "react"
-import { Label as LabelPrimitive } from "radix-ui"
 
-import { cn } from "@/lib/utils"
+/* simple cn helper */
+function cn(...classes: (string | undefined | false)[]) {
+  return classes.filter(Boolean).join(" ")
+}
+
+type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement> & {
+  disabled?: boolean
+}
 
 function Label({
   className,
+  disabled,
   ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) {
+}: LabelProps) {
   return (
-    <LabelPrimitive.Root
+    <label
       data-slot="label"
       className={cn(
-        "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+        "flex items-center gap-2 text-sm leading-none font-medium select-none",
+        disabled && "pointer-events-none opacity-50",
         className
       )}
       {...props}

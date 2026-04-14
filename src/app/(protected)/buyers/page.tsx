@@ -125,11 +125,11 @@ export default function ProductsPage() {
       render: (r) => (
         r.status == "Active" ?
           (
-            <AppBadge className="bg-green-100 text-green-700">Active</AppBadge>
+            <AppBadge variant="success" >Active</AppBadge>
           )
           :
           (
-            <AppBadge className="bg-red-100 text-red-700">inActive</AppBadge>
+            <AppBadge variant="destructive">inActive</AppBadge>
           )
         // <span
         //   className={`px-2 py-1 text-sm rounded ${r.isActive ? "text-green-600" : "text-gray-400"
