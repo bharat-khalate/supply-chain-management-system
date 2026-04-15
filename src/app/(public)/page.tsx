@@ -9,14 +9,11 @@ export default function Home() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     
-     router.push('/vendors');
-    // if (token) {
-    //   // User is logged in, redirect to dashboard
-    //   router.push('/dashboard');
-    // } else {
-    //   // User is not logged in, redirect to login
-    //   router.push('/login');
-    // }
+    if (token) {
+      router.push('/dashboard');
+    } else {
+      router.push('/login');
+    }
   }, [router]);
 
   return (

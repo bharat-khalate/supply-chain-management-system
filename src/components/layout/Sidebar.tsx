@@ -3,6 +3,7 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import AppLogo from "@/components/common/AppLogo";
 
 import {
   BuyersIcon,
@@ -112,12 +113,7 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
     md:translate-x-0`}
       >
         {/* Logo */}
-        <div className="px-6 py-5 mb-8 ">
-          <h1 className="text-xl font-bold tracking-tight text-[#1E3A8A]">
-            Atelier ERP
-          </h1>
-          <span className="text-sm text-[#64748B]">Supply Chain Management</span>
-        </div>
+        <AppLogo className="px-6 py-5 mb-8" />
 
         {/* Nav */}
         <nav className="flex-1 px-3 py-4 space-y-1">

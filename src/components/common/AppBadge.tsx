@@ -1,6 +1,6 @@
 import React from "react";
 // Assuming this is your Shadcn/Tailwind badge
-import Badge, { BadgeVariant } from "../ui/Badge";
+import Badge, { BadgeVariant } from "../ui/badge";
 
 // 1. Avoid mixing MUI types with Tailwind components unless intentional.
 // If Badge is a standard React component, use this:
