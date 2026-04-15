@@ -1,11 +1,6 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+
 import { DataTable, type Column } from "@/components/common/table/DataTable";
-import { Modal } from "@/components/common/Modal";
-import DashboardHeader from "@/components/layout/Header";
-import TableHeader from "@/components/common/table/TableHeader";
-import TableFooter from "@/components/common/table/TableFooter";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
 import { ISample } from "@/utils/data";
 import { useSelector } from "react-redux"
@@ -13,6 +8,7 @@ import { useAppDispatch } from "@/lib/hooks"
 import { addSample, getAllSample, removeSample } from "@/redux/slice";
 import { RootState } from "@/redux/Store";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 export default function ProductsPage() {
   const { data, loading } = useSelector((store: RootState) => store.sampleSlice);
   const dispatch = useAppDispatch();

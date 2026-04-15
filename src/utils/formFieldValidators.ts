@@ -50,6 +50,15 @@ export const commonStringValidation = (fieldName: string, maxLength: number) =>
     .required(`${fieldName} is required`)
     .max(maxLength, `${fieldName} must not exceed ${maxLength} characters`);
 
+export const buyerTypeValidation = (fieldName: string) => {
+  return Yup.string()
+    .required(`${fieldName} is required`)
+    .oneOf(
+      ["Retailer", "Wholesaler", "Brand", "Corporate", "Institutional", "Enterprise", "Misc"],
+      `${fieldName} is invalid`
+    );
+};
+
 export const commonAlphaNumericValidation = (
   fieldName: string,
   maxLength: number
@@ -268,13 +277,13 @@ export const brandUrlValidation = Yup.string()
   .required("Brand_Url_Is_Required")
   .max(500, "Brand URL must be at most 500 characters");
 
-  export const redirectionUrlValidation = Yup.string()
+export const redirectionUrlValidation = Yup.string()
   .trim()
   .url("Invalid URL format")
   .required("Redirection URL is required")
   .max(500, "Redirection URL must be at most 500 characters");
 
-  
+
 export const multipleProductsSelectValidation = Yup.array()
   .min(1, "Please select at least one product")
   .required("At least one product is required");

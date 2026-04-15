@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/BreadCrumb"
 type Item = {
     label: string
-    href?: string
+    path: string
 }
 export function AppBreadcrumb({ items }: { items: Item[] }) {
     return (
@@ -21,10 +21,11 @@ export function AppBreadcrumb({ items }: { items: Item[] }) {
                         <div key={i} className="flex items-center">
                             <BreadcrumbItem>
                                 {isLast ? (
-                                    <BreadcrumbPage className="text-blue-400">{item.label}</BreadcrumbPage>
+                                    <BreadcrumbPage >{item.label}</BreadcrumbPage>
                                 ) : (
-                                    <BreadcrumbLink >
-                                        <Link href={item.href || "#"}>{item.label}</Link>
+
+                                    <BreadcrumbLink href={item.path} className="text-blue-400">
+                                        {item.label}
                                     </BreadcrumbLink>
                                 )}
                             </BreadcrumbItem>
@@ -33,6 +34,6 @@ export function AppBreadcrumb({ items }: { items: Item[] }) {
                     )
                 })}
             </BreadcrumbList>
-        </Breadcrumb>
+        </Breadcrumb >
     )
 }

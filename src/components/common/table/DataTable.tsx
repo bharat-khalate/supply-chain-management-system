@@ -48,13 +48,6 @@ export function DataTable<T extends object>({
   visiblePageCount = 5,
   removeWrapperBorder = false,
 }: DataTableProps<T> & { removeWrapperBorder?: boolean }) {
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center py-16">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600" />
-      </div>
-    );
-  }
   const getVisiblePages = (current: number, total: number, maxVisible: number) => {
     if (total <= maxVisible) return Array.from({ length: total }, (_, i) => i + 1);
     let start = Math.max(1, current - Math.floor(maxVisible / 2));
@@ -88,55 +81,70 @@ export function DataTable<T extends object>({
               )}
             </tr>
           </thead>
+          {
+
+
+          }
           <tbody className="divide-y divide-gray-100">
-            {data.length === 0 ? (
-              <tr>
-                <td
-                  colSpan={columns.length + (onEdit || onDelete ? 1 : 0)}
-                  className="px-6 py-10 text-center text-gray-400 text-sm"
-                >
-                  {emptyMessage}
-                </td>
-              </tr>
-            ) : (
-              data.map((row, idx) => (
-                <tr key={idx} className={`hover:bg-gray-50 transition-colors ${removeWrapperBorder && idx === data.length - 1 ? 'border-b-0' : ''}`}>
-                  {columns.map((col) => (
+            {
+              loading ?
+                (
+                  <tr>
+                    <td colSpan={columns.length + (onEdit || onDelete ? 1 : 0)} className="text-center py-10">
+                      <div className="flex justify-center items-center">
+                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600" />
+                      </div>
+                    </td>
+                  </tr>
+                ) :
+                data.length === 0 ? (
+                  <tr>
                     <td
-                      key={String(col.key)}
-                      className={`px-6 py-4 text-sm text-gray-700 whitespace-nowrap ${removeWrapperBorder && idx === data.length - 1 ? 'border-b-0' : ''}`}
+                      colSpan={columns.length + (onEdit || onDelete ? 1 : 0)}
+                      className="px-6 py-10 text-center text-gray-400 text-sm"
                     >
-                      {col.render
-                        ? col.render(row)
-                        : String(row[col.key as keyof T] ?? "-")}
+                      {emptyMessage}
                     </td>
-                  ))}
-                  {(onEdit || onDelete) && (
-                    <td className="px-6 py-4 text-right whitespace-nowrap space-x-2">
-                      {onEdit && (
-                        <button
-                          onClick={() => onEdit(row)}
-                          className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition"
+                  </tr>
+                ) : (
+                  data.map((row, idx) => (
+                    <tr key={idx} className={`hover:bg-gray-50 transition-colors ${removeWrapperBorder && idx === data.length - 1 ? 'border-b-0' : ''}`}>
+                      {columns.map((col) => (
+                        <td
+                          key={String(col.key)}
+                          className={`px-6 py-4 text-sm text-gray-700 whitespace-nowrap ${removeWrapperBorder && idx === data.length - 1 ? 'border-b-0' : ''}`}
                         >
-                          Edit
-                        </button>
+                          {col.render
+                            ? col.render(row)
+                            : String(row[col.key as keyof T] ?? "-")}
+                        </td>
+                      ))}
+                      {(onEdit || onDelete) && (
+                        <td className="px-6 py-4 text-right whitespace-nowrap space-x-2">
+                          {onEdit && (
+                            <button
+                              onClick={() => onEdit(row)}
+                              className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition"
+                            >
+                              Edit
+                            </button>
+                          )}
+                          {onDelete && (
+                            <button
+                              onClick={() => onDelete(row)}
+                              className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-md bg-red-50 text-red-700 hover:bg-red-100 transition"
+                            >
+                              Delete
+                            </button>
+                          )}
+                        </td>
                       )}
-                      {onDelete && (
-                        <button
-                          onClick={() => onDelete(row)}
-                          className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-md bg-red-50 text-red-700 hover:bg-red-100 transition"
-                        >
-                          Delete
-                        </button>
-                      )}
-                    </td>
-                  )}
-                </tr>
-              ))
-            )}
+                    </tr>
+                  ))
+                )}
           </tbody>
         </table>
-      </div>
+      </div >
       {totalCount !== undefined && lastPage !== undefined && limit !== undefined && currentPage !== undefined && (
         <div className="w-full bg-white border border-gray-100 rounded-sm shadow-sm p-4 flex items-center justify-between">
           {/* Left Side: Results Count */}
@@ -176,7 +184,8 @@ export function DataTable<T extends object>({
             </button>
           </div>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 }

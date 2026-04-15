@@ -1,17 +1,13 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { DataTable, type Column } from "@/components/common/table/DataTable";
-import DashboardHeader from "@/components/layout/Header";
-import TableHeader from "@/components/common/table/TableHeader";
-import TableFooter from "@/components/common/table/TableFooter";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
 import { IEnquiry } from "@/utils/data";
-import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/redux/Store";
 import { addEnquiry, getAllEnquiries, removeEnquiry } from "@/redux/slice";
 import { useAppDispatch } from "@/lib/hooks";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 export default function ProductsPage() {
   const { loading, data } = useSelector((store: RootState) => store.enquirySlice);
   const dispatch = useAppDispatch();

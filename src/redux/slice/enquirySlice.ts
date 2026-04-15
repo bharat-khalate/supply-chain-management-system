@@ -66,8 +66,6 @@ const enquirySlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-
-            // 🔹 Get all
             .addCase(getAllEnquiries.pending, (state) => {
                 state.loading = true;
             })
@@ -76,35 +74,25 @@ const enquirySlice = createSlice({
                 state.data = action.payload;
                 state.total = action.payload.length;
             })
-
-            // 🔹 Get single
             .addCase(getEnquiryById.fulfilled, (state, action) => {
                 state.selected = action.payload;
             })
-
-            // 🔹 Add
             .addCase(addEnquiry.fulfilled, (state, action) => {
                 state.data.push(action.payload);
                 state.total += 1;
             })
-
-            // 🔹 Update
             .addCase(updateEnquiry.fulfilled, (state, action) => {
                 const index = state.data.findIndex(
                     (e) => e.enquiryId === action.payload.enquiryId
                 );
                 if (index !== -1) state.data[index] = action.payload;
             })
-
-            // 🔹 Delete
             .addCase(removeEnquiry.fulfilled, (state, action) => {
                 state.data = state.data.filter(
                     (e) => e.enquiryId !== action.payload
                 );
                 state.total -= 1;
             })
-
-            // 🔹 Filter
             .addCase(filterEnquiries.pending, (state) => {
                 state.loading = true;
             })
@@ -112,8 +100,6 @@ const enquirySlice = createSlice({
                 state.loading = false;
                 state.data = action.payload;
             })
-
-            // 🔹 Global error handler (no any)
             .addMatcher(isRejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error?.message || "Something went wrong";

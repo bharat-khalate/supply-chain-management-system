@@ -84,7 +84,7 @@ export function BreadcrumbLink({
   return (
     <Link
       href={href}
-      className={`transition-colors hover:text-black ${className ?? ""}`}
+      className={`transition-colors ${className ?? ""}`}
       {...props}
     >
       {children}

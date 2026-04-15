@@ -6,7 +6,6 @@ import {
 } from "@reduxjs/toolkit";
 import { ISample, sampleRecords } from "@/utils/data";
 import { RootState } from "../Store";
-// Get all samples
 export const getAllSample = createAsyncThunk<ISample[]>(
   "sample/getAll",
   async () => {
@@ -14,7 +13,6 @@ export const getAllSample = createAsyncThunk<ISample[]>(
     return sampleRecords;
   }
 );
-// Get single sample (future use)
 export const getSampleById = createAsyncThunk<ISample, string>(
   "sample/getById",
   async (id) => {
@@ -22,27 +20,22 @@ export const getSampleById = createAsyncThunk<ISample, string>(
     return sampleRecords.find((s) => s.sampleId === id)!;
   }
 );
-// Add sample
 export const addSample = createAsyncThunk<ISample, ISample>(
   "sample/add",
   async (sample) => sample
 );
-// Update sample (future use)
 export const updateSample = createAsyncThunk<ISample, ISample>(
   "sample/update",
   async (updated) => updated
 );
-// Delete sample
 export const removeSample = createAsyncThunk<string, string>(
   "sample/remove",
   async (id) => id
 );
-// Filter samples
 export const filterSamples = createAsyncThunk<
   ISample[],
   Record<string, string | string[]>
 >("sample/filter", async (query) => {
-  // replace with API later
   return sampleRecords.filter(() => true);
 });
 interface SampleState {
@@ -68,7 +61,6 @@ const sampleSlice = createSlice({
   initialState,
   reducers: {
     resetSampleState: () => initialState,
-
     setPagination: (
       state,
       action: PayloadAction<{ page: number; limit: number }>
@@ -79,7 +71,6 @@ const sampleSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // 🔹 Get all
       .addCase(getAllSample.pending, (state) => {
         state.loading = true;
       })
@@ -88,30 +79,25 @@ const sampleSlice = createSlice({
         state.data = action.payload;
         state.total = action.payload.length;
       })
-      // 🔹 Get single
       .addCase(getSampleById.fulfilled, (state, action) => {
         state.selected = action.payload;
       })
-      // 🔹 Add
       .addCase(addSample.fulfilled, (state, action) => {
         state.data.push(action.payload);
         state.total += 1;
       })
-      // 🔹 Update
       .addCase(updateSample.fulfilled, (state, action) => {
         const index = state.data.findIndex(
           (s) => s.sampleId === action.payload.sampleId
         );
         if (index !== -1) state.data[index] = action.payload;
       })
-      // 🔹 Delete
       .addCase(removeSample.fulfilled, (state, action) => {
         state.data = state.data.filter(
           (s) => s.sampleId !== action.payload
         );
         state.total -= 1;
       })
-      // 🔹 Filter
       .addCase(filterSamples.pending, (state) => {
         state.loading = true;
       })
@@ -119,16 +105,13 @@ const sampleSlice = createSlice({
         state.loading = false;
         state.data = action.payload;
       })
-      // 🔹 Global error handler (no any)
       .addMatcher(isRejected, (state, action) => {
         state.loading = false;
         state.error = action.error?.message || "Something went wrong";
       });
   },
 });
-// actions
 export const { resetSampleState, setPagination } = sampleSlice.actions;
-// selectors
 export const selectSamples = (state: RootState) => state.sampleSlice.data;
 export const selectSample = (state: RootState) => state.sampleSlice.selected;
 export const selectSampleLoading = (state: RootState) => state.sampleSlice.loading;

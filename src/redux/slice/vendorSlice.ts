@@ -6,7 +6,6 @@ import {
 } from "@reduxjs/toolkit";
 import { IVendor, vendors } from "@/utils/data";
 import { RootState } from "../Store";
-// Get all vendors
 export const getAllVendors = createAsyncThunk<IVendor[]>(
   "vendors/getAll",
   async () => {
@@ -14,7 +13,6 @@ export const getAllVendors = createAsyncThunk<IVendor[]>(
     return vendors;
   }
 );
-// Get single vendor (future use)
 export const getVendorById = createAsyncThunk<IVendor, string>(
   "vendors/getById",
   async (id) => {
@@ -22,27 +20,22 @@ export const getVendorById = createAsyncThunk<IVendor, string>(
     return vendors.find((v) => v.id === id)!;
   }
 );
-// Add vendor
 export const addVendor = createAsyncThunk<IVendor, IVendor>(
   "vendors/add",
   async (vendor) => vendor
 );
-// Update vendor (future use)
 export const updateVendor = createAsyncThunk<IVendor, IVendor>(
   "vendors/update",
   async (updated) => updated
 );
-// Delete vendor
 export const removeVendor = createAsyncThunk<string, string>(
   "vendors/remove",
   async (id) => id
 );
-// Filter vendors
 export const filterVendors = createAsyncThunk<
   IVendor[],
   Record<string, string | string[]>
 >("vendors/filter", async (query) => {
-  // replace with API later
   return vendors.filter(() => true);
 });
 interface VendorState {
@@ -50,7 +43,6 @@ interface VendorState {
   selected: IVendor | null;
   loading: boolean;
   error: string | null;
-  // future-ready
   page: number;
   limit: number;
   total: number;
@@ -70,7 +62,6 @@ const vendorSlice = createSlice({
   initialState,
   reducers: {
     resetVendorState: () => initialState,
-
     setPagination: (
       state,
       action: PayloadAction<{ page: number; limit: number }>
@@ -81,7 +72,6 @@ const vendorSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // 🔹 Get all
       .addCase(getAllVendors.pending, (state) => {
         state.loading = true;
       })
@@ -90,30 +80,25 @@ const vendorSlice = createSlice({
         state.data = action.payload;
         state.total = action.payload.length;
       })
-      // 🔹 Get single
       .addCase(getVendorById.fulfilled, (state, action) => {
         state.selected = action.payload;
       })
-      // 🔹 Add
       .addCase(addVendor.fulfilled, (state, action) => {
         state.data.push(action.payload);
         state.total += 1;
       })
-      // 🔹 Update
       .addCase(updateVendor.fulfilled, (state, action) => {
         const index = state.data.findIndex(
           (v) => v.id === action.payload.id
         );
         if (index !== -1) state.data[index] = action.payload;
       })
-      // 🔹 Delete
       .addCase(removeVendor.fulfilled, (state, action) => {
         state.data = state.data.filter(
           (v) => v.id !== action.payload
         );
         state.total -= 1;
       })
-      // 🔹 Filter
       .addCase(filterVendors.pending, (state) => {
         state.loading = true;
       })
@@ -121,16 +106,13 @@ const vendorSlice = createSlice({
         state.loading = false;
         state.data = action.payload;
       })
-      // 🔹 Global error handler (no any)
       .addMatcher(isRejected, (state, action) => {
         state.loading = false;
         state.error = action.error?.message || "Something went wrong";
       });
   },
 });
-// actions
 export const { resetVendorState, setPagination } = vendorSlice.actions;
-// selectors
 export const selectVendors = (state: RootState) => state.vendorSlice.data;
 export const selectVendor = (state: RootState) => state.vendorSlice.selected;
 export const selectVendorLoading = (state: RootState) => state.vendorSlice.loading;
