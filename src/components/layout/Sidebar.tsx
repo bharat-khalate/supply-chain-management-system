@@ -19,7 +19,7 @@ import {
   SettingsIcon,
   MastersIcon,
   LogOutIcon,
-  RightArrowIcon
+  RightArrowIcon,
 } from "@icons/sidebaricons";
 import { INavItem, ISidebarProps } from "@/types";
 
@@ -49,7 +49,19 @@ const navItems: INavItem[] = [
   { href: "/staff", label: "Staff", icon: StaffIcon },
   { href: "/faqs", label: "FAQ's", icon: FAQIcon },
   { href: "/support-tickets", label: "Support Tickets", icon: SupportTicketsIcon },
-  { href: "/settings", label: "General Settings", icon: SettingsIcon },
+  {
+    href: "/settings",
+    label: "General Settings",
+    icon: SettingsIcon,
+    hasSubmenu: true,
+    suffixIcon: RightArrowIcon,
+    submenus: [
+      { href: "/settings/general-settings", label: "General Settings" },
+      { href: "/settings/about-us", label: "About Us" },
+      { href: "/settings/terms-and-conditions", label: "Terms And Conditions" },
+      { href: "/settings/privacy-policy", label: "Privacy Policy" }
+    ]
+  },
 ];
 
 export function Sidebar({ open, setOpen }: ISidebarProps) {
@@ -106,11 +118,10 @@ export function Sidebar({ open, setOpen }: ISidebarProps) {
                 <div key={item.href} className="flex flex-col">
                   <div
                     onClick={() => toggleSubmenu(item.href)}
-                    className={`flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer select-none ${
-                      isActive
-                        ? "bg-white text-[#1D4ED8]"
-                        : "text-[#64748B] hover:text-gray-600"
-                    }`}
+                    className={`flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer select-none ${isActive
+                      ? "bg-white text-[#1D4ED8]"
+                      : "text-[#64748B] hover:text-gray-600"
+                      }`}
                   >
                     <div className="flex items-center gap-3">
                       <IconComponent />
@@ -118,20 +129,18 @@ export function Sidebar({ open, setOpen }: ISidebarProps) {
                     </div>
                     {SuffixIcon && (
                       <div
-                        className={`transition-transform duration-300 ${
-                          isOpen ? "rotate-90" : ""
-                        }`}
+                        className={`text-gray-400 transition-transform duration-300 ${isOpen ? "rotate-90" : ""
+                          }`}
                       >
                         <SuffixIcon />
                       </div>
                     )}
                   </div>
                   <div
-                    className={`grid transition-all duration-300 ease-in-out ${
-                      isOpen
-                        ? "grid-rows-[1fr] opacity-100 mt-1"
-                        : "grid-rows-[0fr] opacity-0"
-                    }`}
+                    className={`grid transition-all duration-300 ease-in-out ${isOpen
+                      ? "grid-rows-[1fr] opacity-100 mt-1"
+                      : "grid-rows-[0fr] opacity-0"
+                      }`}
                   >
                     <div className="overflow-hidden">
                       {item.submenus && (
@@ -144,11 +153,10 @@ export function Sidebar({ open, setOpen }: ISidebarProps) {
                               <Link
                                 key={sub.href}
                                 href={sub.href}
-                                className={`block px-3 py-2 rounded-lg text-sm transition-colors ${
-                                  isSubActive
-                                    ? "text-[#1D4ED8] bg-white bg-opacity-50 font-medium"
-                                    : "text-[#64748B] hover:text-gray-600"
-                                }`}
+                                className={`block px-3 py-2 rounded-lg text-sm transition-colors ${isSubActive
+                                  ? "text-[#1D4ED8] bg-white bg-opacity-50 font-medium"
+                                  : "text-[#64748B] hover:text-gray-600"
+                                  }`}
                               >
                                 {sub.label}
                               </Link>
@@ -165,11 +173,10 @@ export function Sidebar({ open, setOpen }: ISidebarProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-white text-[#1D4ED8]"
-                    : "text-[#64748B]  hover:text-gray-600"
-                }`}
+                className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive
+                  ? "bg-white text-[#1D4ED8]"
+                  : "text-[#64748B]  hover:text-gray-600"
+                  }`}
               >
                 <IconComponent />
                 {item.label}

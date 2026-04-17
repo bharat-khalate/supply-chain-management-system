@@ -19,6 +19,12 @@ export const passwordValidation = (maxLength: number) =>
     )
     .max(maxLength, `Password must not exceed ${maxLength} characters`);
 
+export const commonUrlValidation = Yup.string()
+  .trim()
+  .url("Invalid URL format")
+  .required("Url_Is_Required")
+  .max(500, "URL must be at most 500 characters");
+
 export const confirmPasswordValidation = (maxLength: number) =>
   Yup.string()
     .matches(

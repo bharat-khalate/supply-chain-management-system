@@ -1,15 +1,10 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import {  useState } from 'react';
 import { Sidebar } from './Sidebar';
 import DashboardHeader from './Header';
-import { PagesTopLoader } from 'nextjs-toploader/pages';
-import { useGlobalRedirect } from '@/lib/hooks';
 import NextTopLoader from 'nextjs-toploader';
 export function AppShell({ children }: { children: React.ReactNode }) {
-
     const [open, setOpen] = useState(false);
-
     return (
         <div className="flex min-h-screen bg-[#F6FAFE]">
             <Sidebar open={open} setOpen={setOpen} />

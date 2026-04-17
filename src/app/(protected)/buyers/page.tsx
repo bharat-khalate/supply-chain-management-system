@@ -25,7 +25,7 @@ export default function ProductsPage() {
     filterValues,
     handleInputChange,
     applyFilters,
-    clearFilters } = useQueryFilters<IBuyer>(fetchBuyers, defaultPaginationConfig);
+    clearFilters } = useQueryFilters<IBuyer>(fetchBuyers);
   const getNextPage = () => {
     if (!(paginationConfig.canNextPage)) return;
     const meta: IFetchServiceParams = {

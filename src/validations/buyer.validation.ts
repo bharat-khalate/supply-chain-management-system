@@ -8,7 +8,7 @@ export const BuyerSchema = Yup.object({
     phone: phoneValidation(),
     buyerAddress: AddressStringValidation("Buyer Address", BuyerConstants.buyerAddress.length),
     contactPerson: commonStringValidation("Contact Person", BuyerConstants.contactPerson.length),
-    requirementCategory: commonStringValidation("Category", BuyerConstants.requireMentCategory.length),
+    requirementCategory: commonStringValidation("Category", BuyerConstants.requirementCategory.length),
     buyerType: buyerTypeValidation("Buyer Type"),
     status: commonStringValidation("Status", BuyerConstants.status.length)
 });

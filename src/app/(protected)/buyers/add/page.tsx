@@ -33,6 +33,16 @@ const BUYER_TYPES = [
     { id: "Enterprise", name: "Enterprise" },
     { id: "Misc", name: "Misc" },
 ];
+export interface IBuyerFields {
+    buyerName: string;
+    email: string,
+    phone: string,
+    buyerAddress: string,
+    contactPerson: string,
+    requirementCategory: string,
+    buyerType: string,
+    status: "Active" | "Inactive",
+}
 export default function OnBoardVendor() {
     const router = useRouter();
     const dispatch = useAppDispatch();
@@ -66,7 +76,7 @@ export default function OnBoardVendor() {
             router.back();
         }
     });
-    const isInvalid = (fieldName: keyof typeof initialValues) => shouldShowError(formik, fieldName);
+    const isInvalid = (fieldName: keyof IBuyerFields) => shouldShowError(formik, fieldName);
     const inputClassName = `flex  w-full rounded-lg border border-gray-200 bg-gray-100 rounded-xs px-3 py-2 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm transition-colors focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none data-[invalid=true]:border-red-500 data-[invalid=true]:bg-red-50 data-[invalid=true]:focus:ring-red-500/20 disabled:cursor-not-allowed disabled:opacity-60`;
     return (
         <div className="space-y-6 my-6 max-w-3xl ">
