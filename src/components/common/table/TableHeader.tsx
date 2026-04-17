@@ -1,28 +1,15 @@
 import React, { useState } from 'react';
 import { FilterIcon, PrintIcon, DownloadIcon } from '@icons/table-icons/header/index';
-export interface option { label: string, value: string }
-export interface FilterFields {
-  key: string;
-  type: "text" | "select" | "check";
-  options?: option[];
-  label: string;
-  render?: (filter: FilterFields) => React.ReactNode;
-}
-export type onChange = (key: string, value: string | string[]) => void
-export interface TableHeaderProps {
-  fields: FilterFields[];
-  values: Record<string, string | string[]>;
-  onChange: onChange;
-  onApply: () => void;
-  onClear: () => void;
-}
+import { ITableHeaderProps } from '@/types';
+
+
 const TableHeader = ({
   fields,
   values,
   onChange,
   onApply,
   onClear
-}: TableHeaderProps) => {
+}: ITableHeaderProps) => {
   const [expand, setExpand] = useState<boolean>(false);
   const handleCheckBoxChange = (key: string, value: string, isChecked: boolean) => {
     const current: string[] = values[key] as string[] || [];

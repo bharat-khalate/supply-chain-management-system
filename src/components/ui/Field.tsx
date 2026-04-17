@@ -1,10 +1,11 @@
 "use client"
+import { TFieldProps } from "@/types"
 import { useMemo } from "react"
-/* Simple class merge helper (replace cn) */
+
+
 function cn(...classes: (string | undefined | false)[]) {
   return classes.filter(Boolean).join(" ")
 }
-/* ---------------- FIELD GROUP ---------------- */
 function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -14,15 +15,11 @@ function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
     />
   )
 }
-/* ---------------- FIELD ---------------- */
-type FieldProps = React.ComponentProps<"div"> & {
-  orientation?: "vertical" | "horizontal" | "responsive"
-}
 function Field({
   className,
   orientation = "vertical",
   ...props
-}: FieldProps) {
+}: TFieldProps) {
   const base = "flex w-full gap-3"
   const orientationStyles = {
     vertical: "flex-col",
@@ -38,7 +35,6 @@ function Field({
     />
   )
 }
-/* ---------------- FIELD LABEL ---------------- */
 function FieldLabel({
   className,
   ...props
@@ -54,25 +50,24 @@ function FieldLabel({
     />
   )
 }
-/* ---------------- FIELD ERROR ---------------- */
-type FieldErrorProps = React.ComponentProps<"div"> & {
-  errors?: Array<{ message?: string } | undefined>
-}
 function FieldError({
   className,
   children,
   errors,
-  ...props
-}: FieldErrorProps) {
-  const content = useMemo(() => {
-    if (children) return children
-    if (!errors?.length) return null
+  ...props  
+}: TFieldProps) {
+  const content = useMemo<React.ReactNode>(() => {
+    if (children) return children;
+    if (!errors?.length) return null;
+
     const uniqueErrors = [
       ...new Map(errors.map((e) => [e?.message, e])).values(),
-    ]
+    ];
+
     if (uniqueErrors.length === 1) {
-      return uniqueErrors[0]?.message
+      return uniqueErrors[0]?.message ?? null;
     }
+
     return (
       <ul className="ml-4 list-disc flex flex-col gap-1">
         {uniqueErrors.map(
@@ -80,9 +75,11 @@ function FieldError({
             error?.message && <li key={i}>{error.message}</li>
         )}
       </ul>
-    )
-  }, [children, errors])
-  if (!content) return null
+    );
+  }, [children, errors]);
+
+  if (!content) return null;
+
   return (
     <div
       role="alert"
@@ -92,9 +89,8 @@ function FieldError({
     >
       {content}
     </div>
-  )
+  );
 }
-/* ---------------- EXPORT ---------------- */
 export {
   Field,
   FieldLabel,

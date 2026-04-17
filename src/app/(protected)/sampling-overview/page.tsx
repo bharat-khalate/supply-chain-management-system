@@ -1,19 +1,20 @@
 "use client";
 
-import { DataTable, type Column } from "@/components/common/table/DataTable";
+import { DataTable } from "@/components/common/table/DataTable";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
-import { ISample } from "@/utils/data";
+import { IColumn, ISample } from "@/types";
 import { useSelector } from "react-redux"
 import { useAppDispatch } from "@/lib/hooks"
 import { addSample, getAllSample, removeSample } from "@/redux/slice";
 import { RootState } from "@/redux/Store";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
+import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
 export default function ProductsPage() {
   const { data, loading } = useSelector((store: RootState) => store.sampleSlice);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getAllSample());
+    dispatch(getAllSample(defaultPaginationConfig));
   }, [])
   const openCreate = () => {
     const sample: ISample = {
@@ -31,7 +32,7 @@ export default function ProductsPage() {
     dispatch(removeSample(sampleId))
     toast.success("Sample Deleted.")
   }
-  const columns: Column<ISample>[] = [
+  const columns: IColumn<ISample>[] = [
     {
       key: "sampleId",
       header: "Sample Id",

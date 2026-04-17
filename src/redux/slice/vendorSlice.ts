@@ -1,75 +1,78 @@
 import {
   createAsyncThunk,
   createSlice,
-  PayloadAction,
-  isRejected,
 } from "@reduxjs/toolkit";
-import { IVendor, vendors } from "@/utils/data";
 import { RootState } from "../Store";
-export const getAllVendors = createAsyncThunk<IVendor[]>(
+import { IPaginatedState, IVendor } from "@/types";
+import { vendorService } from "@/service";
+import { IFetchServiceParams } from "@/types/service/service.types";
+export const getAllVendors = createAsyncThunk(
   "vendors/getAll",
-  async () => {
-    await new Promise((r) => setTimeout(r, 500));
-    return vendors;
+  async (props: IFetchServiceParams, { rejectWithValue }) => {
+    try {
+      return await vendorService.getAll(props);
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to fetch vendors");
+    }
   }
 );
-export const getVendorById = createAsyncThunk<IVendor, string>(
+export const getVendorById = createAsyncThunk(
   "vendors/getById",
-  async (id) => {
-    await new Promise((r) => setTimeout(r, 300));
-    return vendors.find((v) => v.id === id)!;
+  async (id: string, { rejectWithValue }) => {
+    try {
+      return await vendorService.getById(id);
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to fetch vendor");
+    }
   }
 );
-export const addVendor = createAsyncThunk<IVendor, IVendor>(
+export const addVendor = createAsyncThunk(
   "vendors/add",
-  async (vendor) => vendor
+  async (vendor: IVendor, { rejectWithValue }) => {
+    try {
+      return await vendorService.add(vendor);
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to add vendor");
+    }
+  }
 );
-export const updateVendor = createAsyncThunk<IVendor, IVendor>(
+export const updateVendor = createAsyncThunk(
   "vendors/update",
-  async (updated) => updated
+  async (updated: IVendor, { rejectWithValue }) => {
+    try {
+      return await vendorService.update(updated);
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to update vendor");
+    }
+  }
 );
-export const removeVendor = createAsyncThunk<string, string>(
+export const removeVendor = createAsyncThunk(
   "vendors/remove",
-  async (id) => id
+  async (id: string, { rejectWithValue }) => {
+    try {
+      return await vendorService.remove(id);
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to remove vendor");
+    }
+  }
 );
-export const filterVendors = createAsyncThunk<
-  IVendor[],
-  Record<string, string | string[]>
->("vendors/filter", async (query) => {
-  return vendors.filter(() => true);
-});
-interface VendorState {
-  data: IVendor[];
-  selected: IVendor | null;
-  loading: boolean;
-  error: string | null;
-  page: number;
-  limit: number;
-  total: number;
-}
-
-const initialState: VendorState = {
+const initialState: IPaginatedState<IVendor> = {
   data: [],
   selected: null,
   loading: false,
   error: null,
-  page: 1,
-  limit: 10,
-  total: 0,
+  pagination: {
+    currentPage: 0,
+    lastPage: 0,
+    totalCount: 0,
+    canNextPage: false,
+    canPreviousPage: false
+  }
 };
 const vendorSlice = createSlice({
   name: "vendors",
   initialState,
-  reducers: {
-    resetVendorState: () => initialState,
-    setPagination: (
-      state,
-      action: PayloadAction<{ page: number; limit: number }>
-    ) => {
-      state.page = action.payload.page;
-      state.limit = action.payload.limit;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getAllVendors.pending, (state) => {
@@ -77,50 +80,45 @@ const vendorSlice = createSlice({
       })
       .addCase(getAllVendors.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
-        state.total = action.payload.length;
+        state.data = action.payload.data;
+        state.pagination = action.payload.pagination
       })
       .addCase(getVendorById.fulfilled, (state, action) => {
         state.selected = action.payload;
       })
       .addCase(addVendor.fulfilled, (state, action) => {
-        state.data.push(action.payload);
-        state.total += 1;
+        state.loading = false;
+        state.selected = action.payload; // optional
       })
       .addCase(updateVendor.fulfilled, (state, action) => {
-        const index = state.data.findIndex(
-          (v) => v.id === action.payload.id
-        );
-        if (index !== -1) state.data[index] = action.payload;
-      })
-      .addCase(removeVendor.fulfilled, (state, action) => {
-        state.data = state.data.filter(
-          (v) => v.id !== action.payload
-        );
-        state.total -= 1;
-      })
-      .addCase(filterVendors.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(filterVendors.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        state.selected = action.payload;
       })
-      .addMatcher(isRejected, (state, action) => {
+      .addCase(removeVendor.fulfilled, (state) => {
         state.loading = false;
-        state.error = action.error?.message || "Something went wrong";
-      });
+      })
+      .addMatcher(
+        (action) =>
+          action.type.startsWith("vendors/") &&
+          action.type.endsWith("/rejected"),
+        (state, action) => {
+          state.loading = false;
+          const errorMessage =
+            "error" in action &&
+              typeof action.error === "object" &&
+              action.error !== null &&
+              "message" in action.error
+              ? (action.error as { message?: string }).message
+              : "Something went wrong";
+          state.error = errorMessage || "Something went wrong";
+        }
+      )
   },
 });
-export const { resetVendorState, setPagination } = vendorSlice.actions;
 export const selectVendors = (state: RootState) => state.vendorSlice.data;
 export const selectVendor = (state: RootState) => state.vendorSlice.selected;
 export const selectVendorLoading = (state: RootState) => state.vendorSlice.loading;
 export const selectVendorError = (state: RootState) => state.vendorSlice.error;
-export const selectVendorPagination = (state: RootState) => ({
-  page: state.vendorSlice.page,
-  limit: state.vendorSlice.limit,
-  total: state.vendorSlice.total,
-});
+export const selectVendorPagination = (state: RootState) => state.vendorSlice.pagination;
 
 export default vendorSlice.reducer;

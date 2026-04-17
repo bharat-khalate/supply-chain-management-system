@@ -7,10 +7,9 @@ import { PagesTopLoader } from 'nextjs-toploader/pages';
 import { useGlobalRedirect } from '@/lib/hooks';
 import NextTopLoader from 'nextjs-toploader';
 export function AppShell({ children }: { children: React.ReactNode }) {
-    const router = useRouter();
-    const [ready, setReady] = useState(false);
+
     const [open, setOpen] = useState(false);
-    const { isRedirecting } = useGlobalRedirect()
+
     return (
         <div className="flex min-h-screen bg-[#F6FAFE]">
             <Sidebar open={open} setOpen={setOpen} />

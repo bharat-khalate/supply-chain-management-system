@@ -21,20 +21,10 @@ import {
   LogOutIcon,
   RightArrowIcon
 } from "@icons/sidebaricons";
-interface SubmenuItem {
-  href: string;
-  label: string;
-}
-interface NavItem {
-  href: string;
-  label: string;
-  icon: React.ElementType;
-  isActive?: boolean;
-  hasSubmenu?: boolean;
-  suffixIcon?: React.ElementType;
-  submenus?: SubmenuItem[];
-}
-const navItems: NavItem[] = [
+import { INavItem, ISidebarProps } from "@/types";
+
+
+const navItems: INavItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: DashboardIcon },
   {
     href: "/masters",
@@ -61,11 +51,8 @@ const navItems: NavItem[] = [
   { href: "/support-tickets", label: "Support Tickets", icon: SupportTicketsIcon },
   { href: "/settings", label: "General Settings", icon: SettingsIcon },
 ];
-interface SidebarProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}
-export function Sidebar({ open, setOpen }: SidebarProps) {
+
+export function Sidebar({ open, setOpen }: ISidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [openSubmenus, setOpenSubmenus] = useState<Record<string, boolean>>({});

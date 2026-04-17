@@ -1,19 +1,9 @@
+import { IBadgeProps, IBadgeVariant } from "@/types"
 import React from "react"
-export type BadgeVariant =
-  | "default"
-  | "secondary"
-  | "destructive"
-  | "outline"
-  | "ghost"
-  | "link"
-  | "success"
-interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  variant?: BadgeVariant
-  asChild?: boolean
-}
+
 const baseStyles =
   "inline-flex h-5 w-fit items-center justify-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-all"
-const variantStyles: Record<BadgeVariant, string> = {
+const variantStyles: Record<IBadgeVariant, string> = {
   default: "bg-blue-600 text-white",
   secondary: "bg-gray-200 text-gray-800",
   destructive: "bg-red-100 text-red-700",
@@ -27,7 +17,7 @@ function Badge({
   variant = "default",
   asChild = false,
   ...props
-}: BadgeProps) {
+}: IBadgeProps) {
 
   const Comp = asChild ? "span" : "span"
   return (

@@ -1,74 +1,78 @@
 import {
     createAsyncThunk,
     createSlice,
-    PayloadAction,
-    isRejected,
 } from "@reduxjs/toolkit";
-import { ITOrder, orders } from "@/utils/data";
 import { RootState } from "../Store";
-export const getAllOrders = createAsyncThunk<ITOrder[]>(
+import { IOrder,  IPaginatedState } from "@/types";
+import { orderService } from "@/service";
+import { IFetchServiceParams } from "@/types/service/service.types";
+export const getAllOrders = createAsyncThunk(
     "orders/getAll",
-    async () => {
-        await new Promise((r) => setTimeout(r, 500));
-        return orders;
+    async (props: IFetchServiceParams, { rejectWithValue }) => {
+        try {
+            return await orderService.getAll(props);
+        } catch (error: any) {
+            return rejectWithValue(error.message || "Failed to fetch orders");
+        }
     }
 );
-export const getOrderById = createAsyncThunk<ITOrder, string>(
+export const getOrderById = createAsyncThunk(
     "orders/getById",
-    async (id) => {
-        await new Promise((r) => setTimeout(r, 300));
-        return orders.find((o) => o.orderId === id)!;
+    async (id: string, { rejectWithValue }) => {
+        try {
+            return await orderService.getById(id);
+        } catch (error: any) {
+            return rejectWithValue(error.message || "Failed to fetch order");
+        }
     }
 );
-export const addOrder = createAsyncThunk<ITOrder, ITOrder>(
+export const addOrder = createAsyncThunk(
     "orders/add",
-    async (order) => order
+    async (order: IOrder, { rejectWithValue }) => {
+        try {
+            return await orderService.add(order);
+        } catch (error: any) {
+            return rejectWithValue(error.message || "Failed to add order");
+        }
+    }
 );
-export const updateOrder = createAsyncThunk<ITOrder, ITOrder>(
+export const updateOrder = createAsyncThunk(
     "orders/update",
-    async (updated) => updated
+    async (updated: IOrder, { rejectWithValue }) => {
+        try {
+            return await orderService.update(updated);
+        } catch (error: any) {
+            return rejectWithValue(error.message || "Failed to update order");
+        }
+    }
 );
-export const removeOrder = createAsyncThunk<string, string>(
+export const removeOrder = createAsyncThunk(
     "orders/remove",
-    async (id) => id
+    async (id: string, { rejectWithValue }) => {
+        try {
+            return await orderService.remove(id);
+        } catch (error: any) {
+            return rejectWithValue(error.message || "Failed to remove order");
+        }
+    }
 );
-export const filterOrders = createAsyncThunk<
-    ITOrder[],
-    Record<string, string | string[]>
->("orders/filter", async (query) => {
-    return orders.filter(() => true);
-});
-interface OrderState {
-    data: ITOrder[];
-    selected: ITOrder | null;
-    loading: boolean;
-    error: string | null;
-    page: number;
-    limit: number;
-    total: number;
-}
-const initialState: OrderState = {
+const initialState: IPaginatedState<IOrder> = {
     data: [],
     selected: null,
     loading: false,
     error: null,
-    page: 1,
-    limit: 10,
-    total: 0,
+    pagination: {
+        currentPage: 0,
+        lastPage: 0,
+        totalCount: 0,
+        canNextPage: false,
+        canPreviousPage: false
+    }
 };
 const orderSlice = createSlice({
     name: "orders",
     initialState,
-    reducers: {
-        resetOrderState: () => initialState,
-        setPagination: (
-            state,
-            action: PayloadAction<{ page: number; limit: number }>
-        ) => {
-            state.page = action.payload.page;
-            state.limit = action.payload.limit;
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(getAllOrders.pending, (state) => {
@@ -76,50 +80,46 @@ const orderSlice = createSlice({
             })
             .addCase(getAllOrders.fulfilled, (state, action) => {
                 state.loading = false;
-                state.data = action.payload;
-                state.total = action.payload.length;
+                state.data = action.payload.data;
+                state.pagination = action.payload.pagination
             })
             .addCase(getOrderById.fulfilled, (state, action) => {
                 state.selected = action.payload;
             })
             .addCase(addOrder.fulfilled, (state, action) => {
-                state.data.push(action.payload);
-                state.total += 1;
+                state.loading = false;
+                state.selected = action.payload; // optional
             })
             .addCase(updateOrder.fulfilled, (state, action) => {
-                const index = state.data.findIndex(
-                    (o) => o.orderId === action.payload.orderId
-                );
-                if (index !== -1) state.data[index] = action.payload;
-            })
-            .addCase(removeOrder.fulfilled, (state, action) => {
-                state.data = state.data.filter(
-                    (o) => o.orderId !== action.payload
-                );
-                state.total -= 1;
-            })
-            .addCase(filterOrders.pending, (state) => {
-                state.loading = true;
-            })
-            .addCase(filterOrders.fulfilled, (state, action) => {
                 state.loading = false;
-                state.data = action.payload;
+                state.selected = action.payload;
             })
-            .addMatcher(isRejected, (state, action) => {
+            .addCase(removeOrder.fulfilled, (state) => {
                 state.loading = false;
-                state.error = action.error?.message || "Something went wrong";
-            });
+            })
+            .addMatcher(
+                (action) =>
+                    action.type.startsWith("orders/") &&
+                    action.type.endsWith("/rejected"),
+                (state, action) => {
+                    state.loading = false;
+                    const errorMessage =
+                        "error" in action &&
+                            typeof action.error === "object" &&
+                            action.error !== null &&
+                            "message" in action.error
+                            ? (action.error as { message?: string }).message
+                            : "Something went wrong";
+                    state.error = errorMessage || "Something went wrong";
+                }
+            )
     },
 });
-export const { resetOrderState, setPagination } = orderSlice.actions;
+
 export const selectOrders = (state: RootState) => state.orderSlice.data;
 export const selectOrder = (state: RootState) => state.orderSlice.selected;
 export const selectOrderLoading = (state: RootState) => state.orderSlice.loading;
 export const selectOrderError = (state: RootState) => state.orderSlice.error;
-export const selectOrderPagination = (state: RootState) => ({
-    page: state.orderSlice.page,
-    limit: state.orderSlice.limit,
-    total: state.orderSlice.total,
-});
+export const selectOrderPagination = (state: RootState) => state.orderSlice.pagination;
 
 export default orderSlice.reducer;

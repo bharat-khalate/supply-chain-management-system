@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { RadioGroup } from "@heroui/react";
 import { CheckCircle, Ban } from "lucide-react";
@@ -19,12 +19,11 @@ import { AppBreadcrumb } from "@/components/common/AppBreadCrumb";
 import Card from "@/components/common/AppCard";
 import { addBuyer } from "@/redux/slice";
 import { useAppDispatch } from "@/lib/hooks";
-import { BuyerSchema } from "@/utils/validationSchemas";
-import { IBuyer } from "@/utils/data";
+import { IBuyer } from "@/types";
 import { shouldShowError } from "@/utils/validations";
 import { BasicInformationIcon, ConfigurationIcon, ProductionSpecificationIcon, ProductStatusIcon } from "@icons/form-icons";
 import AppDotLoader from "@/components/common/NavigationDotloader";
-import path from "path";
+import { BuyerSchema } from "@/validations/buyer.validation";
 const BUYER_TYPES = [
     { id: "Retailer", name: "Retailer" },
     { id: "Wholesaler", name: "Wholesaler" },
@@ -35,7 +34,6 @@ const BUYER_TYPES = [
     { id: "Misc", name: "Misc" },
 ];
 export default function OnBoardVendor() {
-    const pathName = usePathname();
     const router = useRouter();
     const dispatch = useAppDispatch();
     const [showValidation, setShowValidation] = useState(false);
@@ -68,7 +66,7 @@ export default function OnBoardVendor() {
             router.back();
         }
     });
-    const isInvalid = (fieldName: keyof typeof initialValues) => !!(formik.touched[fieldName] && formik.errors[fieldName]);
+    const isInvalid = (fieldName: keyof typeof initialValues) => shouldShowError(formik, fieldName);
     const inputClassName = `flex  w-full rounded-lg border border-gray-200 bg-gray-100 rounded-xs px-3 py-2 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm transition-colors focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none data-[invalid=true]:border-red-500 data-[invalid=true]:bg-red-50 data-[invalid=true]:focus:ring-red-500/20 disabled:cursor-not-allowed disabled:opacity-60`;
     return (
         <div className="space-y-6 my-6 max-w-3xl ">
@@ -143,7 +141,6 @@ export default function OnBoardVendor() {
                         </TextField>
                     </Card.Content>
                 </Card>
-
                 <Card>
                     <Card.Header>
                         <div className="flex items-center gap-2">
@@ -154,7 +151,6 @@ export default function OnBoardVendor() {
                     <Card.Content className="space-y-6 pt-4">
                         <div className="flex flex-row gap-2">
                             {/* Fixed Select Placeholder & Trigger styling */}
-
                             <Select
                                 isRequired
                                 className={` w-full space-y-2 basis-1/3 `}
@@ -201,8 +197,6 @@ export default function OnBoardVendor() {
 
                                 )}
                             </Select>
-
-
                             <TextField isRequired isInvalid={isInvalid("phone")} className="space-y-2">
                                 <Label className="text-sm font-medium leading-none">Phone</Label>
                                 <Input

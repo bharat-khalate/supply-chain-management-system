@@ -1,18 +1,19 @@
 "use client";
-import { DataTable, type Column } from "@/components/common/table/DataTable";
+import { DataTable} from "@/components/common/table/DataTable";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
-import { IEnquiry } from "@/utils/data";
+import { IColumn, IEnquiry } from "@/types";
 import { RootState } from "@/redux/Store";
 import { addEnquiry, getAllEnquiries, removeEnquiry } from "@/redux/slice";
 import { useAppDispatch } from "@/lib/hooks";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
 export default function ProductsPage() {
   const { loading, data } = useSelector((store: RootState) => store.enquirySlice);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getAllEnquiries())
+    dispatch(getAllEnquiries(defaultPaginationConfig))
   }, [])
   const openCreate = () => {
     const enquiry: IEnquiry = {
@@ -31,7 +32,7 @@ export default function ProductsPage() {
     dispatch(removeEnquiry(enquiryId))
     toast.success("Deleted Enquiry.")
   }
-  const columns: Column<IEnquiry>[] = [
+  const columns: IColumn<IEnquiry>[] = [
     {
       key: "enquiryId",
       header: "Enquiry Id",

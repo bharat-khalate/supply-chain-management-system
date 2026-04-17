@@ -1,69 +1,75 @@
-import { createAsyncThunk, createSlice, PayloadAction, isRejected } from "@reduxjs/toolkit";
-import { IEnquiry, enquiries } from "@/utils/data";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../Store";
-export const getAllEnquiries = createAsyncThunk<IEnquiry[]>(
+import { IEnquiry, IPaginatedState } from "@/types";
+import { enquiryService } from "@/service";
+import { IFetchServiceParams } from "@/types/service/service.types";
+export const getAllEnquiries = createAsyncThunk(
     "enquiries/getAll",
-    async () => {
-        await new Promise((r) => setTimeout(r, 500));
-        return enquiries;
+    async (props: IFetchServiceParams, { rejectWithValue }) => {
+        try {
+            return await enquiryService.getAll(props);
+        } catch (error: any) {
+            return rejectWithValue(error.message || "Failed to fetch enquiries");
+        }
     }
 );
-export const getEnquiryById = createAsyncThunk<IEnquiry, string>(
+export const getEnquiryById = createAsyncThunk(
     "enquiries/getById",
-    async (id) => {
-        await new Promise((r) => setTimeout(r, 300));
-        return enquiries.find((e) => e.enquiryId === id)!;
+    async (id: string, { rejectWithValue }) => {
+        try {
+            return await enquiryService.getById(id);
+        } catch (error: any) {
+            return rejectWithValue(error.message || "Failed to fetch enquiry");
+        }
     }
 );
-export const addEnquiry = createAsyncThunk<IEnquiry, IEnquiry>(
+export const addEnquiry = createAsyncThunk(
     "enquiries/add",
-    async (enquiry) => enquiry
+    async (enquiry: IEnquiry, { rejectWithValue }) => {
+        try {
+            return await enquiryService.add(enquiry);
+        } catch (error: any) {
+            return rejectWithValue(error.message || "Failed to add enquiry");
+        }
+    }
 );
-export const updateEnquiry = createAsyncThunk<IEnquiry, IEnquiry>(
+export const updateEnquiry = createAsyncThunk(
     "enquiries/update",
-    async (updated) => updated
+    async (updated: IEnquiry, { rejectWithValue }) => {
+        try {
+            return await enquiryService.update(updated);
+        } catch (error: any) {
+            return rejectWithValue(error.message || "Failed to update enquiry");
+        }
+    }
 );
-export const removeEnquiry = createAsyncThunk<string, string>(
+export const removeEnquiry = createAsyncThunk(
     "enquiries/remove",
-    async (id) => id
+    async (id: string, { rejectWithValue }) => {
+        try {
+            return await enquiryService.remove(id);
+        } catch (error: any) {
+            return rejectWithValue(error.message || "Failed to remove enquiry");
+        }
+    }
 );
-export const filterEnquiries = createAsyncThunk<
-    IEnquiry[],
-    Record<string, string | string[]>
->("enquiries/filter", async (query) => {
-    return enquiries.filter(() => true);
-});
-interface EnquiryState {
-    data: IEnquiry[];
-    selected: IEnquiry | null;
-    loading: boolean;
-    error: string | null;
-    page: number;
-    limit: number;
-    total: number;
-}
-const initialState: EnquiryState = {
+const initialState: IPaginatedState<IEnquiry> = {
     data: [],
     selected: null,
     loading: false,
     error: null,
-    page: 1,
-    limit: 10,
-    total: 0,
+    pagination: {
+        currentPage: 0,
+        lastPage: 0,
+        totalCount: 0,
+        canNextPage: false,
+        canPreviousPage: false
+    }
 };
 const enquirySlice = createSlice({
     name: "enquiries",
     initialState,
-    reducers: {
-        resetEnquiryState: () => initialState,
-        setPagination: (
-            state,
-            action: PayloadAction<{ page: number; limit: number }>
-        ) => {
-            state.page = action.payload.page;
-            state.limit = action.payload.limit;
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(getAllEnquiries.pending, (state) => {
@@ -71,50 +77,44 @@ const enquirySlice = createSlice({
             })
             .addCase(getAllEnquiries.fulfilled, (state, action) => {
                 state.loading = false;
-                state.data = action.payload;
-                state.total = action.payload.length;
+                state.data = action.payload.data;
+                state.pagination = action.payload.pagination
             })
             .addCase(getEnquiryById.fulfilled, (state, action) => {
                 state.selected = action.payload;
             })
             .addCase(addEnquiry.fulfilled, (state, action) => {
-                state.data.push(action.payload);
-                state.total += 1;
+                state.loading = false;
+                state.selected = action.payload; // optionalF
             })
             .addCase(updateEnquiry.fulfilled, (state, action) => {
-                const index = state.data.findIndex(
-                    (e) => e.enquiryId === action.payload.enquiryId
-                );
-                if (index !== -1) state.data[index] = action.payload;
-            })
-            .addCase(removeEnquiry.fulfilled, (state, action) => {
-                state.data = state.data.filter(
-                    (e) => e.enquiryId !== action.payload
-                );
-                state.total -= 1;
-            })
-            .addCase(filterEnquiries.pending, (state) => {
-                state.loading = true;
-            })
-            .addCase(filterEnquiries.fulfilled, (state, action) => {
                 state.loading = false;
-                state.data = action.payload;
+                state.selected = action.payload;
             })
-            .addMatcher(isRejected, (state, action) => {
+            .addCase(removeEnquiry.fulfilled, (state) => {
                 state.loading = false;
-                state.error = action.error?.message || "Something went wrong";
-            });
+            })
+            .addMatcher(
+                (action) => action.type.startsWith("enquiries/") && action.type.endsWith("/rejected"),
+                (state, action) => {
+                    state.loading = false;
+                    const errorMessage =
+                        "error" in action &&
+                            typeof action.error === "object" &&
+                            action.error !== null &&
+                            "message" in action.error
+                            ? (action.error as { message?: string }).message
+                            : "Something went wrong";
+                    state.error = errorMessage || "Something went wrong";
+                }
+            );
     },
 });
-export const { resetEnquiryState, setPagination } = enquirySlice.actions;
+
 export const selectEnquiries = (state: RootState) => state.enquirySlice.data;
 export const selectEnquiry = (state: RootState) => state.enquirySlice.selected;
 export const selectEnquiryLoading = (state: RootState) => state.enquirySlice.loading;
 export const selectEnquiryError = (state: RootState) => state.enquirySlice.error;
-export const selectEnquiryPagination = (state: RootState) => ({
-    page: state.enquirySlice.page,
-    limit: state.enquirySlice.limit,
-    total: state.enquirySlice.total,
-});
+export const selectEnquiryPagination = (state: RootState) => state.enquirySlice.pagination;
 
 export default enquirySlice.reducer;

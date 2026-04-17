@@ -17,15 +17,31 @@ export interface IPaginationQuery {
   sort?: string;
   search?: string;
 }
+export interface IPaginationResponse {
+  currentPage: number;
+  lastPage: number;
+  totalCount: number;
+  canNextPage: boolean;
+  canPreviousPage: boolean;
+};
+
 export interface IPaginatedResponse<T = any> {
   success: boolean;
   statusCode: number;
   message: string;
   data: T[];
-  pagination: {
-    total: number;
-    page: number;
-    limit: number;
-    pages: number;
-  };
+  pagination: IPaginationResponse;
+}
+
+export interface IPaginatedData<T> {
+  data: T[];
+  pagination: IPaginationResponse
+}
+
+export interface IPaginatedState<T> {
+  data: T[];
+  pagination: IPaginationResponse;
+  selected: T | null;
+  loading: boolean;
+  error: any | null
 }

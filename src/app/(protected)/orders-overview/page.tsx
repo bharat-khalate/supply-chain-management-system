@@ -1,23 +1,24 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { DataTable, type Column } from "@/components/common/table/DataTable";
+import { DataTable } from "@/components/common/table/DataTable";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
-import { ITOrder } from "@/utils/data";
+import { IColumn, IOrder } from "@/types";
 import { useAppDispatch } from "@/lib/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/Store";
 import { useEffect } from "react";
 import { addOrder, getAllOrders, removeOrder } from "@/redux/slice";
 import toast from "react-hot-toast";
+import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
 export default function ProductsPage() {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { data, loading } = useSelector((store: RootState) => store.orderSlice);
     useEffect(() => {
-        dispatch(getAllOrders());
+        dispatch(getAllOrders(defaultPaginationConfig));
     }, [])
     const openCreate = () => {
-        const order: ITOrder = {
+        const order: IOrder = {
             orderId: "ORD001",
             date: "25/3/2026",
             qty: 2000,
@@ -32,7 +33,7 @@ export default function ProductsPage() {
         dispatch(removeOrder(orderId));
         toast.success("Order Deleted.")
     }
-    const columns: Column<ITOrder>[] = [
+    const columns: IColumn<IOrder>[] = [
         {
             key: "orderId",
             header: "Order Id",

@@ -2,13 +2,18 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useAppDispatch } from "@hooks/index"
-import { UnknownAction } from "@reduxjs/toolkit";
+import { AsyncThunk, AsyncThunkConfig } from "@reduxjs/toolkit";
+import { IPaginatedData } from "@/types";
+import { IFetchServiceParams } from "@/types/service/service.types";
+import { buildSearchParams, getSanitizedPagination, parseSearchParams } from "@/utils/helpers/queryParams.helper";
+import { Preahvihear } from "next/font/google";
 
-type AsyncActionCreator<T = unknown> = (
-    params: Record<string, string | string[]>
-) => T;
-type SimpleActionCreator<T = unknown, A = void> =
-    A extends void ? () => T : (args: A) => T;
+type TFetchAction<T> = AsyncThunk<
+    IPaginatedData<T>,
+    IFetchServiceParams,
+    AsyncThunkConfig
+>;
+
 /**
  * @description
  * Custom hook to manage query-based filters synced with the URL.
@@ -30,9 +35,8 @@ type SimpleActionCreator<T = unknown, A = void> =
  *   setFilterValues: Manually set filter state if needed
  * }
  */
-export const useQueryFilters = (
-    fetchAction: AsyncActionCreator,
-    clearAction: SimpleActionCreator
+export const useQueryFilters = <T,>(
+    fetchAction: TFetchAction<T>
 ) => {
     const router = useRouter();
     const pathname = usePathname();
@@ -41,33 +45,22 @@ export const useQueryFilters = (
     const [filterValues, setFilterValues] = useState<Record<string, string | string[]>>({});
     // parsing url and syncing with state
     useEffect(() => {
-        const paramsObj: Record<string, string | string[]> = {};
-        searchParams.forEach((value, key) => {
-            paramsObj[key] = value.includes(",") ? value.split(",") : value;
-        });
-        (async () => setFilterValues(paramsObj))();
-        if (Object.keys(paramsObj).length > 0) {
-            dispatch(fetchAction(paramsObj) as UnknownAction);
-        } else {
-            dispatch(clearAction() as UnknownAction);
-        }
-    }, [searchParams, dispatch, fetchAction, clearAction]);
+        const rawParams = parseSearchParams(searchParams);
+        const params = getSanitizedPagination(rawParams);
+        const { page, limit, ...filters } = params;
+        (async () => setFilterValues(params))();
+        dispatch(fetchAction({
+            page: Number(page),
+            limit: Number(limit),
+            ...(Object.keys(filters).length > 0 && { query: filters })
+        }));
+    }, [searchParams, dispatch, fetchAction]);
     // updating url
     const applyFilters = useCallback((values?: Record<string, string | string[]>) => {
         const dataToApply = values || filterValues;
-        const params = new URLSearchParams();
-        Object.entries(dataToApply).forEach(([key, value]) => {
-            if (Array.isArray(value) && value.length > 0) {
-                params.set(key, value.join(","));
-            } else if (typeof value === "string" && value.trim() !== "") {
-                params.set(key, value);
-            }
-        });
-        const query = params.toString();
-        console.log(query)
-        if (query) {
-            router.push(`${pathname}?${query}`);
-        }
+        const paginationValues = getSanitizedPagination({ ...dataToApply, page: "0", limit: "0" });
+        const query = buildSearchParams(paginationValues);
+        router.push(query ? `${pathname}?${query}` : pathname);
     }, [filterValues, pathname, router]);
     const handleInputChange = (key: string, value: string | string[]) => {
         setFilterValues((prev) => {
@@ -89,6 +82,6 @@ export const useQueryFilters = (
         handleInputChange,
         applyFilters,
         clearFilters,
-        setFilterValues
+        setFilterValues,
     };
 };

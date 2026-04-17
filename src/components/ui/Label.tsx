@@ -1,17 +1,16 @@
 "use client"
+import { TLabelProps } from "@/types"
 import * as React from "react"
 /* simple cn helper */
 function cn(...classes: (string | undefined | false)[]) {
   return classes.filter(Boolean).join(" ")
 }
-type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement> & {
-  disabled?: boolean
-}
+
 function Label({
   className,
   disabled,
   ...props
-}: LabelProps) {
+}: TLabelProps) {
   return (
     <label
       data-slot="label"

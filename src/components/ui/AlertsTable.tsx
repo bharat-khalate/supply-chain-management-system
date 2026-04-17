@@ -1,15 +1,9 @@
 "use client";
 import React from "react";
-import { DataTable, type Column } from "@/components/common/table/DataTable";
+import { DataTable } from "@/components/common/table/DataTable";
 import { ExclaimIcon, BoatIcon, SuccessIcon } from "@icons/table-icons/actions";
-interface IAlert {
-  priority: string;
-  priorityStyle: string;
-  title: string;
-  subtitle: string;
-  date: string;
-  actionIcon: React.ReactNode;
-}
+import { IAlert, IColumn } from "@/types";
+
 const alerts: IAlert[] = [
   {
     priority: "High",
@@ -37,7 +31,7 @@ const alerts: IAlert[] = [
   },
 ];
 export default function AlertsTable() {
-  const columns: Column<IAlert>[] = [
+  const columns: IColumn<IAlert>[] = [
     {
       key: "priority",
       header: "Priority",
@@ -52,6 +46,7 @@ export default function AlertsTable() {
     {
       key: "issue",
       header: "Issue/Task",
+
       render: (r) => (
         <div>
           <p className="text-[14px] font-bold text-[#171C1F]">{r.title}</p>

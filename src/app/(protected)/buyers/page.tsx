@@ -1,28 +1,48 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { DataTable, type Column } from "@/components/common/table/DataTable";
-import TableHeader, { FilterFields } from "@/components/common/table/TableHeader";
+import { DataTable } from "@/components/common/table/DataTable";
+import TableHeader from "@/components/common/table/TableHeader";
 import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
 import { useSelector } from "react-redux";
-import { IBuyer } from "@/utils/data";
+import { IBuyer, IColumn, IFilterFields } from "@/types";
 import toast from "react-hot-toast";
 import { useAppDispatch, useGlobalRedirect } from "@/lib/hooks";
-import { fetchBuyers, filterBuyer, selectBuyers, selectBuyerLoading, removeBuyer } from "@/redux/slice";
+import { fetchBuyers, selectBuyers, selectBuyerLoading, removeBuyer, selectBuyerPagination } from "@/redux/slice";
 import { useQueryFilters } from "@/lib/hooks";
 import AppBadge from "@/components/common/StatusBadge";
 import AppDotLoader from "@/components/common/NavigationDotloader";
+import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
+import { IPaginationResponse } from "@/types/global.types";
+import { IFetchServiceParams } from "@/types/service/service.types";
 export default function ProductsPage() {
   const dispatch = useAppDispatch();
   const buyersData: IBuyer[] = useSelector(selectBuyers);
   const loading = useSelector(selectBuyerLoading);
+  const paginationConfig: IPaginationResponse = useSelector(selectBuyerPagination)
   const { isRedirecting, navigate } = useGlobalRedirect();
   const pathname = usePathname();
   const {
     filterValues,
     handleInputChange,
     applyFilters,
-    clearFilters } = useQueryFilters(filterBuyer, fetchBuyers);
-  const filterFields: FilterFields[] = [
+    clearFilters } = useQueryFilters<IBuyer>(fetchBuyers, defaultPaginationConfig);
+  const getNextPage = () => {
+    if (!(paginationConfig.canNextPage)) return;
+    const meta: IFetchServiceParams = {
+      page: paginationConfig.currentPage + 1,
+      limit: defaultPaginationConfig.limit
+    }
+    dispatch(fetchBuyers(meta));
+  }
+  const getPreviousPage = () => {
+    if (!(paginationConfig.canPreviousPage)) return;
+    const meta: IFetchServiceParams = {
+      page: paginationConfig.currentPage - 1,
+      limit: defaultPaginationConfig.limit
+    }
+    dispatch(fetchBuyers(meta));
+  }
+  const filterFields: IFilterFields[] = [
     {
       key: "id",
       type: "select",
@@ -45,7 +65,7 @@ export default function ProductsPage() {
     dispatch(removeBuyer(customerId));
     toast.success("Customer removed")
   }
-  const columns: Column<IBuyer>[] = [
+  const columns: IColumn<IBuyer>[] = [
     {
       key: "vendorAndOrigin",
       header: "Vendor & Origin",
@@ -142,6 +162,16 @@ export default function ProductsPage() {
         data={buyersData}
         loading={loading}
         emptyMessage="No Buyers yet."
+        currentPage={paginationConfig.currentPage}
+        lastPage={paginationConfig.lastPage}
+        limit={defaultPaginationConfig.limit}
+        totalCount={paginationConfig.totalCount}
+        visiblePageCount={3}
+        canPreviousPage={paginationConfig.canPreviousPage}
+        canNextPage={paginationConfig.canNextPage}
+        previousPage={getPreviousPage}
+        nextPage={getNextPage}
+        handleLimitChange={(val) => console.log("limit:", val)}
         Header={<TableHeader values={filterValues} onApply={applyFilters} onClear={clearFilters} onChange={handleInputChange} fields={filterFields} />}
       />
     </div>

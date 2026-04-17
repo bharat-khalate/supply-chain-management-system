@@ -1,32 +1,8 @@
 "use client";
 import React from "react";
 import { LeftIcon, RightIcon } from "@icons/table-icons/footer";
-export interface Column<T> {
-  key: keyof T | string;
-  header: string;
-  render?: (row: T) => React.ReactNode;
-}
-interface DataTableProps<T extends object> {
-  columns: Column<T>[];
-  data: T[];
-  loading?: boolean;
-  emptyMessage?: string;
-  onEdit?: (row: T) => void;
-  onDelete?: (row: T) => void;
-  idKey?: keyof T;
-  Header?: React.ReactNode;
-  previousPage?: () => void;
-  nextPage?: () => void;
-  canPreviousPage?: boolean;
-  canNextPage?: boolean;
-  currentPage?: number;
-  lastPage?: number;
-  limit?: number;
-  totalCount?: number;
-  handleLimitChange?: (limit: number) => void;
-  goToPage?: (page: number) => void;
-  visiblePageCount?: number;
-}
+import { IDataTableProps } from "@/types";
+
 export function DataTable<T extends object>({
   columns,
   data,
@@ -47,7 +23,7 @@ export function DataTable<T extends object>({
   goToPage,
   visiblePageCount = 5,
   removeWrapperBorder = false,
-}: DataTableProps<T> & { removeWrapperBorder?: boolean }) {
+}: IDataTableProps<T> & { removeWrapperBorder?: boolean }) {
   const getVisiblePages = (current: number, total: number, maxVisible: number) => {
     if (total <= maxVisible) return Array.from({ length: total }, (_, i) => i + 1);
     let start = Math.max(1, current - Math.floor(maxVisible / 2));

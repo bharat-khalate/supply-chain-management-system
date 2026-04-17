@@ -7,11 +7,9 @@ import {
     BreadcrumbSeparator,
     BreadcrumbPage,
 } from "@/components/ui/BreadCrumb"
-type Item = {
-    label: string
-    path: string
-}
-export function AppBreadcrumb({ items }: { items: Item[] }) {
+import { TItem } from "@/types"
+
+export function AppBreadcrumb({ items }: { items: TItem[] }) {
     return (
         <Breadcrumb>
             <BreadcrumbList>

@@ -1,18 +1,19 @@
 "use client";
-import { DataTable, type Column } from "@/components/common/table/DataTable";
+import { DataTable } from "@/components/common/table/DataTable";
 import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
-import { IVendor } from "@/utils/data";
+import { IColumn, IVendor } from "@/types";
 import { useAppDispatch } from "@/lib/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/Store";
 import { addVendor, getAllVendors, removeVendor } from "@/redux/slice";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
 export default function ProductsPage() {
   const { data, loading } = useSelector((store: RootState) => store.vendorSlice)
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getAllVendors())
+    dispatch(getAllVendors(defaultPaginationConfig))
   }, [])
   const openCreate = () => {
     const vendor: IVendor = {
@@ -31,7 +32,7 @@ export default function ProductsPage() {
     dispatch(removeVendor(vendorId))
     toast.success("Vendor Deleted.")
   }
-  const columns: Column<IVendor>[] = [
+  const columns: IColumn<IVendor>[] = [
     {
       key: "vendorAndOrigin",
       header: "Vendor & Origin",

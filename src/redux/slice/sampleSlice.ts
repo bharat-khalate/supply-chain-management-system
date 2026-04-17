@@ -1,74 +1,79 @@
 import {
   createAsyncThunk,
   createSlice,
-  PayloadAction,
-  isRejected,
+  
 } from "@reduxjs/toolkit";
-import { ISample, sampleRecords } from "@/utils/data";
 import { RootState } from "../Store";
-export const getAllSample = createAsyncThunk<ISample[]>(
+import { IPaginatedState, ISample } from "@/types";
+import { sampleService } from "@/service";
+import { IFetchServiceParams } from "@/types/service/service.types";
+export const getAllSample = createAsyncThunk(
   "sample/getAll",
-  async () => {
-    await new Promise((r) => setTimeout(r, 500));
-    return sampleRecords;
+  async (props: IFetchServiceParams, { rejectWithValue }) => {
+    try {
+      return await sampleService.getAll(props);
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to fetch samples");
+    }
   }
 );
-export const getSampleById = createAsyncThunk<ISample, string>(
+export const getSampleById = createAsyncThunk(
   "sample/getById",
-  async (id) => {
-    await new Promise((r) => setTimeout(r, 300));
-    return sampleRecords.find((s) => s.sampleId === id)!;
+  async (id: string, { rejectWithValue }) => {
+    try {
+      return await sampleService.getById(id);
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to fetch sample");
+    }
   }
 );
-export const addSample = createAsyncThunk<ISample, ISample>(
+export const addSample = createAsyncThunk(
   "sample/add",
-  async (sample) => sample
+  async (sample: ISample, { rejectWithValue }) => {
+    try {
+      return await sampleService.add(sample);
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to add sample");
+    }
+  }
 );
-export const updateSample = createAsyncThunk<ISample, ISample>(
+export const updateSample = createAsyncThunk(
   "sample/update",
-  async (updated) => updated
+  async (updated: ISample, { rejectWithValue }) => {
+    try {
+      return await sampleService.update(updated);
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to update sample");
+    }
+  }
 );
-export const removeSample = createAsyncThunk<string, string>(
+export const removeSample = createAsyncThunk(
   "sample/remove",
-  async (id) => id
+  async (id: string, { rejectWithValue }) => {
+    try {
+      return await sampleService.remove(id);
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to remove sample");
+    }
+  }
 );
-export const filterSamples = createAsyncThunk<
-  ISample[],
-  Record<string, string | string[]>
->("sample/filter", async (query) => {
-  return sampleRecords.filter(() => true);
-});
-interface SampleState {
-  data: ISample[];
-  selected: ISample | null;
-  loading: boolean;
-  error: string | null;
-  page: number;
-  limit: number;
-  total: number;
-}
-const initialState: SampleState = {
+const initialState: IPaginatedState<ISample> = {
   data: [],
   selected: null,
   loading: false,
   error: null,
-  page: 1,
-  limit: 10,
-  total: 0,
+  pagination: {
+    currentPage: 0,
+    lastPage: 0,
+    totalCount: 0,
+    canNextPage: false,
+    canPreviousPage: false
+  }
 };
 const sampleSlice = createSlice({
   name: "sample",
   initialState,
-  reducers: {
-    resetSampleState: () => initialState,
-    setPagination: (
-      state,
-      action: PayloadAction<{ page: number; limit: number }>
-    ) => {
-      state.page = action.payload.page;
-      state.limit = action.payload.limit;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getAllSample.pending, (state) => {
@@ -76,50 +81,45 @@ const sampleSlice = createSlice({
       })
       .addCase(getAllSample.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
-        state.total = action.payload.length;
+        state.data = action.payload.data;
+        state.pagination = action.payload.pagination
       })
       .addCase(getSampleById.fulfilled, (state, action) => {
         state.selected = action.payload;
       })
       .addCase(addSample.fulfilled, (state, action) => {
-        state.data.push(action.payload);
-        state.total += 1;
+        state.loading = false;
+        state.selected = action.payload; // optional
       })
       .addCase(updateSample.fulfilled, (state, action) => {
-        const index = state.data.findIndex(
-          (s) => s.sampleId === action.payload.sampleId
-        );
-        if (index !== -1) state.data[index] = action.payload;
-      })
-      .addCase(removeSample.fulfilled, (state, action) => {
-        state.data = state.data.filter(
-          (s) => s.sampleId !== action.payload
-        );
-        state.total -= 1;
-      })
-      .addCase(filterSamples.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(filterSamples.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        state.selected = action.payload;
       })
-      .addMatcher(isRejected, (state, action) => {
+      .addCase(removeSample.fulfilled, (state) => {
         state.loading = false;
-        state.error = action.error?.message || "Something went wrong";
-      });
+      })
+      .addMatcher(
+        (action) =>
+          action.type.startsWith("sample/") &&
+          action.type.endsWith("/rejected"),
+        (state, action) => {
+          state.loading = false;
+          const errorMessage =
+            "error" in action &&
+              typeof action.error === "object" &&
+              action.error !== null &&
+              "message" in action.error
+              ? (action.error as { message?: string }).message
+              : "Something went wrong";
+          state.error = errorMessage || "Something went wrong";
+        }
+      )
   },
 });
-export const { resetSampleState, setPagination } = sampleSlice.actions;
 export const selectSamples = (state: RootState) => state.sampleSlice.data;
 export const selectSample = (state: RootState) => state.sampleSlice.selected;
 export const selectSampleLoading = (state: RootState) => state.sampleSlice.loading;
 export const selectSampleError = (state: RootState) => state.sampleSlice.error;
-export const selectSamplePagination = (state: RootState) => ({
-  page: state.sampleSlice.page,
-  limit: state.sampleSlice.limit,
-  total: state.sampleSlice.total,
-});
+export const selectSamplePagination = (state: RootState) => state.sampleSlice.pagination;
 
 export default sampleSlice.reducer;
