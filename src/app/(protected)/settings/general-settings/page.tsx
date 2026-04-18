@@ -1,14 +1,11 @@
 "use client";
-
-import GeneralInfoSettingForm from "@/components/common/settings-layout/forms/GenralInfoSettingForm";
-import SocialMediaLinkForm from "@/components/common/settings-layout/forms/SocialMediaLinkForm";
+import GeneralInfoSettingForm from "./_forms/GenralInfoSetting";
+import SocialMediaLinkForm from "./_forms/SocialMediaLink";
 import SettingShell from "@/components/common/settings-layout/SettingsShell";
 import { Tabs } from "@heroui/react";
-import { useState } from "react";
-type TNavigationOptions = "general" | "app-version" | "social-media-links" | "app-link";
+import AppVersion from "./_forms/AppVersion";
+import AppLink from "./_forms/AppLink";
 export default function AboutUsSettingPage() {
-  const [activeTab, setActiveTab] = useState<TNavigationOptions>("general");
-  let content;
   const sideBarOptions = [
     {
       key: "general",
@@ -19,7 +16,7 @@ export default function AboutUsSettingPage() {
             <GeneralInfoSettingForm />
           </div>
         </Tabs.Panel>
-      )
+      ),
     },
     {
       key: "social-media-links",
@@ -30,220 +27,36 @@ export default function AboutUsSettingPage() {
             <SocialMediaLinkForm />
           </div>
         </Tabs.Panel>
-      )
+      ),
     },
-    { key: "app-link", label: "App Link" },
-    { key: "app-version", label: "App Version" },
-  ]
-
-  switch (activeTab) {
-    case "app-version":
-      content = (
-        <div className="space-y-4 max-w-2xl">
-          {/* Android Version */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Android Versions<span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              defaultValue="1.0.0"
-              className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+    {
+      key: "app-link",
+      label: "App Link",
+      render: (key: string) => (
+        <Tabs.Panel key={key} id={key}>
+          <div className="text-sm text-gray-500">
+            <AppLink />
           </div>
-
-          {/* iOS Version */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              IOS Versions<span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              defaultValue="1.0.0"
-              className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+        </Tabs.Panel>
+      ),
+    },
+    {
+      key: "app-version",
+      label: "App Version",
+      render: (key: string) => (
+        <Tabs.Panel key={key} id={key}>
+          <div className="text-sm text-gray-500">
+            <AppVersion />
           </div>
-
-          <p className="text-sm text-red-500">
-            Note: Please do not change this value until confirmed by developers.
-          </p>
-
-          <div className="flex gap-3 pt-2">
-            <button className="bg-gray-700 text-white px-4 py-2 rounded-md text-sm">
-              Submit
-            </button>
-            <button className="border px-4 py-2 rounded-md text-sm">
-              Reset
-            </button>
-          </div>
-        </div>
-      );
-      break;
-    case "general":
-      content = (<div className="space-y-4 max-w-2xl">
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            System Email<span className="text-red-500">*</span>
-          </label>
-          <input
-            type="email"
-            defaultValue="admin@admin.com"
-            className="w-full border rounded-md px-3 py-2 text-sm"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            Phone Number<span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            defaultValue="9177885566"
-            className="w-full border rounded-md px-3 py-2 text-sm"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            Website Video URL<span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            defaultValue="https://example.com/video-url"
-            className="w-full border rounded-md px-3 py-2 text-sm"
-          />
-        </div>
-
-        <div className="flex gap-3 pt-2">
-          <button className="bg-gray-700 text-white px-4 py-2 rounded-md text-sm">
-            Submit
-          </button>
-          <button className="border px-4 py-2 rounded-md text-sm">
-            Reset
-          </button>
-        </div>
-      </div>);
-      break;
-    case "social-media-links":
-      content = (<div className="space-y-4 max-w-2xl">
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            X (Twitter) Profile URL
-          </label>
-          <input
-            type="text"
-            placeholder="https://twitter.com/your-profile"
-            className="w-full border rounded-md px-3 py-2 text-sm"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            Facebook Profile URL
-          </label>
-          <input
-            type="text"
-            placeholder="https://facebook.com/your-profile"
-            className="w-full border rounded-md px-3 py-2 text-sm"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            Instagram Profile URL
-          </label>
-          <input
-            type="text"
-            placeholder="https://instagram.com/your-profile"
-            className="w-full border rounded-md px-3 py-2 text-sm"
-          />
-        </div>
-
-        <div className="flex gap-3 pt-2">
-          <button className="bg-gray-700 text-white px-4 py-2 rounded-md text-sm">
-            Submit
-          </button>
-          <button className="border px-4 py-2 rounded-md text-sm">
-            Reset
-          </button>
-        </div>
-      </div>);
-      break;
-    case "app-link":
-      content = (<div className="space-y-4 max-w-2xl">
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            Android App Link<span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            defaultValue="https://play.google.com/store/apps/details?id=com.app"
-            className="w-full border rounded-md px-3 py-2 text-sm"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            iOS App Link<span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            defaultValue="https://apps.apple.com/app/id123456789"
-            className="w-full border rounded-md px-3 py-2 text-sm"
-          />
-        </div>
-
-        <p className="text-sm text-red-500">
-          Note: Please do not change this value until confirmed by developers.
-        </p>
-
-        <div className="flex gap-3 pt-2">
-          <button className="bg-gray-700 text-white px-4 py-2 rounded-md text-sm">
-            Submit
-          </button>
-          <button className="border px-4 py-2 rounded-md text-sm">
-            Reset
-          </button>
-        </div>
-      </div>);
-      break;
-    default:
-      content = (
-        <div className="text-sm text-gray-500">
-          {activeTab} content goes here...
-        </div>
-      );
-  }
+        </Tabs.Panel>
+      ),
+    },
+  ];
   return (
-
     <SettingShell title="Manage Settings">
-
-      {/* <div className="w-64">
-        <ul className="space-y-2">
-          {sideBarOptions.map((item) => (
-            <li key={item.key}>
-              <button
-                onClick={() => setActiveTab(item.key as TNavigationOptions)}
-                className={`w-full text-left px-4 py-2 rounded-md text-sm font-medium ${activeTab === item.key
-                  ? "bg-blue-900 text-white"
-                  : "text-blue-600 hover:bg-gray-100"
-                  }`}
-              >
-                {item.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div> */}
-
-      {/* Content */}
-      {/* <div className="flex-1">
-        {content}
-
-      </div> */}
       <Tabs orientation="vertical" className="w-full">
-        <Tabs.ListContainer    >
-          <Tabs.List className="bg-inherit text-inherit gap-3" >
+        <Tabs.ListContainer>
+          <Tabs.List className="bg-inherit text-inherit gap-3">
             {sideBarOptions.map(({ key, label }) => (
               <Tabs.Tab
                 key={key}
@@ -257,19 +70,15 @@ export default function AboutUsSettingPage() {
           </Tabs.List>
         </Tabs.ListContainer>
         {sideBarOptions.map(({ key, render }) => {
-          return render != undefined ?
+          return render != undefined ? (
             render(key)
-            : (
-              <Tabs.Panel key={key} id={key} >
-                <div className="text-sm text-gray-500">
-                  content goes here...
-                </div>
-              </Tabs.Panel>
-            )
+          ) : (
+            <Tabs.Panel key={key} id={key}>
+              <div className="text-sm text-gray-500">content goes here...</div>
+            </Tabs.Panel>
+          );
         })}
       </Tabs>
-
-    </SettingShell >
-
+    </SettingShell>
   );
 }

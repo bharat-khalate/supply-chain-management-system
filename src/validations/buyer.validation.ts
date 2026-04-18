@@ -1,4 +1,4 @@
-import { BuyerConstants } from '@/utils/constants';
+import { BuyerConstants } from '@/configs/forms';
 import { commonStringValidation, emailValidation, phoneValidation, AddressStringValidation, buyerTypeValidation } from '@/utils/formFieldValidators';
 import * as Yup from 'yup'
 

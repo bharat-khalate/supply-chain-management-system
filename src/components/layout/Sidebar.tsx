@@ -56,7 +56,7 @@ const navItems: INavItem[] = [
     hasSubmenu: true,
     suffixIcon: RightArrowIcon,
     submenus: [
-      { href: "/settings/general-settings", label: "General Settings" },
+      { href: "/settings/general-settings", label: "Settings" },
       { href: "/settings/about-us", label: "About Us" },
       { href: "/settings/terms-and-conditions", label: "Terms And Conditions" },
       { href: "/settings/privacy-policy", label: "Privacy Policy" }

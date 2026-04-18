@@ -1,10 +1,5 @@
 // Application constants
 
-import { IBuyerFields } from "@/app/(protected)/buyers/add/page";
-import { IGeneralInfoSetting } from "@/components/common/settings-layout/forms/GenralInfoSettingForm";
-import { ISocialMediaLinkFormFields } from "@/components/common/settings-layout/forms/SocialMediaLinkForm";
-import { FieldConstant } from "@/types/interface";
-
 export const HTTP_STATUS = {
   OK: 200,
   CREATED: 201,
@@ -57,86 +52,3 @@ export const PAGINATION_DEFAULTS = {
 export const TOKEN_EXPIRY = {
   ACCESS_TOKEN: '15m',
 } as const;
-
-
-export const BuyerConstants: Record<keyof IBuyerFields, FieldConstant<keyof IBuyerFields>> = {
-  buyerName: {
-    label: "Name",
-    length: 52,
-    key: "buyerName"
-  },
-  buyerAddress: {
-    label: "Address",
-    length: 250,
-    key: "buyerAddress"
-  },
-  phone: {
-    label: "Phone",
-    length: 15,
-    key: "phone"
-  },
-  email: {
-    label: "Email",
-    length: 150,
-    key: "email"
-  },
-  contactPerson: {
-    label: "Contact Person",
-    length: 52,
-    key: "contactPerson"
-  },
-  requirementCategory: {
-    label: "Requirement Category",
-    length: 52,
-    key: "requirementCategory"
-  },
-  buyerType: {
-    label: "Buyer Type",
-    length: 52,
-    key: "buyerType"
-  },
-  status: {
-    label: "status",
-    length: 25,
-    key: "status"
-  }
-}
-
-export const GeneralSettingConstant: Record<keyof IGeneralInfoSetting, FieldConstant<keyof IGeneralInfoSetting>> = {
-  systemEmail: {
-    label: "System Email",
-    length: 150,
-    key: "systemEmail"
-  },
-  phone: {
-    label: "Phone Number",
-    length: 15,
-    key: "phone"
-  },
-  websiteVideoUrl: {
-    label: "Website Video Url",
-    length: 250,
-    key: "websiteVideoUrl"
-  }
-}
-
-
-export type TGeneralSettingConstants = typeof GeneralSettingConstant;
-
-export const SocialMediaLinkFormFieldConstants: Record<keyof ISocialMediaLinkFormFields, FieldConstant<keyof ISocialMediaLinkFormFields>> = {
-  instagramLink: {
-    key: "instagramLink",
-    length: 520,
-    label: "Instagram Link"
-  },
-  facebookLink: {
-    key: "facebookLink",
-    length: 520,
-    label: "Facebook Link"
-  },
-  twitterLink: {
-    label: "Twitter Link",
-    key: "twitterLink",
-    length: 520
-  }
-}

@@ -1,4 +1,5 @@
-import SettingShell from "@/components/common/settings-layout/SettingsShell"// Adjust path as needed
+import CustomEditor from "@/components/common/Editor";
+import SettingShell from "@/components/common/settings-layout/SettingsShell"; // Adjust path as needed
 
 export default function ManageAboutUs() {
   return (
@@ -10,21 +11,7 @@ export default function ManageAboutUs() {
           </button>
         </div>
         <div className="space-y-8">
-          <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-gray-700">
-              About Us for Distributor<span className="text-red-500">*</span>
-            </label>
-            <div className="border border-blue-300 rounded-md min-h-[200px] bg-white">
-              <div className="flex items-center gap-4 px-3 py-2 border-b border-gray-200 bg-gray-50 text-gray-500 text-lg">
-                <span>B</span> <span>I</span> <span>U</span> <span>S</span> <span>{"<>"}</span>
-              </div>
-              <textarea
-                className="w-full p-4 text-sm text-gray-600 outline-none"
-                rows={6}
-                defaultValue="Type here...."
-              />
-            </div>
-          </div>
+          <CustomEditor />
         </div>
         <div className="flex justify-end gap-3 mt-8">
           <button className="px-6 py-2 border border-gray-300 text-gray-600 rounded-md hover:bg-gray-50 transition">

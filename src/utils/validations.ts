@@ -3,6 +3,7 @@
  */
 
 import { FormikProps } from "formik";
+import { boolean } from "yup";
 
 export const validations = {
   isValidEmail: (email: string): boolean => {
@@ -11,12 +12,13 @@ export const validations = {
   },
   isValidPassword: (password: string): boolean => {
     // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
   },
   isValidPhoneNumber: (phone: string): boolean => {
     const phoneRegex = /^[+]?[0-9]{10,14}$/;
-    return phoneRegex.test(phone.replace(/\s/g, ''));
+    return phoneRegex.test(phone.replace(/\s/g, ""));
   },
   isValidMongoId: (id: string): boolean => {
     return /^[0-9a-fA-F]{24}$/.test(id);
@@ -30,7 +32,7 @@ export const validations = {
     }
   },
   sanitizeString: (str: string): string => {
-    return str.trim().replace(/[<>]/g, '');
+    return str.trim().replace(/[<>]/g, "");
   },
   validatePagination: (page?: string | number, limit?: string | number) => {
     let p = parseInt(String(page), 10) || 1;
@@ -43,13 +45,9 @@ export const validations = {
   },
 };
 
-
-export const shouldShowError = <T extends Record<string, any>>(
+export const shouldShowError = <T>(
   formik: FormikProps<T>,
-  fieldName: keyof T
-): boolean => {
-  return !!(formik.touched[fieldName] && formik.errors[fieldName]);
+): ((fieldName: keyof T) => boolean) => {
+  return (fieldName: keyof T) =>
+    !!(formik.touched[fieldName] && formik.errors[fieldName]);
 };
-
-
-

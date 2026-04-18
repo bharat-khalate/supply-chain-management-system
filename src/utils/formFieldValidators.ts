@@ -15,26 +15,26 @@ export const passwordValidation = (maxLength: number) =>
     .required("Please Enter Your Password.")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
-      "Password must contain at least 8 characters, one uppercase, one lowercase, one digit, and one special character."
+      "Password must contain at least 8 characters, one uppercase, one lowercase, one digit, and one special character.",
     )
     .max(maxLength, `Password must not exceed ${maxLength} characters`);
 
 export const commonUrlValidation = Yup.string()
   .trim()
   .url("Invalid URL format")
-  .required("Url_Is_Required")
+  .required("Url is Required")
   .max(500, "URL must be at most 500 characters");
 
 export const confirmPasswordValidation = (maxLength: number) =>
   Yup.string()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
-      "Password must contain at least 8 characters, one uppercase, one lowercase, one digit, and one special character."
+      "Password must contain at least 8 characters, one uppercase, one lowercase, one digit, and one special character.",
     )
     .required("Please Enter Your Confirm Password.")
     .oneOf(
       [Yup.ref("password")],
-      "Confirm Password and Password should be the same."
+      "Confirm Password and Password should be the same.",
     )
     .max(maxLength, `Confirm Password must not exceed ${maxLength} characters`);
 
@@ -44,14 +44,14 @@ export const commonNameValidation = (value: string) =>
     .max(52, "Must be 52 characters or less")
     .matches(
       /^[\u0600-\u06FFA-Za-z\s]+$/,
-      "Only alphabets are allowed for " + value
+      "Only alphabets are allowed for " + value,
     );
 
 export const commonStringValidation = (fieldName: string, maxLength: number) =>
   Yup.string()
     .matches(
       /^[\u0900-\u097FA-Za-z\s?]+$/,
-      `${fieldName} should contain only Hindi or English letters, spaces, and question marks`
+      `${fieldName} should contain only Hindi or English letters, spaces, and question marks`,
     )
     .required(`${fieldName} is required`)
     .max(maxLength, `${fieldName} must not exceed ${maxLength} characters`);
@@ -60,19 +60,27 @@ export const buyerTypeValidation = (fieldName: string) => {
   return Yup.string()
     .required(`${fieldName} is required`)
     .oneOf(
-      ["Retailer", "Wholesaler", "Brand", "Corporate", "Institutional", "Enterprise", "Misc"],
-      `${fieldName} is invalid`
+      [
+        "Retailer",
+        "Wholesaler",
+        "Brand",
+        "Corporate",
+        "Institutional",
+        "Enterprise",
+        "Misc",
+      ],
+      `${fieldName} is invalid`,
     );
 };
 
 export const commonAlphaNumericValidation = (
   fieldName: string,
-  maxLength: number
+  maxLength: number,
 ) =>
   Yup.string()
     .matches(
       /^[a-zA-Z0-9]+$/,
-      `${fieldName} should contain only letters and numbers (no spaces or special characters)`
+      `${fieldName} should contain only letters and numbers (no spaces or special characters)`,
     )
     .required(`${fieldName} is required`)
     .max(maxLength, `${fieldName} must not exceed ${maxLength} characters`);
@@ -80,7 +88,7 @@ export const AddressStringValidation = (value: string, maxLength: number) =>
   Yup.string()
     .matches(
       /^[\u0600-\u06FFA-Za-z0-9\s.,#'’/\-()&]+$/,
-      `${value} can only contain letters, numbers, spaces, and basic special characters (.,#'/-()&)`
+      `${value} can only contain letters, numbers, spaces, and basic special characters (.,#'/-()&)`,
     )
     .max(maxLength, `${value} must not exceed ${maxLength} characters`)
     .required(`${value} is required`);
@@ -94,18 +102,18 @@ export const commonStringValidationWithoutSpace = (value: string) =>
     .matches(/^[\u0600-\u06FFA-Za-z]+$/, `${value} should contain only letters`)
     .required(`${value} is required`);
 
-export const commonNumberValidation = (value: string) =>
-  Yup.string()
-    .required(`${value} is required`)
-    .matches(/^[0-9]+$/, `${value} should contain only numbers`)
-    .min(1, `${value} must be at least 1`);
+export const commonNumberValidation = (label: string) =>
+  Yup.number()
+    .typeError(`${label} must be a number`)
+    .required(`${label} is required`)
+    .min(1, `${label} must be at least 1`);
 
 export const commonNumberAcceptOneDecimalValidation = (value: string) =>
   Yup.string()
     .required(`${value} is required`)
     .matches(
       /^(\d+\.?\d{0,1})$/,
-      `${value} should contain only numbers with up to one decimal place`
+      `${value} should contain only numbers with up to one decimal place`,
     )
     .min(1, `${value} must be at least 1`);
 
@@ -113,7 +121,7 @@ export const commonAlphNumValidation = (value: string) =>
   Yup.string()
     .matches(
       /^(?=.*\p{L})(?=.*\d)[\p{L}\d]+$/u,
-      "Must contain both letters and numbers"
+      "Must contain both letters and numbers",
     )
     .required(`${value} is required`);
 
@@ -121,7 +129,7 @@ export const commonNumberStringValidation = (value: string) =>
   Yup.string()
     .matches(
       /^(?:\d+\.?\d*|\.\d+)$/,
-      `${value} should contain only valid numbers`
+      `${value} should contain only valid numbers`,
     )
     .required(`${value} is required`);
 
@@ -141,7 +149,7 @@ export const commonPercentageValidation = (value: string) =>
     .required(`${value} is required`)
     .matches(
       /^\d{1,2}(\.\d{1,2})?$|^100$/,
-      `${value} must be a number between 1 and 100 with up to two decimal places`
+      `${value} must be a number between 1 and 100 with up to two decimal places`,
     );
 
 export const commonNumbersCountValidation = (value: string, min: number) =>
@@ -151,7 +159,10 @@ export const commonNumbersCountValidation = (value: string, min: number) =>
 
 export const phoneValidation = () =>
   Yup.string()
-    .matches(/^[6-9]\d{9}$/, "Invalid Indian mobile number (must be 10 digits starting with 6-9)")
+    .matches(
+      /^[6-9]\d{9}$/,
+      "Invalid Indian mobile number (must be 10 digits starting with 6-9)",
+    )
     .required("Phone number is required");
 
 export const originalPasswordValidation = (maxLength: number) =>
@@ -176,7 +187,7 @@ export const isRequiredRoleNameValidation = () => {
 };
 
 export const isRequiredValidation = Yup.mixed().required(
-  `phoneCode is required`
+  `phoneCode is required`,
 );
 
 export const validateArray = (value: string) =>
@@ -202,19 +213,19 @@ export const isRequiredPasswordValidation = (isEdit: boolean) =>
         .max(28, "Password must not exceed 28 characters")
         .matches(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,28}$/,
-          "Password must contain one uppercase, one lowercase, one digit, and one special character."
+          "Password must contain one uppercase, one lowercase, one digit, and one special character.",
         )
         .required("Password is required"),
     otherwise: (schema) => schema.notRequired(),
   });
 
 export const isRequiredEmailValidationForOptionalCases = (
-  isEdit: boolean
+  isEdit: boolean,
 ): Yup.StringSchema<string | undefined> =>
   Yup.string()
     .matches(
       /^[\p{L}\d._%+-]+@[\p{L}\d.-]+\.[\p{L}]{2,}$/u,
-      "Invalid email format"
+      "Invalid email format",
     )
     .when([], {
       is: () => !isEdit,
@@ -224,7 +235,7 @@ export const isRequiredEmailValidationForOptionalCases = (
 
 export const commonRequiredStringValidationForOptionalCases = (
   label: string,
-  isEdit: boolean
+  isEdit: boolean,
 ): Yup.StringSchema<string | undefined> =>
   Yup.string().when([], {
     is: () => !isEdit,
@@ -236,7 +247,7 @@ export const isRequiredConfirmPasswordValidation = (isEdit: boolean) =>
   Yup.string()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
-      "Password must contain at least 8 characters, one uppercase, one lowercase, one digit, and one special character."
+      "Password must contain at least 8 characters, one uppercase, one lowercase, one digit, and one special character.",
     )
     .oneOf([Yup.ref("password")], "Passwords must match")
     .when("password", {
@@ -249,7 +260,7 @@ export const commonCouponCodeValidation = (value: string) =>
   Yup.string()
     .matches(
       /^(?=.*\p{L})(?=.*\d)[\p{L}\d]+$/u,
-      "Must contain both letters and numbers"
+      "Must contain both letters and numbers",
     )
     .required(`${value} is required`);
 
@@ -266,7 +277,7 @@ export const commonImageValidation = Yup.mixed()
     if (!value) return false;
     if (value instanceof File) {
       return ["image/jpeg", "image/png", "image/jpg", "image/gif"].includes(
-        value.type
+        value.type,
       );
     }
     return true;
@@ -288,7 +299,6 @@ export const redirectionUrlValidation = Yup.string()
   .url("Invalid URL format")
   .required("Redirection URL is required")
   .max(500, "Redirection URL must be at most 500 characters");
-
 
 export const multipleProductsSelectValidation = Yup.array()
   .min(1, "Please select at least one product")

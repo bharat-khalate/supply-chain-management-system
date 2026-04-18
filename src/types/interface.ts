@@ -3,7 +3,7 @@ export interface FieldConstant<T> {
   min?: number;
   max?: number;
   length: number;
-  key: T
+  key: keyof T
 }
 
 

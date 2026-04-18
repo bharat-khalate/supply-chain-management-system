@@ -9,9 +9,6 @@ export interface IBuyer {
     requirementCategory: string;
     status: "Active" | "Inactive";
 }
-
-
-
 export interface IBuyerState {
     data: IBuyer[];
     selected: IBuyer | null;
@@ -20,4 +17,14 @@ export interface IBuyerState {
     page: number;
     limit: number;
     total: number;
+}
+export interface IBuyerFields {
+    buyerName: string;
+    email: string,
+    phone: string,
+    buyerAddress: string,
+    contactPerson: string,
+    requirementCategory: string,
+    buyerType: string,
+    status: "Active" | "Inactive",
 }
