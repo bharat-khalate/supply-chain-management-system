@@ -97,6 +97,22 @@ export const commonRequiredStringValidation = (value: string) => {
   return Yup.string().required(`${value} is required`);
 };
 
+export const CommonRichTextRequiredValidator = (label: string) =>
+   Yup.string()
+    .required(`${label} is required`)
+    .defined() // 👈 IMPORTANT
+    .test("not-empty", `${label} is required`, (value) => {
+      if (!value) return false;
+
+      const text = value
+        .replace(/<[^>]*>/g, "")
+        .replace(/&nbsp;/g, " ")
+        .replace(/<br\s*\/?>/gi, "")
+        .trim();
+
+      return text.length > 0;
+  });
+
 export const commonStringValidationWithoutSpace = (value: string) =>
   Yup.string()
     .matches(/^[\u0600-\u06FFA-Za-z]+$/, `${value} should contain only letters`)

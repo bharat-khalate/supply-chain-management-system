@@ -30,6 +30,7 @@ import { TItem } from "./components";
 import { TAppCardHeaderProps, TAppCardProps } from "./components";
 import { IModalProps } from "./components";
 import { IAppStatusBadgeProps } from "./components";
+import { ICustomEditorProps, IAppEditorProps } from "./components";
 
 export type { IBuyer, IVendor, ISample, IEnquiry, IOrder };
 export type {
@@ -62,3 +63,4 @@ export type { TItem };
 export type { TAppCardHeaderProps, TAppCardProps };
 export type { IModalProps };
 export type { IAppStatusBadgeProps };
+export type { ICustomEditorProps, IAppEditorProps };

@@ -1,7 +1,25 @@
-import CustomEditor from "@/components/common/Editor";
+"use client";
+import CustomEditor from "@/components/ui/Editor";
+import AppDotLoader from "@/components/common/NavigationDotloader";
 import SettingShell from "@/components/common/settings-layout/SettingsShell"; // Adjust path as needed
+import { AboutUsFields } from "@/configs/forms/settings/aboutUs.form";
+import { IAboutUs } from "@/types/settings";
+import { AboutUsSchema } from "@/validations";
+import { Button } from "@heroui/react";
+import { FormikProps, useFormik } from "formik";
+import CustomAppEditor from "@/components/common/AppEditor";
 
 export default function ManageAboutUs() {
+ const initialValues: IAboutUs = {
+    aboutUs: "Type Here",
+  };
+  const formik: FormikProps<IAboutUs> = useFormik<IAboutUs>({
+    initialValues: initialValues,
+    validationSchema: AboutUsSchema,
+    onSubmit: async (_values) => {
+      console.log(_values);
+    },
+  });
   return (
     <SettingShell title="Manage About Us">
       <div className="flex flex-col w-full bg-white rounded-md shadow-sm border border-gray-200 p-6">
@@ -11,15 +29,26 @@ export default function ManageAboutUs() {
           </button>
         </div>
         <div className="space-y-8">
-          <CustomEditor />
+          <CustomAppEditor
+            formik={formik}
+            fieldKey={AboutUsFields.aboutUs.key}
+          />
         </div>
         <div className="flex justify-end gap-3 mt-8">
-          <button className="px-6 py-2 border border-gray-300 text-gray-600 rounded-md hover:bg-gray-50 transition">
+          <Button
+            className="px-6 py-2 border border-gray-300 text-gray-600 rounded-md hover:bg-gray-50 transition"
+            onPress={() => formik.resetForm()}
+          >
             Reset
-          </button>
-          <button className="px-6 py-2 bg-[#4A5E8A] text-white rounded-md hover:bg-opacity-90 transition">
+          </Button>
+          <Button
+            onPress={() => formik.handleSubmit()}
+            isPending={formik.isSubmitting}
+            className="px-6 py-2 bg-[#4A5E8A] text-white rounded-md hover:bg-opacity-90 transition"
+          >
+            {formik.isSubmitting ? <AppDotLoader /> : "Save"}
             Save
-          </button>
+          </Button>
         </div>
       </div>
     </SettingShell>

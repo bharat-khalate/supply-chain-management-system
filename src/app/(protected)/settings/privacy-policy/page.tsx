@@ -1,66 +1,55 @@
-"use client"
-import React, { useState } from 'react';
+"use client";
 import SettingShell from "@/components/common/settings-layout/SettingsShell";
+import CustomAppEditor from "@/components/common/AppEditor";
+import AppDotLoader from "@/components/common/NavigationDotloader";
+import { IPrivacyPolicy } from "@/types/settings";
+import { TermsAndConditionsSchema } from "@/validations";
+import { Button } from "@heroui/react";
+import { FormikProps, useFormik } from "formik";
+import { PrivacyPolicyField } from "@/configs/forms/settings/privacyPolicy.form";
 
 export default function ManagePrivacyPolicy() {
-    const [distributorPolicy, setDistributorPolicy] = useState("Privacy Policy Distributor\n\nLorem Ipsum...");
-    const [retailerPolicy, setRetailerPolicy] = useState("Privacy Policy Retailer\n\nLorem Ipsum...");
-
-    return (
-        <SettingShell title="Manage Privacy Policy">
-            <div className="flex flex-col w-full bg-white rounded-lg shadow-sm border border-gray-200 p-6 relative">
-                
-                <button className="absolute top-4 right-6 px-4 py-1 border border-gray-300 rounded text-xs text-gray-600 hover:bg-gray-50 flex items-center gap-1">
-                    <span>←</span> Back
-                </button>
-
-                <div className="border-b border-gray-200 mb-6">
-                    <button className="border-b-2 border-blue-500 pb-2 px-4 text-sm font-medium text-blue-600">
-                        Details
-                    </button>
-                </div>
-
-                <div className="space-y-8">
-                    {/* Distributor Field */}
-                    <div className="flex flex-col gap-2">
-                        <label className="text-[11px] font-bold text-gray-700 uppercase">
-                            Privacy Policy for Distributor<span className="text-red-500">*</span>
-                        </label>
-                        <div className="border border-blue-400 rounded-md overflow-hidden flex flex-col">
-                            <div className="flex items-center gap-4 px-3 py-1.5 border-b border-gray-200 bg-[#F9FAFB] text-gray-400 text-xs">
-                                <span className="font-bold">B</span> <span className="italic">I</span> <span className="underline">U</span> <span>S</span>
-                            </div>
-                            <textarea 
-                                className="p-4 min-h-[180px] w-full outline-none resize-none text-sm text-gray-700"
-                                value={distributorPolicy}
-                                onChange={(e) => setDistributorPolicy(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Retailer Field */}
-                    <div className="flex flex-col gap-2">
-                        <label className="text-[11px] font-bold text-gray-700 uppercase">
-                            Privacy Policy for Retailer<span className="text-red-500">*</span>
-                        </label>
-                        <div className="border border-blue-400 rounded-md overflow-hidden flex flex-col">
-                            <div className="flex items-center gap-4 px-3 py-1.5 border-b border-gray-200 bg-[#F9FAFB] text-gray-400 text-xs">
-                                <span className="font-bold">B</span> <span className="italic">I</span> <span className="underline">U</span> <span>S</span>
-                            </div>
-                            <textarea 
-                                className="p-4 min-h-[180px] w-full outline-none resize-none text-sm text-gray-700"
-                                value={retailerPolicy}
-                                onChange={(e) => setRetailerPolicy(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex justify-end gap-3 mt-10">
-                    <button className="px-5 py-1.5 border border-gray-300 text-sm text-gray-600 rounded">Reset</button>
-                    <button className="px-5 py-1.5 bg-[#52668D] text-white text-sm rounded shadow-sm">Save</button>
-                </div>
-            </div>
-        </SettingShell>
-    );
+  const initialValues: IPrivacyPolicy = {
+    privacyPolicy: "Type Here",
+  };
+  const formik: FormikProps<IPrivacyPolicy> = useFormik<IPrivacyPolicy>({
+    initialValues: initialValues,
+    validationSchema: TermsAndConditionsSchema,
+    onSubmit: async (_values) => {
+      console.log(_values);
+    },
+  });
+  return (
+    <SettingShell title="Manage Privacy Policy">
+      <div className="flex flex-col w-full bg-white rounded-md shadow-sm border border-gray-200 p-6">
+        <div className="border-b border-gray-200 mb-6">
+          <button className="border-b-2 border-blue-500 pb-2 px-4 text-sm font-medium text-blue-600">
+            Details
+          </button>
+        </div>
+        <div className="space-y-8">
+          <CustomAppEditor
+            formik={formik}
+            fieldKey={PrivacyPolicyField.privacyPolicy.key}
+          />
+        </div>
+        <div className="flex justify-end gap-3 mt-8">
+          <Button
+            className="px-6 py-2 border border-gray-300 text-gray-600 rounded-md hover:bg-gray-50 transition"
+            onPress={() => formik.resetForm()}
+          >
+            Reset
+          </Button>
+          <Button
+            onPress={() => formik.handleSubmit()}
+            isPending={formik.isSubmitting}
+            className="px-6 py-2 bg-[#4A5E8A] text-white rounded-md hover:bg-opacity-90 transition"
+          >
+            {formik.isSubmitting ? <AppDotLoader /> : "Save"}
+            Save
+          </Button>
+        </div>
+      </div>
+    </SettingShell>
+  );
 }

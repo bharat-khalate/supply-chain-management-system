@@ -150,3 +150,6 @@
     @apply font-sans;
   }
 }
+.ck-editor__editable_inline {
+  min-height: 150px;
+}

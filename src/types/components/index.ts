@@ -10,6 +10,7 @@ import { TItem } from "./breadcrumb.types";
 import { TAppCardProps, TAppCardHeaderProps } from "./appcard.types";
 import { IModalProps } from "./appmodal.types";
 import {IAppStatusBadgeProps} from "./statusbadge"
+import { ICustomEditorProps, IAppEditorProps } from "./customEditor";
 
 export type { IAlert }
 export type { IBadgeProps, IBadgeVariant }
@@ -23,3 +24,4 @@ export type { TItem }
 export type { TAppCardProps, TAppCardHeaderProps }
 export type {IModalProps}
 export type {IAppStatusBadgeProps}
+export type {ICustomEditorProps, IAppEditorProps}
