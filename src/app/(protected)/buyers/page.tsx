@@ -14,6 +14,8 @@ import AppDotLoader from "@/components/common/NavigationDotloader";
 import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
 import { IPaginationResponse } from "@/types/global.types";
 import { IFetchServiceParams } from "@/types/service/service.types";
+import { RedirectButtonClass } from "@/utils/tailwindCssClassConstant";
+import { Button } from "@heroui/react";
 export default function ProductsPage() {
   const dispatch = useAppDispatch();
   const buyersData: IBuyer[] = useSelector(selectBuyers);
@@ -145,17 +147,17 @@ export default function ProductsPage() {
         <div>
           <h1 className="text-2xl font-bold text-[#0040A1]">Buyers Overview</h1>
         </div>
-        <button
-          onClick={() => navigate(`${pathname}/add`)}
-          disabled={isRedirecting}
-          className="bg-gradient-to-br from-[#0040A1] to-[#0056D2] text-white px-4 py-2 rounded-lg hover:brightness-110 transition text-sm font-medium cursor-pointer min-w-32 min-h-10 flex items-center justify-center disabled:cursor-not-allowed disabled:opacity-90"
+        <Button
+          onPress={() => navigate({ href: `${pathname}/add` })}
+          isDisabled={isRedirecting}
+          className={RedirectButtonClass}
         >
           {isRedirecting ? (
             <AppDotLoader />
           ) : (
             <span>+ OnBoard Buyer</span>
           )}
-        </button>
+        </Button>
       </div>
       <DataTable
         columns={columns}

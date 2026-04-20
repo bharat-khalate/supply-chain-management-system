@@ -2,25 +2,34 @@ import { shouldShowError } from "@/utils/validations";
 import { Button, FieldError, Input, Label, TextField } from "@heroui/react";
 import { useFormik } from "formik";
 import AppDotLoader from "../../../../../components/common/NavigationDotloader";
-import { ISocialMediaLinkSettings } from "@/types/settings";
+import { ISetting, ISocialMediaLinkSettings } from "@/types/settings";
 import { SocialMediaLinkFormFieldConstants } from "@/configs/forms";
 import { SocialMediaLinkFormSchema } from "@/validations";
+import { useSelector } from "react-redux";
+import { selectConfigSettings, updateConfigSetting } from "@/redux/slice";
+import { useAppDispatch } from "@/lib/hooks";
+import { InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 export default function SocialMediaLinkForm(): React.ReactNode {
-  const initialValues: ISocialMediaLinkSettings = {
+  const setting: ISetting | null = useSelector(selectConfigSettings);
+  const { twitterLink, instagramLink, facebookLink } = setting || {
     twitterLink: "",
     instagramLink: "",
     facebookLink: "",
   };
+  const initialValues: ISocialMediaLinkSettings = {
+    twitterLink,
+    instagramLink,
+    facebookLink,
+  };
+  const dispatch = useAppDispatch();
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: SocialMediaLinkFormSchema,
     onSubmit: async (_values) => {
       console.log(_values);
+      dispatch(updateConfigSetting({ ...setting, ..._values } as ISetting))
     },
   });
-  const inputClassName = `flex  w-full rounded-lg border border-gray-200 bg-gray-100 rounded-xs px-3 py-2 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm transition-colors focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none data-[invalid=true]:border-red-500 data-[invalid=true]:bg-red-50 data-[invalid=true]:focus:ring-red-500/20 disabled:cursor-not-allowed disabled:opacity-60`;
-  const inputErrorMessageClass = "text-[0.8rem] font-medium text-destructive";
-  const labelInputClass = "text-sm font-medium leading-none";
   const isInvalid = shouldShowError<ISocialMediaLinkSettings>(formik);
   return (
     <form className="flex flex-col gap-y-6">
@@ -30,11 +39,11 @@ export default function SocialMediaLinkForm(): React.ReactNode {
           SocialMediaLinkFormFieldConstants.twitterLink.key,
         )}
       >
-        <Label className={labelInputClass}>
+        <Label className={InputLabelClass}>
           {SocialMediaLinkFormFieldConstants.twitterLink.label}
         </Label>
         <Input
-          className={inputClassName}
+          className={InputFieldClass}
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
           value={
@@ -47,10 +56,10 @@ export default function SocialMediaLinkForm(): React.ReactNode {
         {isInvalid(
           SocialMediaLinkFormFieldConstants.twitterLink.key,
         ) && (
-          <FieldError className={inputErrorMessageClass}>
-            {formik.errors[SocialMediaLinkFormFieldConstants.twitterLink.key]}
-          </FieldError>
-        )}
+            <FieldError className={InputFieldErrorMessageClass}>
+              {formik.errors[SocialMediaLinkFormFieldConstants.twitterLink.key]}
+            </FieldError>
+          )}
       </TextField>
       <TextField
         isRequired
@@ -58,11 +67,11 @@ export default function SocialMediaLinkForm(): React.ReactNode {
           SocialMediaLinkFormFieldConstants.instagramLink.key,
         )}
       >
-        <Label className={labelInputClass}>
+        <Label className={InputLabelClass}>
           {SocialMediaLinkFormFieldConstants.instagramLink.label}
         </Label>
         <Input
-          className={inputClassName}
+          className={InputFieldClass}
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
           value={
@@ -75,10 +84,10 @@ export default function SocialMediaLinkForm(): React.ReactNode {
         {isInvalid(
           SocialMediaLinkFormFieldConstants.instagramLink.key,
         ) && (
-          <FieldError className={inputErrorMessageClass}>
-            {formik.errors[SocialMediaLinkFormFieldConstants.instagramLink.key]}
-          </FieldError>
-        )}
+            <FieldError className={InputFieldErrorMessageClass}>
+              {formik.errors[SocialMediaLinkFormFieldConstants.instagramLink.key]}
+            </FieldError>
+          )}
       </TextField>
       <TextField
         isRequired
@@ -86,11 +95,11 @@ export default function SocialMediaLinkForm(): React.ReactNode {
           SocialMediaLinkFormFieldConstants.facebookLink.key,
         )}
       >
-        <Label className={labelInputClass}>
+        <Label className={InputLabelClass}>
           {SocialMediaLinkFormFieldConstants.facebookLink.label}
         </Label>
         <Input
-          className={inputClassName}
+          className={InputFieldClass}
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
           value={
@@ -103,15 +112,15 @@ export default function SocialMediaLinkForm(): React.ReactNode {
         {isInvalid(
           SocialMediaLinkFormFieldConstants.facebookLink.key,
         ) && (
-          <FieldError className={inputErrorMessageClass}>
-            {formik.errors[SocialMediaLinkFormFieldConstants.facebookLink.key]}
-          </FieldError>
-        )}
+            <FieldError className={InputFieldErrorMessageClass}>
+              {formik.errors[SocialMediaLinkFormFieldConstants.facebookLink.key]}
+            </FieldError>
+          )}
       </TextField>
       <div className="flex justify-end gap-5 mt-5">
         <Button
           type="submit"
-          className="bg-blue-900 text-white px-4 py-2 text-sm font-medium rounded-md shadow hover:bg-blue-950"
+          className={SubmitButtonClass}
           isPending={formik.isSubmitting}
         >
           {formik.isSubmitting ? <AppDotLoader /> : "Save Setting"}
@@ -119,7 +128,7 @@ export default function SocialMediaLinkForm(): React.ReactNode {
         <Button
           variant="ghost"
           onPress={() => formik.resetForm()}
-          className="px-4 py-2 text-sm font-medium rounded-md border border-blue-800 hover:bg-accent"
+          className={ResetFormButtonClass}
         >
           Reset
         </Button>

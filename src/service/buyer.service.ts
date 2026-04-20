@@ -5,7 +5,7 @@ const buyerService = {
     fetchAll: async (params: IFetchServiceParams): Promise<IPaginatedData<IBuyer>> => {
         return new Promise((resolve) => {
             setTimeout(() => {
-                    resolve(getPaginatedData<IBuyer>(buyers))
+                resolve(getPaginatedData<IBuyer>(buyers))
             }, 500);
         });
     },
@@ -27,7 +27,7 @@ const buyerService = {
                 resolve(newBuyer);
             }, 300);
         });
-    },    update: async (updatedBuyer: IBuyer): Promise<IBuyer> => {
+    }, update: async (updatedBuyer: IBuyer): Promise<IBuyer> => {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(updatedBuyer);
@@ -43,3 +43,4 @@ const buyerService = {
     },
 };
 export default buyerService;
+export type TBuyerService = typeof buyerService;

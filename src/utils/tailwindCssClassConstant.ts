@@ -1,0 +1,6 @@
+export const InputFieldClass = `flex  w-full rounded-lg border border-gray-200 bg-gray-100 rounded-xs px-3 py-2 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm transition-colors focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none data-[invalid=true]:border-red-500 data-[invalid=true]:bg-red-50 data-[invalid=true]:focus:ring-red-500/20 disabled:cursor-not-allowed disabled:opacity-60`;
+export const InputFieldErrorMessageClass = "text-[0.8rem] font-medium text-destructive";
+export const InputLabelClass = "text-sm font-medium leading-none";
+export const RedirectButtonClass = "bg-gradient-to-br from-[#0040A1] to-[#0056D2] text-white px-4 py-2 rounded-lg hover:brightness-110 transition text-sm font-medium cursor-pointer min-w-32 min-h-10 flex items-center justify-center disabled:cursor-not-allowed disabled:opacity-90";
+export const SubmitButtonClass = "bg-blue-600 text-white px-4 py-2 text-sm font-medium rounded-md shadow hover:bg-blue-700";
+export const ResetFormButtonClass = "px-4 py-2 text-sm font-medium rounded-md border border-input hover:bg-accent";

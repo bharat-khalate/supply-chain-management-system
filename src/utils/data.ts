@@ -3,6 +3,7 @@ import { IBuyer } from "@/types/buyer.types";
 import { IEnquiry } from "@/types/enquiry.types";
 import { IOrder } from "@/types/orders.types";
 import { ISample } from "@/types/sample.types";
+import { IPageSetting, ISetting } from "@/types/settings";
 import { IVendor } from "@/types/vendor.types";
 
 export const enquiries: IEnquiry[] = [
@@ -477,5 +478,64 @@ export const getPaginatedData = <T>(
     canPreviousPage: false,
   },
 });
+export const configSetting: ISetting = {
+  systemEmail: "admin@example.com",
+  phone: "+919876543210",
+  websiteVideoUrl: "https://example.com/video",
+  twitterLink: "https://twitter.com/example",
+  instagramLink: "https://instagram.com/example",
+  facebookLink: "https://facebook.com/example",
+  androidVersion: 1,
+  iosVersion: 1,
+  androidLink: "https://play.google.com/store/apps/details?id=com.example.app",
+  iosLink: "https://apps.apple.com/app/id1234567890",
+};
+export const pageSetting: IPageSetting = {
+  termsAndConditions: `
+    <h2>Terms & Conditions</h2>
+    <p>Welcome to our platform. By accessing or using our services, you agree to be bound by these terms.</p>
+    
+    <h3>1. Usage</h3>
+    <p>You agree to use the application only for lawful purposes and in a way that does not infringe the rights of others.</p>
+    
+    <h3>2. Account Responsibility</h3>
+    <p>You are responsible for maintaining the confidentiality of your account credentials.</p>
+    
+    <h3>3. Limitation of Liability</h3>
+    <p>We are not liable for any damages arising from the use or inability to use the service.</p>
+    
+    <p><strong>Note:</strong> These terms may be updated from time to time.</p>
+  `,
 
+  aboutUs: `
+    <h2>About Us</h2>
+    <p>We are a technology-driven company focused on delivering high-quality digital solutions.</p>
+    
+    <p>Our mission is to create reliable, scalable, and user-friendly applications that solve real-world problems.</p>
+    
+    <ul>
+      <li>Innovative solutions</li>
+      <li>Customer-centric approach</li>
+      <li>Continuous improvement</li>
+    </ul>
+    
+    <p>We strive to maintain excellence in everything we build.</p>
+  `,
+
+  privacyPolicy: `
+    <h2>Privacy Policy</h2>
+    <p>Your privacy is important to us. This policy explains how we collect and use your data.</p>
+    
+    <h3>1. Information Collection</h3>
+    <p>We may collect personal information such as name, email address, and usage data.</p>
+    
+    <h3>2. Usage of Information</h3>
+    <p>We use your data to improve our services and provide a better user experience.</p>
+    
+    <h3>3. Data Protection</h3>
+    <p>We implement appropriate security measures to protect your data.</p>
+    
+    <p><strong>Contact:</strong> For any questions, please reach out to our support team.</p>
+  `,
+};
 

@@ -1,33 +1,43 @@
 import AppDotLoader from "@/components/common/NavigationDotloader";
 import { AppVersionFields } from "@/configs/forms";
-import { IAppVersion } from "@/types/settings";
+import { useAppDispatch } from "@/lib/hooks";
+import { selectConfigSettingError, selectConfigSettingLoader, selectConfigSettings, updateConfigSetting } from "@/redux/slice";
+import { IAppVersion, ISetting } from "@/types/settings";
+import { InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { shouldShowError } from "@/utils/validations";
 import { AppVersionSchema } from "@/validations";
 import { FieldError, Label, TextField, Input, Button } from "@heroui/react";
 import { useFormik } from "formik";
+import { useSelector } from "react-redux";
 export default function AppVersion(): React.ReactNode {
-  const initialValues: IAppVersion = {
+  const settings: ISetting | null = useSelector(selectConfigSettings);
+  const { androidVersion, iosVersion } = settings || {
     androidVersion: 1,
     iosVersion: 1,
+  };
+  const isLoading: boolean = useSelector(selectConfigSettingLoader);
+  const error: string | null = useSelector(selectConfigSettingError);
+  const dispatch = useAppDispatch();
+  const initialValues: IAppVersion = {
+    androidVersion,
+    iosVersion
   };
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: AppVersionSchema,
     onSubmit: async (_values) => {
       console.log(_values);
+      dispatch(updateConfigSetting({ ...settings, ..._values } as ISetting))
     },
   });
   const isInvalid = shouldShowError<IAppVersion>(formik);
-  const inputClassName = `flex  w-full rounded-lg border border-gray-200 bg-gray-100 rounded-xs px-3 py-2 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm transition-colors focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none data-[invalid=true]:border-red-500 data-[invalid=true]:bg-red-50 data-[invalid=true]:focus:ring-red-500/20 disabled:cursor-not-allowed disabled:opacity-60`;
-  const inputErrorMessageClass = "text-[0.8rem] font-medium text-destructive";
-  const inputLabelClass = "text-sm font-medium leading-none";
   return (
     <form onSubmit={formik.handleSubmit} className="flex flex-col gap-y-6">
       <TextField
         isRequired
         isInvalid={isInvalid(AppVersionFields.androidVersion.key)}
       >
-        <Label className={inputLabelClass}>
+        <Label className={InputLabelClass}>
           {AppVersionFields.androidVersion.label}
         </Label>
         <Input
@@ -37,10 +47,10 @@ export default function AppVersion(): React.ReactNode {
           onBlur={formik.handleBlur}
           aria-label={AppVersionFields.androidVersion.label}
           name={AppVersionFields.androidVersion.key}
-          className={inputClassName}
+          className={InputFieldClass}
         />
         {formik.errors[AppVersionFields.androidVersion.key] && (
-          <FieldError className={inputErrorMessageClass}>
+          <FieldError className={InputFieldErrorMessageClass}>
             {formik.errors[AppVersionFields.androidVersion.key]}
           </FieldError>
         )}
@@ -49,7 +59,7 @@ export default function AppVersion(): React.ReactNode {
         isRequired
         isInvalid={isInvalid(AppVersionFields.iosVersion.key)}
       >
-        <Label className={inputLabelClass}>
+        <Label className={InputLabelClass}>
           {AppVersionFields.iosVersion.label}
         </Label>
         <Input
@@ -58,11 +68,11 @@ export default function AppVersion(): React.ReactNode {
           value={formik.values[AppVersionFields.iosVersion.key]}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          className={inputClassName}
+          className={InputFieldClass}
           aria-label={AppVersionFields.iosVersion.label}
         />
         {formik.errors[AppVersionFields.iosVersion.key] && (
-          <FieldError className={inputErrorMessageClass}>
+          <FieldError className={InputFieldErrorMessageClass}>
             {formik.errors[AppVersionFields.iosVersion.key]}
           </FieldError>
         )}
@@ -71,14 +81,14 @@ export default function AppVersion(): React.ReactNode {
         <Button
           type="submit"
           className={
-            "bg-blue-900 hover:bg-blue-950 text-white px-4 py-2 text-sm font-medium rounded-md shadow "
+            SubmitButtonClass
           }
           isPending={formik.isSubmitting}
         >
           {formik.isSubmitting ? <AppDotLoader /> : "Save"}
         </Button>
         <Button
-          className="border-blue-900 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent"
+          className={ResetFormButtonClass}
           onPress={() => formik.resetForm()}
         >
           Reset

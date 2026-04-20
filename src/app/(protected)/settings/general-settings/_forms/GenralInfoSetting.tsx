@@ -1,26 +1,37 @@
 import { shouldShowError } from "@/utils/validations";
 import { Button, FieldError, Input, Label, TextField } from "@heroui/react";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import AppDotLoader from "../../../../../components/common/NavigationDotloader";
-import { IGeneralInfoSetting } from "@/types/settings";
+import { IGeneralInfoSetting, ISetting } from "@/types/settings";
 import { GeneralSettingConstant } from "@/configs/forms";
 import { GeneralInfoSchema } from "@/validations";
+import { useSelector } from "react-redux";
+import { fetchConfigSetting, selectConfigSettings, updateConfigSetting } from "@/redux/slice";
+import { useAppDispatch } from "@/lib/hooks";
+import { InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 export default function GeneralInfoSettingForm(): React.ReactNode {
-  const initialValues: IGeneralInfoSetting = {
+  const setting: ISetting | null = useSelector(selectConfigSettings);
+  const { systemEmail, phone, websiteVideoUrl } = setting || {
     systemEmail: "",
     phone: "",
     websiteVideoUrl: "",
+  };
+  const dispatch = useAppDispatch();
+  const initialValues: IGeneralInfoSetting = {
+    systemEmail,
+    phone,
+    websiteVideoUrl,
   };
   const formik = useFormik({
     initialValues,
     validationSchema: GeneralInfoSchema,
     onSubmit: async (_values) => {
       console.log(_values);
+      dispatch(updateConfigSetting({ ...setting, ..._values } as ISetting));
     },
   });
-  const inputClassName = `flex  w-full rounded-lg border border-gray-200 bg-gray-100 rounded-xs px-3 py-2 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm transition-colors focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none data-[invalid=true]:border-red-500 data-[invalid=true]:bg-red-50 data-[invalid=true]:focus:ring-red-500/20 disabled:cursor-not-allowed disabled:opacity-60`;
-  const inputErrorMessageClass = "text-[0.8rem] font-medium text-destructive";
+
   const isInvalid = shouldShowError<IGeneralInfoSetting>(formik);
   return (
     <form onSubmit={formik.handleSubmit} className="flex flex-col space-y-6">
@@ -28,42 +39,42 @@ export default function GeneralInfoSettingForm(): React.ReactNode {
         isRequired
         isInvalid={isInvalid(GeneralSettingConstant.systemEmail.key)}
       >
-        <Label className="text-sm font-medium leading-none">
+        <Label className={InputLabelClass}>
           {GeneralSettingConstant.systemEmail.label}
         </Label>
         <Input
           name={GeneralSettingConstant.systemEmail.key}
           placeholder="Enter System Email"
-          className={inputClassName}
+          className={InputFieldClass}
           value={formik.values[GeneralSettingConstant.systemEmail.key]}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           aria-label={GeneralSettingConstant.systemEmail.label}
         />
-        {isInvalid( GeneralSettingConstant.systemEmail.key) && (
-          <FieldError className={inputErrorMessageClass}>
+        {isInvalid(GeneralSettingConstant.systemEmail.key) && (
+          <FieldError className={InputFieldErrorMessageClass}>
             {formik.errors[GeneralSettingConstant.systemEmail.key]}
           </FieldError>
         )}
       </TextField>
       <TextField
         isRequired
-        isInvalid={isInvalid( GeneralSettingConstant.phone.key)}
+        isInvalid={isInvalid(GeneralSettingConstant.phone.key)}
       >
-        <Label className="text-sm font-medium leading-none">
+        <Label className={InputLabelClass}>
           {GeneralSettingConstant.phone.label}
         </Label>
         <Input
           name={GeneralSettingConstant.phone.key}
           placeholder="Enter Phone Number"
-          className={inputClassName}
+          className={InputFieldClass}
           value={formik.values[GeneralSettingConstant.phone.key]}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           aria-label={GeneralSettingConstant.phone.label}
         />
-        {isInvalid( GeneralSettingConstant.phone.key) && (
-          <FieldError className={inputErrorMessageClass}>
+        {isInvalid(GeneralSettingConstant.phone.key) && (
+          <FieldError className={InputFieldErrorMessageClass}>
             {formik.errors[GeneralSettingConstant.phone.key]}
           </FieldError>
         )}
@@ -75,13 +86,13 @@ export default function GeneralInfoSettingForm(): React.ReactNode {
           GeneralSettingConstant.websiteVideoUrl.key,
         )}
       >
-        <Label className="text-sm font-medium leading-none">
+        <Label className={InputLabelClass}>
           {GeneralSettingConstant.websiteVideoUrl.label}
         </Label>
         <Input
           name={GeneralSettingConstant.websiteVideoUrl.key}
           placeholder="Enter Website Video Url"
-          className={inputClassName}
+          className={InputFieldClass}
           value={formik.values[GeneralSettingConstant.websiteVideoUrl.key]}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -90,15 +101,15 @@ export default function GeneralInfoSettingForm(): React.ReactNode {
         {isInvalid(
           GeneralSettingConstant.websiteVideoUrl.key,
         ) && (
-          <FieldError className={inputErrorMessageClass}>
-            {formik.errors[GeneralSettingConstant.websiteVideoUrl.key]}
-          </FieldError>
-        )}
+            <FieldError className={InputFieldErrorMessageClass}>
+              {formik.errors[GeneralSettingConstant.websiteVideoUrl.key]}
+            </FieldError>
+          )}
       </TextField>
       <div className="flex justify-end gap-5 mt-5">
         <Button
           type="submit"
-          className="bg-blue-900 text-white px-4 py-2 text-sm font-medium rounded-md shadow hover:bg-blue-900"
+          className={SubmitButtonClass}
           isPending={formik.isSubmitting}
         >
           {formik.isSubmitting ? <AppDotLoader /> : "Save Setting"}
@@ -107,7 +118,7 @@ export default function GeneralInfoSettingForm(): React.ReactNode {
         <Button
           variant="ghost"
           onPress={() => formik.resetForm()}
-          className="px-4 py-2 text-sm font-medium rounded-md border border-blue-800 hover:bg-accent"
+          className={ResetFormButtonClass}
         >
           Reset
         </Button>

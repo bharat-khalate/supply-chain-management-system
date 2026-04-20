@@ -1,35 +1,45 @@
 import AppDotLoader from "@/components/common/NavigationDotloader";
 import { AppLinkFields } from "@/configs/forms";
-import { IAppLink } from "@/types/settings";
+import { useAppDispatch } from "@/lib/hooks";
+import { fetchConfigSetting, selectConfigSettingError, selectConfigSettingLoader, selectConfigSettings, updateConfigSetting } from "@/redux/slice";
+import { IAppLink, ISetting } from "@/types/settings";
+import { InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { shouldShowError } from "@/utils/validations";
 import { AppLinkSchema } from "@/validations";
 import { Button, FieldError, Input, Label, TextField } from "@heroui/react";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export default function AppLink(): React.ReactNode {
-  const initialValues: IAppLink = {
+  const settings: ISetting | null = useSelector(selectConfigSettings);
+  const { iosLink, androidLink } = settings || {
     iosLink: "",
     androidLink: "",
+  };
+  const isLoading: boolean = useSelector(selectConfigSettingLoader);
+  const error: string | null = useSelector(selectConfigSettingError);
+  const dispatch = useAppDispatch();
+  const initialValues: IAppLink = {
+    androidLink,
+    iosLink,
   };
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: AppLinkSchema,
     onSubmit: async (_values) => {
       console.log(_values);
+      dispatch(updateConfigSetting({ ...settings, ..._values } as ISetting))
     },
   });
   const isInvalid = shouldShowError<IAppLink>(formik);
-  const inputClassName = `flex  w-full rounded-lg border border-gray-200 bg-gray-100 rounded-xs px-3 py-2 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm transition-colors focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none data-[invalid=true]:border-red-500 data-[invalid=true]:bg-red-50 data-[invalid=true]:focus:ring-red-500/20 disabled:cursor-not-allowed disabled:opacity-60`;
-  const inputErrorMessageClass = "text-[0.8rem] font-medium text-destructive";
-  const inputLabelClass = "text-sm font-medium leading-none";
   return (
     <form onSubmit={formik.handleSubmit} className="flex flex-col gap-y-6">
       <TextField
         isRequired
         isInvalid={isInvalid(AppLinkFields.androidLink.key)}
       >
-        <Label className={inputLabelClass}>
+        <Label className={InputLabelClass}>
           {AppLinkFields.androidLink.label}
         </Label>
         <Input
@@ -39,16 +49,16 @@ export default function AppLink(): React.ReactNode {
           onBlur={formik.handleBlur}
           aria-label={AppLinkFields.androidLink.key}
           name={AppLinkFields.androidLink.key}
-          className={inputClassName}
+          className={InputFieldClass}
         />
         {formik.errors[AppLinkFields.androidLink.key] && (
-          <FieldError className={inputErrorMessageClass}>
+          <FieldError className={InputFieldErrorMessageClass}>
             {formik.errors[AppLinkFields.androidLink.key]}
           </FieldError>
         )}
       </TextField>
       <TextField isRequired isInvalid={isInvalid(AppLinkFields.iosLink.key)}>
-        <Label className={inputLabelClass}>{AppLinkFields.iosLink.label}</Label>
+        <Label className={InputLabelClass}>{AppLinkFields.iosLink.label}</Label>
         <Input
           placeholder="Enter IOS Link"
           value={formik.values[AppLinkFields.iosLink.key]}
@@ -56,10 +66,10 @@ export default function AppLink(): React.ReactNode {
           onBlur={formik.handleBlur}
           aria-label={AppLinkFields.iosLink.key}
           name={AppLinkFields.iosLink.key}
-          className={inputClassName}
+          className={InputFieldClass}
         />
         {formik.errors[AppLinkFields.iosLink.key] && (
-          <FieldError className={inputErrorMessageClass}>
+          <FieldError className={InputFieldErrorMessageClass}>
             {formik.errors[AppLinkFields.iosLink.key]}
           </FieldError>
         )}
@@ -71,14 +81,14 @@ export default function AppLink(): React.ReactNode {
         <Button
           type="submit"
           className={
-            "bg-blue-900 hover:bg-blue-950 px-4 py-2 text-white text-sm rounded-md shadow "
+            SubmitButtonClass
           }
           isPending={formik.isSubmitting}
         >
           {formik.isSubmitting ? <AppDotLoader /> : "Save"}
         </Button>
         <Button
-          className={"text-sm px-4 py-2 rounded-md font-medium hover:bg-accent border border-blue-900"}
+          className={ResetFormButtonClass}
           onPress={() => formik.resetForm()}
         >
           Reset

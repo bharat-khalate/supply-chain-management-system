@@ -47,3 +47,4 @@ const vendorService = {
 
 };
 export default vendorService;
+export type TVendorService = typeof vendorService;

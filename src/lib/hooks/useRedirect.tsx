@@ -2,12 +2,13 @@
 "use client";
 import React, { createContext, useContext, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { IRedirectOptions } from "@/types";
 const LoadingContext = createContext({
     isRedirecting: false,
-    navigate: (href: string) => { },
+    navigate: (_options: IRedirectOptions) => { },
 });
 /**
- * @description
+ * @description 
  * Global loading context to handle route navigation with transition state.
  * - Uses React `useTransition` to track navigation loading state
  * - Provides a `navigate` function for route changes
@@ -23,9 +24,12 @@ const LoadingContext = createContext({
 export const LoadingProvider = ({ children }: { children: React.ReactNode }) => {
     const [isRedirecting, startTransition] = useTransition();
     const router = useRouter();
-    const navigate = (href: string) => {
+    const navigate = ({ action = "push", href }: IRedirectOptions) => {
         startTransition(() => {
-            router.push(href);
+            if (action === "back") {
+                router.back()
+            } else if (href)
+                router.push(href);
         });
     };
     return (

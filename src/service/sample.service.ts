@@ -43,6 +43,7 @@ const sampleService = {
             }, 300);
         });
     },
-    
+
 };
 export default sampleService;
+export type TSampleService = typeof sampleService;

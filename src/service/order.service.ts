@@ -46,3 +46,4 @@ const orderService = {
    
 };
 export default orderService;
+export type TOrderService=typeof orderService;

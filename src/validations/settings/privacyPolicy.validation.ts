@@ -5,7 +5,7 @@ import * as Yup from "yup";
 export const PrivacyPolicySchema: Yup.ObjectSchema<IPrivacyPolicy> = Yup.object(
   {
     privacyPolicy: CommonRichTextRequiredValidator(
-      PrivacyPolicyField.privacyPolicy.key,
+      PrivacyPolicyField.privacyPolicy.label,
     ),
   },
 );

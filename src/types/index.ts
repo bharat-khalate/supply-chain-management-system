@@ -11,6 +11,7 @@ import {
   IPaginatedData,
   IPaginationQuery,
 } from "./global.types";
+import {IRedirectOptions} from "./hook.types"
 
 //component types import
 import { IAlert } from "./components";
@@ -49,6 +50,7 @@ export type {
   IPaginatedData,
   IPaginationQuery,
 };
+export {IRedirectOptions}
 
 //component type export
 export type { IAlert };

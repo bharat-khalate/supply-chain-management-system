@@ -29,6 +29,7 @@ import {
 } from "@icons/form-icons";
 import AppDotLoader from "@/components/common/NavigationDotloader";
 import { BuyerSchema } from "@/validations";
+import { InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 const BUYER_TYPES = [
   { id: "Retailer", name: "Retailer" },
   { id: "Wholesaler", name: "Wholesaler" },
@@ -76,7 +77,6 @@ export default function OnBoardVendor() {
     },
   });
   const isInvalid = shouldShowError(formik);
-  const inputClassName = `flex  w-full rounded-lg border border-gray-200 bg-gray-100 rounded-xs px-3 py-2 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm transition-colors focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none data-[invalid=true]:border-red-500 data-[invalid=true]:bg-red-50 data-[invalid=true]:focus:ring-red-500/20 disabled:cursor-not-allowed disabled:opacity-60`;
   return (
     <div className="space-y-6 my-6 max-w-3xl ">
       <div className="flex items-center justify-start my-6">
@@ -102,11 +102,11 @@ export default function OnBoardVendor() {
                 isInvalid={isInvalid("buyerName")}
                 className="space-y-2 basis-1/2"
               >
-                <Label className="text-sm font-medium leading-none">Name</Label>
+                <Label className={InputLabelClass}>Name</Label>
                 <Input
                   name="buyerName"
                   placeholder="Enter Buyer Name"
-                  className={inputClassName}
+                  className={InputFieldClass}
                   value={formik.values.buyerName}
                   onChange={(e) =>
                     formik.setFieldValue(
@@ -118,7 +118,7 @@ export default function OnBoardVendor() {
                   aria-label="Name"
                 />
                 {isInvalid("buyerName") && (
-                  <FieldError className="text-[0.8rem] font-medium text-destructive">
+                  <FieldError className={InputFieldErrorMessageClass}>
                     {formik.errors.buyerName as string}
                   </FieldError>
                 )}
@@ -128,20 +128,20 @@ export default function OnBoardVendor() {
                 isInvalid={isInvalid("contactPerson")}
                 className="space-y-2 basis-1/2"
               >
-                <Label className="text-sm font-medium leading-none">
+                <Label className={InputLabelClass}>
                   Contact Person
                 </Label>
                 <Input
                   name="contactPerson"
                   placeholder="Enter contact person name"
-                  className={inputClassName}
+                  className={InputFieldClass}
                   value={formik.values.contactPerson}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   aria-label="Contact Person"
                 />
                 {isInvalid("contactPerson") && (
-                  <FieldError className="text-[0.8rem] font-medium text-destructive">
+                  <FieldError className={InputFieldErrorMessageClass}>
                     {formik.errors.contactPerson as string}
                   </FieldError>
                 )}
@@ -152,13 +152,13 @@ export default function OnBoardVendor() {
               isInvalid={isInvalid("buyerAddress")}
               className="space-y-2"
             >
-              <Label className="text-sm font-medium leading-none">
+              <Label className={InputLabelClass}>
                 Address
               </Label>
               <TextArea
                 name="buyerAddress"
                 placeholder="Enter address"
-                className={`${inputClassName}`}
+                className={`${InputFieldClass}`}
                 value={formik.values.buyerAddress}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -166,7 +166,7 @@ export default function OnBoardVendor() {
                 aria-label="Address"
               />
               {isInvalid("buyerAddress") && (
-                <FieldError className="text-[0.8rem] font-medium text-destructive">
+                <FieldError className={InputFieldErrorMessageClass}>
                   {formik.errors.buyerAddress as string}
                 </FieldError>
               )}
@@ -203,10 +203,10 @@ export default function OnBoardVendor() {
                 }}
                 isInvalid={isInvalid("buyerType")}
               >
-                <Label className="text-sm font-medium leading-none">
+                <Label className={InputLabelClass}>
                   Buyer Type
                 </Label>
-                <Select.Trigger className={inputClassName}>
+                <Select.Trigger className={InputFieldClass}>
                   {/* Place placeholder directly in Select.Value */}
                   <Select.Value className="placeholder:text-gray-400 text-gray-700 " />
                   <Select.Indicator className="ml-2 text-gray-400" />
@@ -227,7 +227,7 @@ export default function OnBoardVendor() {
                   </ListBox>
                 </Select.Popover>
                 {isInvalid("buyerType") && (
-                  <FieldError className="text-[0.8rem] font-medium text-destructive">
+                  <FieldError className={InputFieldErrorMessageClass}>
                     {formik.errors.buyerType as string}
                   </FieldError>
                 )}
@@ -237,20 +237,20 @@ export default function OnBoardVendor() {
                 isInvalid={isInvalid("phone")}
                 className="space-y-2"
               >
-                <Label className="text-sm font-medium leading-none">
+                <Label className={InputLabelClass}>
                   Phone
                 </Label>
                 <Input
                   name="phone"
                   placeholder="Enter phone number"
-                  className={`${inputClassName} basis-1/3`}
+                  className={`${InputFieldClass} basis-1/3`}
                   value={formik.values.phone}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   aria-label="Phone"
                 />
                 {isInvalid("phone") && (
-                  <FieldError className="text-[0.8rem] font-medium text-destructive">
+                  <FieldError className={InputFieldErrorMessageClass}>
                     {formik.errors.phone as string}
                   </FieldError>
                 )}
@@ -260,20 +260,20 @@ export default function OnBoardVendor() {
                 isInvalid={isInvalid("email")}
                 className="space-y-2"
               >
-                <Label className="text-sm font-medium leading-none">
+                <Label className={InputLabelClass}>
                   Email
                 </Label>
                 <Input
                   name="email"
                   placeholder="Enter email address"
-                  className={`${inputClassName} basis-1/3`}
+                  className={`${InputFieldClass} basis-1/3`}
                   value={formik.values.email}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   aria-label="Email"
                 />
                 {isInvalid("email") && (
-                  <FieldError className="text-[0.8rem] font-medium text-destructive">
+                  <FieldError className={InputFieldErrorMessageClass}>
                     {formik.errors.email as string}
                   </FieldError>
                 )}
@@ -304,12 +304,11 @@ export default function OnBoardVendor() {
                       onClick={() => formik.setFieldValue("status", item.value)}
                       className={`flex flex-col items-center justify-center gap-2 
                                             w-full sm:basis-1/2 h-20 rounded-lg border cursor-pointer transition-all
-                                             ${
-                                               formik.values.status ===
-                                               item.value
-                                                 ? "border-blue-600 bg-blue-50 text-blue-700"
-                                                 : "border-gray-200 bg-white text-gray-500 hover:border-gray-300"
-                                             }`}
+                                             ${formik.values.status ===
+                          item.value
+                          ? "border-blue-600 bg-blue-50 text-blue-700"
+                          : "border-gray-200 bg-white text-gray-500 hover:border-gray-300"
+                        }`}
                     >
                       <div>{item.icon}</div>
                       <span className="text-sm font-medium w-full text-center">
@@ -337,20 +336,20 @@ export default function OnBoardVendor() {
                 isInvalid={isInvalid("requirementCategory")}
                 className="space-y-2"
               >
-                <Label className="text-sm font-medium leading-none">
+                <Label className={InputLabelClass}>
                   Requirement Category
                 </Label>
                 <Input
                   name="requirementCategory"
                   placeholder="Enter Category"
-                  className={`${inputClassName} `}
+                  className={`${InputFieldClass} `}
                   value={formik.values.requirementCategory}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   aria-label="Requirement CategoryF"
                 />
                 {isInvalid("requirementCategory") && (
-                  <FieldError className="text-[0.8rem] font-medium text-destructive">
+                  <FieldError className={InputFieldErrorMessageClass}>
                     {formik.errors.requirementCategory as string}
                   </FieldError>
                 )}
@@ -362,18 +361,17 @@ export default function OnBoardVendor() {
           <Button
             variant="ghost"
             onPress={() => formik.resetForm()}
-            className="px-4 py-2 text-sm font-medium rounded-md border border-input hover:bg-accent"
+            className={ResetFormButtonClass}
           >
             Reset
           </Button>
           <Button
             type="submit"
-            className="bg-blue-600 text-white px-4 py-2 text-sm font-medium rounded-md shadow hover:bg-blue-700"
+            className={SubmitButtonClass}
             isPending={formik.isSubmitting}
             onPress={() => setShowValidation(true)}
           >
             {formik.isSubmitting ? <AppDotLoader /> : "Save Buyer"}
-            {/* Save Buyer */}
           </Button>
         </div>
       </form>

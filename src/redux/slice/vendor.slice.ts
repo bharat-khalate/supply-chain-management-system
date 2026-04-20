@@ -96,7 +96,7 @@ const vendorSlice = createSlice({
       })
       .addCase(removeVendor.fulfilled, (state) => {
         state.loading = false;
-      })
+      })    
       .addMatcher(
         (action) =>
           action.type.startsWith("vendors/") &&

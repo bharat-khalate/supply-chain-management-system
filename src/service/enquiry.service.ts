@@ -44,3 +44,4 @@ const enquiryService = {
     },
 };
 export default enquiryService;
+export type TEnquiryService = typeof enquiryService;
