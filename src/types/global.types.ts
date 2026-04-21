@@ -24,7 +24,6 @@ export interface IPaginationResponse {
   canNextPage: boolean;
   canPreviousPage: boolean;
 };
-
 export interface IPaginatedResponse<T = any> {
   success: boolean;
   statusCode: number;
@@ -32,12 +31,10 @@ export interface IPaginatedResponse<T = any> {
   data: T[];
   pagination: IPaginationResponse;
 }
-
 export interface IPaginatedData<T> {
   data: T[];
   pagination: IPaginationResponse
 }
-
 export interface IPaginatedState<T> {
   data: T[];
   pagination: IPaginationResponse;

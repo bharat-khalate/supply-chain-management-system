@@ -26,7 +26,6 @@ export function createCronJobs(): ICronJobs {
         logger.error('Cleanup expired tokens job failed', error);
       }
     },
-
     /**
      * Send daily digest emails
      */
@@ -38,7 +37,6 @@ export function createCronJobs(): ICronJobs {
         logger.error('Daily digest job failed', error);
       }
     },
-
     /**
      * Update reports
      */
@@ -52,7 +50,6 @@ export function createCronJobs(): ICronJobs {
     },
   };
 }
-
 /**
  * Initialize all cron jobs with scheduled execution
  */

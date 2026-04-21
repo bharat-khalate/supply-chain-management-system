@@ -88,7 +88,7 @@ const orderSlice = createSlice({
             })
             .addCase(addOrder.fulfilled, (state, action) => {
                 state.loading = false;
-                state.selected = action.payload; // optional
+                state.selected = action.payload;
             })
             .addCase(updateOrder.fulfilled, (state, action) => {
                 state.loading = false;

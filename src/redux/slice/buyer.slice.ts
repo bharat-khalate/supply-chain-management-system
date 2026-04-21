@@ -86,7 +86,7 @@ const buyerSlice = createSlice({
             })
             .addCase(addBuyer.fulfilled, (state, action) => {
                 state.loading = false;
-                state.selected = action.payload; // optional
+                state.selected = action.payload; 
             })
             .addCase(updateBuyer.fulfilled, (state, action) => {
                 state.loading = false;

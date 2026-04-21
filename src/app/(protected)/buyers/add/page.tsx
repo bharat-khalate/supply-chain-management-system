@@ -1,35 +1,31 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useFormik } from "formik";
-import { RadioGroup } from "@heroui/react";
-import { CheckCircle, Ban } from "lucide-react";
-import toast from "react-hot-toast";
-import {
-  Button,
-  FieldError,
-  Label,
-  ListBox,
-  Select,
-  TextField,
-  Input,
-  TextArea,
-} from "@heroui/react";
 import { AppBreadcrumb } from "@/components/common/AppBreadCrumb";
 import Card from "@/components/common/AppCard";
-import { addBuyer } from "@/redux/slice";
+import { BuyerFormConfig } from "@/configs/forms";
+import InputField from "@/components/common/InputField";
+import AppDotLoader from "@/components/common/NavigationDotloader";
 import { useAppDispatch } from "@/lib/hooks";
+import { addBuyer } from "@/redux/slice";
 import { IBuyer } from "@/types";
+import { InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { shouldShowError } from "@/utils/validations";
+import { BuyerSchema } from "@/validations";
+import {
+  Button,
+  FieldError, Input, Label,
+  ListBox, RadioGroup, Select, TextArea, TextField
+} from "@heroui/react";
 import {
   BasicInformationIcon,
   ConfigurationIcon,
   ProductionSpecificationIcon,
   ProductStatusIcon,
 } from "@icons/form-icons";
-import AppDotLoader from "@/components/common/NavigationDotloader";
-import { BuyerSchema } from "@/validations";
-import { InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { useFormik } from "formik";
+import { Ban, CheckCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
 const BUYER_TYPES = [
   { id: "Retailer", name: "Retailer" },
   { id: "Wholesaler", name: "Wholesaler" },
@@ -60,7 +56,7 @@ export default function OnBoardVendor() {
     contactPerson: "",
     requirementCategory: "",
     buyerType: "",
-    status: "Active",
+    status: "Active" as "Active" | "Inactive",
   };
   const formik = useFormik({
     initialValues,
@@ -87,7 +83,7 @@ export default function OnBoardVendor() {
       </div>
       <form onSubmit={formik.handleSubmit} className="space-y-6 ">
         <Card>
-          <Card.Header>
+          <Card.Header className="p-3">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 flex items-center justify-center rounded bg-blue-100 text-blue-700 font-semibold">
                 <BasicInformationIcon />
@@ -95,86 +91,16 @@ export default function OnBoardVendor() {
               <span>Basic Information</span>
             </div>
           </Card.Header>
-          <Card.Content className="space-y-6 pt-4">
+          <Card.Content className="space-y-6  p-6">
             <div className="flex flex-row w-full gap-1">
-              <TextField
-                isRequired
-                isInvalid={isInvalid("buyerName")}
-                className="space-y-2 basis-1/2"
-              >
-                <Label className={InputLabelClass}>Name</Label>
-                <Input
-                  name="buyerName"
-                  placeholder="Enter Buyer Name"
-                  className={InputFieldClass}
-                  value={formik.values.buyerName}
-                  onChange={(e) =>
-                    formik.setFieldValue(
-                      "buyerName",
-                      e.target.value.trimStart(),
-                    )
-                  }
-                  onBlur={formik.handleBlur}
-                  aria-label="Name"
-                />
-                {isInvalid("buyerName") && (
-                  <FieldError className={InputFieldErrorMessageClass}>
-                    {formik.errors.buyerName as string}
-                  </FieldError>
-                )}
-              </TextField>
-              <TextField
-                isRequired
-                isInvalid={isInvalid("contactPerson")}
-                className="space-y-2 basis-1/2"
-              >
-                <Label className={InputLabelClass}>
-                  Contact Person
-                </Label>
-                <Input
-                  name="contactPerson"
-                  placeholder="Enter contact person name"
-                  className={InputFieldClass}
-                  value={formik.values.contactPerson}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  aria-label="Contact Person"
-                />
-                {isInvalid("contactPerson") && (
-                  <FieldError className={InputFieldErrorMessageClass}>
-                    {formik.errors.contactPerson as string}
-                  </FieldError>
-                )}
-              </TextField>
+              <InputField formik={formik} fieldConstant={BuyerFormConfig.buyerName} />
+              <InputField formik={formik} fieldConstant={BuyerFormConfig.contactPerson} />
             </div>
-            <TextField
-              isRequired
-              isInvalid={isInvalid("buyerAddress")}
-              className="space-y-2"
-            >
-              <Label className={InputLabelClass}>
-                Address
-              </Label>
-              <TextArea
-                name="buyerAddress"
-                placeholder="Enter address"
-                className={`${InputFieldClass}`}
-                value={formik.values.buyerAddress}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                rows={3}
-                aria-label="Address"
-              />
-              {isInvalid("buyerAddress") && (
-                <FieldError className={InputFieldErrorMessageClass}>
-                  {formik.errors.buyerAddress as string}
-                </FieldError>
-              )}
-            </TextField>
+            <InputField formik={formik} fieldConstant={BuyerFormConfig.buyerAddress} />
           </Card.Content>
         </Card>
         <Card>
-          <Card.Header>
+          <Card.Header className="p-3">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 flex items-center justify-center rounded bg-blue-100 text-blue-700 font-semibold">
                 <ProductionSpecificationIcon />
@@ -182,7 +108,7 @@ export default function OnBoardVendor() {
               <span>Production Specifications</span>
             </div>
           </Card.Header>
-          <Card.Content className="space-y-6 pt-4">
+          <Card.Content className="space-y-6  p-6">
             <div className="flex flex-row gap-2">
               {/* Fixed Select Placeholder & Trigger styling */}
               <Select
@@ -232,58 +158,14 @@ export default function OnBoardVendor() {
                   </FieldError>
                 )}
               </Select>
-              <TextField
-                isRequired
-                isInvalid={isInvalid("phone")}
-                className="space-y-2"
-              >
-                <Label className={InputLabelClass}>
-                  Phone
-                </Label>
-                <Input
-                  name="phone"
-                  placeholder="Enter phone number"
-                  className={`${InputFieldClass} basis-1/3`}
-                  value={formik.values.phone}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  aria-label="Phone"
-                />
-                {isInvalid("phone") && (
-                  <FieldError className={InputFieldErrorMessageClass}>
-                    {formik.errors.phone as string}
-                  </FieldError>
-                )}
-              </TextField>
-              <TextField
-                isRequired
-                isInvalid={isInvalid("email")}
-                className="space-y-2"
-              >
-                <Label className={InputLabelClass}>
-                  Email
-                </Label>
-                <Input
-                  name="email"
-                  placeholder="Enter email address"
-                  className={`${InputFieldClass} basis-1/3`}
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  aria-label="Email"
-                />
-                {isInvalid("email") && (
-                  <FieldError className={InputFieldErrorMessageClass}>
-                    {formik.errors.email as string}
-                  </FieldError>
-                )}
-              </TextField>
+              <InputField formik={formik} fieldConstant={BuyerFormConfig.phone} />
+              <InputField formik={formik} fieldConstant={BuyerFormConfig.email} />
             </div>
           </Card.Content>
         </Card>
         <div className="flex flex-row gap-3">
           <Card className="w-1/2">
-            <Card.Header>
+            <Card.Header className="p-3">
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 flex items-center justify-center rounded bg-blue-100 text-blue-700 font-semibold">
                   <ProductStatusIcon />
@@ -291,7 +173,7 @@ export default function OnBoardVendor() {
                 <span>Product Status</span>
               </div>
             </Card.Header>
-            <Card.Content className="space-y-6 pt-4">
+            <Card.Content className="space-y-6  p-6">
               <div className="flex flex-col sm:flex-row gap-2">
                 <RadioGroup
                   value={formik.values.status}
@@ -321,7 +203,7 @@ export default function OnBoardVendor() {
             </Card.Content>
           </Card>
           <Card className="w-1/2">
-            <Card.Header>
+            <Card.Header className="p-3">
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 flex items-center justify-center rounded bg-blue-100 text-blue-700 font-semibold">
                   <ConfigurationIcon />
@@ -329,31 +211,8 @@ export default function OnBoardVendor() {
                 <span>Configuration</span>
               </div>
             </Card.Header>
-            <Card.Content className="space-y-6 pt-4">
-              {/* Fixed Select Placeholder & Trigger styling */}
-              <TextField
-                isRequired
-                isInvalid={isInvalid("requirementCategory")}
-                className="space-y-2"
-              >
-                <Label className={InputLabelClass}>
-                  Requirement Category
-                </Label>
-                <Input
-                  name="requirementCategory"
-                  placeholder="Enter Category"
-                  className={`${InputFieldClass} `}
-                  value={formik.values.requirementCategory}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  aria-label="Requirement CategoryF"
-                />
-                {isInvalid("requirementCategory") && (
-                  <FieldError className={InputFieldErrorMessageClass}>
-                    {formik.errors.requirementCategory as string}
-                  </FieldError>
-                )}
-              </TextField>
+            <Card.Content className="space-y-6  p-6">
+              <InputField formik={formik} fieldConstant={BuyerFormConfig.requirementCategory} />
             </Card.Content>
           </Card>
         </div>

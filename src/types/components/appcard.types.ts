@@ -1,9 +1,5 @@
-import {  CardProps } from "@mui/material";
-import {  CardHeaderProps } from "@mui/material";
+import { ComponentProps } from "react";
+import { Card as HeroCard, CardHeader as HeroCardHeader } from "@heroui/react";
 
-export type TAppCardProps = CardProps & {
-    children: React.ReactNode;
-};
-export type TAppCardHeaderProps = CardHeaderProps & {
-  children?: React.ReactNode;
-};
+export type TAppCardProps = ComponentProps<typeof HeroCard>;
+export type TAppCardHeaderProps = ComponentProps<typeof HeroCardHeader>;

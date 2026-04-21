@@ -1,38 +1,40 @@
+import {
+    Card as HeroCard,
+    CardContent as HeroCardContent,
+    CardFooter as HeroCardFooter,
+    CardHeader as HeroCardHeader
+} from "@heroui/react";
 import { TAppCardHeaderProps, TAppCardProps } from "@/types";
-import { Card as MuiCard, CardProps } from "@mui/material";
-import { CardContent, CardContentProps } from "@mui/material";
-import { CardHeader, CardHeaderProps } from "@mui/material";
-import { CardActions, CardActionsProps } from "@mui/material";
-import React from "react";
-
+import { ReactNode } from "react";
 export function AppCard({ children, ...props }: TAppCardProps) {
-    return (
-        <MuiCard
-            {...props}
-            sx={{
-                borderRadius: 3,
-                boxShadow: 2,
-                p: 1
-            }}
-        >
-            {children}
-        </MuiCard>
-    );
+  return (
+    <HeroCard
+      {...props}
+      className={`rounded-xl shadow-md p-2 ${props.className || ""}`}
+    >
+      {children}
+    </HeroCard>
+  );
 }
-export function AppCardContent({ ...props }: CardContentProps) {
-    return <CardContent {...props} />;
+export function AppCardContent({ children, ...props }: any) {
+  return <HeroCardContent {...props}>{children}</HeroCardContent>;
 }
-export function AppCardHeader({ children, ...props }: TAppCardHeaderProps) {
-    return <CardHeader title={children} {...props} />;
+export function AppCardHeader({
+  children,
+  ...props
+}: TAppCardHeaderProps & { children?: ReactNode }) {
+  return (
+    <HeroCardHeader {...props}>
+      {typeof children === "string" ? <span>{children}</span> : children}
+    </HeroCardHeader>
+  );
 }
-export function AppCardFooter({
-    ...props
-}: CardActionsProps) {
-    return <CardActions  {...props} />;
+export function AppCardFooter({ children, ...props }: any) {
+  return <HeroCardFooter {...props}>{children}</HeroCardFooter>;
 }
 const Card = Object.assign(AppCard, {
-    Header: AppCardHeader,
-    Content: AppCardContent,
-    Footer: AppCardFooter
+  Header: AppCardHeader,
+  Content: AppCardContent,
+  Footer: AppCardFooter
 });
 export default Card;

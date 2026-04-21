@@ -1,15 +1,15 @@
 "use client";
+import SettingShell from "@/components/common/settings-layout/SettingsShell";
+import AppSpinner from "@/components/common/Spinner";
+import { useAppDispatch } from "@/lib/hooks";
+import { fetchConfigSetting, selectConfigSettingLoader } from "@/redux/slice";
+import { Tabs } from "@heroui/react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import AppLink from "./_forms/AppLink";
+import AppVersion from "./_forms/AppVersion";
 import GeneralInfoSettingForm from "./_forms/GenralInfoSetting";
 import SocialMediaLinkForm from "./_forms/SocialMediaLink";
-import SettingShell from "@/components/common/settings-layout/SettingsShell";
-import { Tabs } from "@heroui/react";
-import AppVersion from "./_forms/AppVersion";
-import AppLink from "./_forms/AppLink";
-import { fetchConfigSetting, selectConfigSettingLoader } from "@/redux/slice";
-import { useEffect } from "react";
-import { useAppDispatch } from "@/lib/hooks";
-import { useSelector } from "react-redux";
-import AppSpinner from "@/components/common/Spinner";
 export default function AboutUsSettingPage() {
   const dispatch = useAppDispatch();
   const loading = useSelector(selectConfigSettingLoader);

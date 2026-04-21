@@ -1,8 +1,7 @@
 "use client";
-import React from "react";
 import { DataTable } from "@/components/common/table/DataTable";
-import { ExclaimIcon, BoatIcon, SuccessIcon } from "@icons/table-icons/actions";
 import { IAlert, IColumn } from "@/types";
+import { BoatIcon, ExclaimIcon, SuccessIcon } from "@icons/table-icons/actions";
 
 const alerts: IAlert[] = [
   {

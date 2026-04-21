@@ -1,15 +1,15 @@
 "use client";
 
 import { DataTable } from "@/components/common/table/DataTable";
-import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
-import { IColumn, ISample } from "@/types";
-import { useSelector } from "react-redux"
-import { useAppDispatch } from "@/lib/hooks"
+import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
+import { useAppDispatch } from "@/lib/hooks";
 import { addSample, getAllSample, removeSample } from "@/redux/slice";
 import { RootState } from "@/redux/Store";
-import toast from "react-hot-toast";
+import { IColumn, ISample } from "@/types";
+import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
 import { useEffect } from "react";
-import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 export default function ProductsPage() {
   const { data, loading } = useSelector((store: RootState) => store.sampleSlice);
   const dispatch = useAppDispatch();

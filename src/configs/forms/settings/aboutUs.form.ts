@@ -1,7 +1,7 @@
-import { FieldConstant } from "@/types/interface";
+import { TFormFieldConfig } from "@/types";
 import { IAboutUs } from "@/types/settings";
 
-export const AboutUsFields: Record<keyof IAboutUs, FieldConstant<IAboutUs>> = {
+export const AboutUsFields: TFormFieldConfig<IAboutUs> = {
   aboutUs: {
     key: "aboutUs",
     label: "About Us",

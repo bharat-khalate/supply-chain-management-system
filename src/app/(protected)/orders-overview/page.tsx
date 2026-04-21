@@ -1,17 +1,15 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { DataTable } from "@/components/common/table/DataTable";
-import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
-import { IColumn, IOrder } from "@/types";
-import { useAppDispatch } from "@/lib/hooks";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/Store";
-import { useEffect } from "react";
-import { addOrder, getAllOrders, removeOrder } from "@/redux/slice";
-import toast from "react-hot-toast";
 import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
+import { useAppDispatch } from "@/lib/hooks";
+import { addOrder, getAllOrders, removeOrder } from "@/redux/slice";
+import { RootState } from "@/redux/Store";
+import { IColumn, IOrder } from "@/types";
+import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 export default function ProductsPage() {
-    const router = useRouter();
     const dispatch = useAppDispatch();
     const { data, loading } = useSelector((store: RootState) => store.orderSlice);
     useEffect(() => {

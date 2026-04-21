@@ -1,14 +1,14 @@
 "use client";
-import { DataTable} from "@/components/common/table/DataTable";
-import { EditIcon, DeleteIcon, ViewIcon } from "@icons/table-icons/actions"
-import { IColumn, IEnquiry } from "@/types";
+import { DataTable } from "@/components/common/table/DataTable";
+import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
+import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/redux/Store";
 import { addEnquiry, getAllEnquiries, removeEnquiry } from "@/redux/slice";
-import { useAppDispatch } from "@/lib/hooks";
+import { IColumn, IEnquiry } from "@/types";
+import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
 export default function ProductsPage() {
   const { loading, data } = useSelector((store: RootState) => store.enquirySlice);
   const dispatch = useAppDispatch();

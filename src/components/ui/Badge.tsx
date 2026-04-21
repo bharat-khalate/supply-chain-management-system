@@ -1,5 +1,4 @@
 import { IBadgeProps, IBadgeVariant } from "@/types"
-import React from "react"
 
 const baseStyles =
   "inline-flex h-5 w-fit items-center justify-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-all"
@@ -18,9 +17,8 @@ function Badge({
   asChild = false,
   ...props
 }: IBadgeProps) {
-
-  const Comp = asChild ? "span" : "span"
-  return (
+const Comp = asChild ? "span" : "span"
+return (
     <span
       className={`${baseStyles} ${variantStyles[variant]} ${className}`}
       {...props}

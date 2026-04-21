@@ -1,14 +1,14 @@
-import { shouldShowError } from "@/utils/validations";
-import { Button, FieldError, Input, Label, TextField } from "@heroui/react";
-import { useFormik } from "formik";
-import AppDotLoader from "../../../../../components/common/NavigationDotloader";
-import { ISetting, ISocialMediaLinkSettings } from "@/types/settings";
+import InputField from "@/components/common/InputField";
 import { SocialMediaLinkFormFieldConstants } from "@/configs/forms";
-import { SocialMediaLinkFormSchema } from "@/validations";
-import { useSelector } from "react-redux";
-import { selectConfigSettings, updateConfigSetting } from "@/redux/slice";
 import { useAppDispatch } from "@/lib/hooks";
-import { InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { selectConfigSettings, updateConfigSetting } from "@/redux/slice";
+import { ISetting, ISocialMediaLinkSettings } from "@/types/settings";
+import { ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { SocialMediaLinkFormSchema } from "@/validations";
+import { Button } from "@heroui/react";
+import { useFormik } from "formik";
+import { useSelector } from "react-redux";
+import AppDotLoader from "../../../../../components/common/NavigationDotloader";
 export default function SocialMediaLinkForm(): React.ReactNode {
   const setting: ISetting | null = useSelector(selectConfigSettings);
   const { twitterLink, instagramLink, facebookLink } = setting || {
@@ -30,93 +30,11 @@ export default function SocialMediaLinkForm(): React.ReactNode {
       dispatch(updateConfigSetting({ ...setting, ..._values } as ISetting))
     },
   });
-  const isInvalid = shouldShowError<ISocialMediaLinkSettings>(formik);
   return (
     <form className="flex flex-col gap-y-6">
-      <TextField
-        isRequired
-        isInvalid={isInvalid(
-          SocialMediaLinkFormFieldConstants.twitterLink.key,
-        )}
-      >
-        <Label className={InputLabelClass}>
-          {SocialMediaLinkFormFieldConstants.twitterLink.label}
-        </Label>
-        <Input
-          className={InputFieldClass}
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          value={
-            formik.values[SocialMediaLinkFormFieldConstants.twitterLink.key]
-          }
-          name={SocialMediaLinkFormFieldConstants.twitterLink.key}
-          placeholder="Enter the Instagram profile url"
-          aria-label={SocialMediaLinkFormFieldConstants.twitterLink.label}
-        />
-        {isInvalid(
-          SocialMediaLinkFormFieldConstants.twitterLink.key,
-        ) && (
-            <FieldError className={InputFieldErrorMessageClass}>
-              {formik.errors[SocialMediaLinkFormFieldConstants.twitterLink.key]}
-            </FieldError>
-          )}
-      </TextField>
-      <TextField
-        isRequired
-        isInvalid={isInvalid(
-          SocialMediaLinkFormFieldConstants.instagramLink.key,
-        )}
-      >
-        <Label className={InputLabelClass}>
-          {SocialMediaLinkFormFieldConstants.instagramLink.label}
-        </Label>
-        <Input
-          className={InputFieldClass}
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          value={
-            formik.values[SocialMediaLinkFormFieldConstants.instagramLink.key]
-          }
-          name={SocialMediaLinkFormFieldConstants.instagramLink.key}
-          placeholder="Enter the Instagram profile url"
-          aria-label={SocialMediaLinkFormFieldConstants.instagramLink.label}
-        />
-        {isInvalid(
-          SocialMediaLinkFormFieldConstants.instagramLink.key,
-        ) && (
-            <FieldError className={InputFieldErrorMessageClass}>
-              {formik.errors[SocialMediaLinkFormFieldConstants.instagramLink.key]}
-            </FieldError>
-          )}
-      </TextField>
-      <TextField
-        isRequired
-        isInvalid={isInvalid(
-          SocialMediaLinkFormFieldConstants.facebookLink.key,
-        )}
-      >
-        <Label className={InputLabelClass}>
-          {SocialMediaLinkFormFieldConstants.facebookLink.label}
-        </Label>
-        <Input
-          className={InputFieldClass}
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          value={
-            formik.values[SocialMediaLinkFormFieldConstants.facebookLink.key]
-          }
-          name={SocialMediaLinkFormFieldConstants.facebookLink.key}
-          placeholder="Enter the Facebook profile url"
-          aria-label={SocialMediaLinkFormFieldConstants.facebookLink.label}
-        />
-        {isInvalid(
-          SocialMediaLinkFormFieldConstants.facebookLink.key,
-        ) && (
-            <FieldError className={InputFieldErrorMessageClass}>
-              {formik.errors[SocialMediaLinkFormFieldConstants.facebookLink.key]}
-            </FieldError>
-          )}
-      </TextField>
+      <InputField formik={formik} fieldConstant={SocialMediaLinkFormFieldConstants.twitterLink} />
+      <InputField formik={formik} fieldConstant={SocialMediaLinkFormFieldConstants.instagramLink} />
+      <InputField formik={formik} fieldConstant={SocialMediaLinkFormFieldConstants.facebookLink} />
       <div className="flex justify-end gap-5 mt-5">
         <Button
           type="submit"

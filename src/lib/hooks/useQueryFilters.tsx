@@ -43,7 +43,6 @@ export const useQueryFilters = <T,>(
     const searchParams = useSearchParams();
     const dispatch = useAppDispatch();
     const [filterValues, setFilterValues] = useState<Record<string, string | string[]>>({});
-    // parsing url and syncing with state
     useEffect(() => {
         const rawParams = parseSearchParams(searchParams);
         const params = getSanitizedPagination(rawParams);
@@ -55,7 +54,6 @@ export const useQueryFilters = <T,>(
             ...(Object.keys(filters).length > 0 && { query: filters })
         }));
     }, [searchParams, dispatch, fetchAction]);
-    // updating url
     const applyFilters = useCallback((values?: Record<string, string | string[]>) => {
         const dataToApply = values || filterValues;
         const paginationValues = getSanitizedPagination({ ...dataToApply, page: "0", limit: "0" });

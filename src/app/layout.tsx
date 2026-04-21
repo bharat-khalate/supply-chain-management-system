@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
 import '@/app/globals.css';
-import Store from '@/redux/Store'
-import { Toaster } from 'react-hot-toast';
-import { Inter } from "next/font/google";
-import { cn } from "@/lib/utils";
 import { LoadingProvider } from '@/lib/hooks';
+import { cn } from "@/lib/utils";
+import Store from '@/redux/Store';
+import type { Metadata } from 'next';
+import { Inter } from "next/font/google";
+import { Toaster } from 'react-hot-toast';
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 export const metadata: Metadata = {
   title: 'Atelier ERP',

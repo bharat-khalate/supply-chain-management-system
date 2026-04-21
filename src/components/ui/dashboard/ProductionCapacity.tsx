@@ -1,7 +1,4 @@
 "use client";
-
-import React from "react";
-
 const factories = [
   { name: "Factory A - Vietnam", pct: 92, color: "#185FA5", textColor: "#185FA5" },
   { name: "Factory B - India", pct: 68, color: "#0F6E56", textColor: "#0F6E56" },

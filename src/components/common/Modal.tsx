@@ -1,22 +1,15 @@
 'use client';
-
 import { IModalProps } from '@/types';
 import { useEffect, useRef } from 'react';
-
-
 export function Modal({ isOpen, onClose, title, children, size = 'md' }: IModalProps) {
     const overlayRef = useRef<HTMLDivElement>(null);
-
     useEffect(() => {
         const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
         document.addEventListener('keydown', handler);
         return () => document.removeEventListener('keydown', handler);
     }, [onClose]);
-
     if (!isOpen) return null;
-
     const sizeClass = { sm: 'max-w-sm', md: 'max-w-lg', lg: 'max-w-2xl' }[size];
-
     return (
         <div
             ref={overlayRef}

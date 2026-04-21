@@ -1,7 +1,6 @@
-import { IBuyerFields } from "@/types";
-import { FieldConstant } from "@/types/interface";
+import { IBuyerFields, TFormFieldConfig } from "@/types";
 
-export const BuyerConstants: Record<keyof IBuyerFields, FieldConstant<IBuyerFields>> = {
+export const BuyerFormConfig: TFormFieldConfig<IBuyerFields> = {
   buyerName: {
     label: "Name",
     length: 52,

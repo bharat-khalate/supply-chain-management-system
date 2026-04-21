@@ -1,8 +1,8 @@
-import DashboardOverview from "@/components/ui/DashboardOverview";
-import SalesAnalytics from "@/components/ui/SalesAnalytics";
-import ProductionCapacity from "@/components/ui/ProductionCapacity";
-import AlertsTable from "@/components/ui/AlertsTable";
-import RecentActivity from "@/components/ui/RecentActivity";
+import DashboardOverview from "@/components/ui/dashboard/DashboardOverview";
+import SalesAnalytics from "@/components/ui/dashboard/SalesAnalytics";
+import ProductionCapacity from "@/components/ui/dashboard/ProductionCapacity";
+import AlertsTable from "@/components/ui/dashboard/AlertsTable";
+import RecentActivity from "@/components/ui/dashboard/RecentActivity";
 export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-4 pb-6">

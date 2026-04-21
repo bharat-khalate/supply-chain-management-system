@@ -88,7 +88,7 @@ const vendorSlice = createSlice({
       })
       .addCase(addVendor.fulfilled, (state, action) => {
         state.loading = false;
-        state.selected = action.payload; // optional
+        state.selected = action.payload; 
       })
       .addCase(updateVendor.fulfilled, (state, action) => {
         state.loading = false;

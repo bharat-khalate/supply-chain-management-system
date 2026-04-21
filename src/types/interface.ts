@@ -5,22 +5,3 @@ export interface FieldConstant<T> {
   length: number;
   key: keyof T
 }
-
-
-export interface IConfirmDialogue {
-  title: string;
-  message: string;
-  button1Text: string;
-  button2Text: string;
-  show: boolean;
-  button1Action: () => void;
-  button2Action: () => void;
-}
-
-
-export interface IDeleteDialogue {
-  render?: () => React.HTMLElementType
-  show: boolean;
-  deleteAction: () => void;
-  cancelAction: () => void;
-}

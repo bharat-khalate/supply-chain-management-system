@@ -89,7 +89,7 @@ const sampleSlice = createSlice({
       })
       .addCase(addSample.fulfilled, (state, action) => {
         state.loading = false;
-        state.selected = action.payload; // optional
+        state.selected = action.payload; 
       })
       .addCase(updateSample.fulfilled, (state, action) => {
         state.loading = false;

@@ -1,38 +1,33 @@
 'use client'
 
+import { IAppEditorProps } from '@/types'
+import { InputFieldErrorMessageClass } from '@/utils/tailwindCssClassConstant'
+import { shouldShowError } from '@/utils/validations'
+import { Button, FieldError, TextField } from '@heroui/react'
+import Bold from '@tiptap/extension-bold'
+import BulletList from '@tiptap/extension-bullet-list'
+import Document from '@tiptap/extension-document'
+import Heading from '@tiptap/extension-heading'
+import ItalicExt from '@tiptap/extension-italic'
+import ListItem from '@tiptap/extension-list-item'
+import OrderedList from '@tiptap/extension-ordered-list'
+import Paragraph from '@tiptap/extension-paragraph'
+import Strike from '@tiptap/extension-strike'
+import Text from '@tiptap/extension-text'
+import UnderlineExt from '@tiptap/extension-underline'
 import { UndoRedo } from '@tiptap/extensions'
 import { EditorContent, useEditor, useEditorState } from '@tiptap/react'
-import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
-import Heading from '@tiptap/extension-heading'
-import Bold from '@tiptap/extension-bold'
-import ItalicExt from '@tiptap/extension-italic'
-import UnderlineExt from '@tiptap/extension-underline'
-import Strike from '@tiptap/extension-strike'
-import BulletList from '@tiptap/extension-bullet-list'
-import OrderedList from '@tiptap/extension-ordered-list'
-import ListItem from '@tiptap/extension-list-item'
-import { Button, FieldError, TextField } from '@heroui/react'
 import {
     Bold as BoldI,
     Italic,
-    Underline,
-    Strikethrough,
     List,
     ListOrdered,
-    Undo,
     Redo,
-    Maximize2,
-    Minimize2,
-    Save,
-    RotateCcw
+    Strikethrough,
+    Underline,
+    Undo
 } from 'lucide-react'
-import { IAppEditorProps } from '@/types'
-import { shouldShowError } from '@/utils/validations'
-import { useEffect, useState } from 'react'
-import AppDotLoader from '../common/NavigationDotloader'
-import { InputFieldErrorMessageClass } from '@/utils/tailwindCssClassConstant'
+import { useEffect } from 'react'
 const btnClass =
     'p-2 rounded-md hover:bg-gray-200 active:bg-gray-300 transition flex items-center justify-center'
 const activeClass = 'bg-gray-300'

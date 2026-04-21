@@ -100,7 +100,7 @@ export const commonRequiredStringValidation = (value: string) => {
 export const CommonRichTextRequiredValidator = (label: string) =>
    Yup.string()
     .required(`${label} is required`)
-    .defined() // 👈 IMPORTANT
+    .defined() 
     .test("not-empty", `${label} is required`, (value) => {
       if (!value) return false;
 
@@ -267,7 +267,7 @@ export const isRequiredConfirmPasswordValidation = (isEdit: boolean) =>
     )
     .oneOf([Yup.ref("password")], "Passwords must match")
     .when("password", {
-      is: (val: string) => !!val && !isEdit, // If password is present and it's not an edit mode
+      is: (val: string) => !!val && !isEdit,  
       then: (schema) => schema.required("Confirm Password is required"),
       otherwise: (schema) => schema.notRequired(),
     });

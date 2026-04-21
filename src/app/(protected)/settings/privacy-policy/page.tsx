@@ -1,19 +1,19 @@
 "use client";
-import SettingShell from "@/components/common/settings-layout/SettingsShell";
 import AppDotLoader from "@/components/common/NavigationDotloader";
+import SettingShell from "@/components/common/settings-layout/SettingsShell";
+import AppSpinner from "@/components/common/Spinner";
+import Tiptap from "@/components/ui/dashboard/TipTapEditor";
+import { PrivacyPolicyField } from "@/configs/forms/settings/privacyPolicy.form";
+import { useAppDispatch } from "@/lib/hooks";
+import { selectPageSetting, selectPageSettingError, selectPageSettingLoader } from "@/redux/slice";
+import { fetchAllPageSetting, updateAllPageSetting } from "@/redux/slice/page.setting";
 import { IPageSetting, IPrivacyPolicy } from "@/types/settings";
+import { ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { PrivacyPolicySchema } from "@/validations";
 import { Button } from "@heroui/react";
 import { FormikProps, useFormik } from "formik";
-import { PrivacyPolicyField } from "@/configs/forms/settings/privacyPolicy.form";
-import Tiptap from "@/components/ui/TipTapEditor";
-import { useSelector } from "react-redux";
-import { selectPageSetting, selectPageSettingError, selectPageSettingLoader } from "@/redux/slice";
 import { useEffect } from "react";
-import { useAppDispatch } from "@/lib/hooks";
-import { fetchAllPageSetting, updateAllPageSetting } from "@/redux/slice/page.setting";
-import AppSpinner from "@/components/common/Spinner";
-import { ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { useSelector } from "react-redux";
 export default function ManagePrivacyPolicy() {
   const pageSetting: IPageSetting | null = useSelector(selectPageSetting);
   const loading: boolean = useSelector(selectPageSettingLoader);

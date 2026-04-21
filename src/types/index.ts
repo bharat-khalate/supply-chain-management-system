@@ -11,14 +11,11 @@ import {
   IPaginatedData,
   IPaginationQuery,
 } from "./global.types";
-import {IRedirectOptions} from "./hook.types"
-
+import { IRedirectOptions } from "./hook.types"
+import { TFormFieldConfig } from "./formfield.config.types";
 //component types import
 import { IAlert } from "./components";
 import { IBadgeProps, IBadgeVariant } from "./components";
-import { TFieldErrorProps, TFieldProps } from "./components";
-import { TLabelProps } from "./components";
-import { TSeparatorProps } from "./components";
 import { ISubmenuItem, INavItem, ISidebarProps } from "./components";
 import { IDataTableProps, IColumn } from "./components";
 import {
@@ -32,7 +29,7 @@ import { TAppCardHeaderProps, TAppCardProps } from "./components";
 import { IModalProps } from "./components";
 import { IAppStatusBadgeProps } from "./components";
 import { ICustomEditorProps, IAppEditorProps } from "./components";
-
+import { TInputFieldProps } from "./components";
 export type { IBuyer, IVendor, ISample, IEnquiry, IOrder };
 export type {
   IBuyerState,
@@ -50,14 +47,11 @@ export type {
   IPaginatedData,
   IPaginationQuery,
 };
-export {IRedirectOptions}
-
+export type { IRedirectOptions }
+export type { TFormFieldConfig }
 //component type export
 export type { IAlert };
 export type { IBadgeProps, IBadgeVariant };
-export type { TFieldErrorProps, TFieldProps };
-export type { TLabelProps };
-export type { TSeparatorProps };
 export type { ISubmenuItem, INavItem, ISidebarProps };
 export type { IDataTableProps, IColumn };
 export type { ITableHeaderProps, IOnChange, IFilterFields, IOption };
@@ -66,3 +60,4 @@ export type { TAppCardHeaderProps, TAppCardProps };
 export type { IModalProps };
 export type { IAppStatusBadgeProps };
 export type { ICustomEditorProps, IAppEditorProps };
+export type { TInputFieldProps }
