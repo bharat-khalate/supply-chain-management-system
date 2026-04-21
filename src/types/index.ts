@@ -13,6 +13,7 @@ import {
 } from "./global.types";
 import { IRedirectOptions } from "./hook.types"
 import { TFormFieldConfig } from "./formfield.config.types";
+import { ISearchBar } from "./global.types";
 //component types import
 import { IAlert } from "./components";
 import { IBadgeProps, IBadgeVariant } from "./components";
@@ -61,3 +62,4 @@ export type { IModalProps };
 export type { IAppStatusBadgeProps };
 export type { ICustomEditorProps, IAppEditorProps };
 export type { TInputFieldProps }
+export type {ISearchBar}

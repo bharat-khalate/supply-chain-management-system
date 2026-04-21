@@ -11,10 +11,12 @@ export default function InputField<T,>({ formik, fieldConstant }: TInputFieldPro
             isInvalid={isInvalid(fieldConstant.key)}
             className="space-y-2 basis-1/2"
         >
-            <Label className={InputLabelClass}>{fieldConstant.label}</Label>
+            {fieldConstant.label && (
+                <Label className={InputLabelClass}>{fieldConstant.label}</Label>
+            )}
             <Input
                 name={fieldConstant.key as string}
-                placeholder={`Enter ${fieldConstant.label}`}
+                placeholder={fieldConstant.placeHolder ? fieldConstant.placeHolder : `Enter ${fieldConstant.label}`}
                 className={InputFieldClass}
                 value={formik.values[fieldConstant.key] as string}
                 onChange={(e) =>

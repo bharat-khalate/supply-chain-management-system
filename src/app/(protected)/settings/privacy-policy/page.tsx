@@ -8,7 +8,7 @@ import { useAppDispatch } from "@/lib/hooks";
 import { selectPageSetting, selectPageSettingError, selectPageSettingLoader } from "@/redux/slice";
 import { fetchAllPageSetting, updateAllPageSetting } from "@/redux/slice/page.setting";
 import { IPageSetting, IPrivacyPolicy } from "@/types/settings";
-import { ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { FormButtonDivClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { PrivacyPolicySchema } from "@/validations";
 import { Button } from "@heroui/react";
 import { FormikProps, useFormik } from "formik";
@@ -47,7 +47,7 @@ export default function ManagePrivacyPolicy() {
               fieldKey={PrivacyPolicyField.privacyPolicy.key}
             />
           </div>
-          <div className="flex justify-end gap-3 mt-8">
+          <div className={FormButtonDivClass}>
             <Button
               className={ResetFormButtonClass}
               onPress={() => formik.resetForm()}

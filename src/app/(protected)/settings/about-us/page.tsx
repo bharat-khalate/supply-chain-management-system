@@ -7,7 +7,7 @@ import { AboutUsFields } from "@/configs/forms/settings/aboutUs.form";
 import { useAppDispatch } from "@/lib/hooks";
 import { fetchAllPageSetting, selectPageSetting, selectPageSettingError, selectPageSettingLoader, updateAllPageSetting } from "@/redux/slice/page.setting";
 import { IAboutUs, IPageSetting } from "@/types/settings";
-import { ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { FormButtonDivClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { AboutUsSchema } from "@/validations";
 import { Button } from "@heroui/react";
 import { FormikProps, useFormik } from "formik";
@@ -47,7 +47,7 @@ export default function ManageAboutUs() {
               fieldKey={AboutUsFields.aboutUs.key}
             />
           </div>
-          <div className="flex justify-end gap-3 mt-8">
+          <div className={FormButtonDivClass}>
             <Button
               className={ResetFormButtonClass}
               onPress={() => formik.resetForm()}

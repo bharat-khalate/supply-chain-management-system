@@ -42,3 +42,6 @@ export interface IPaginatedState<T> {
   loading: boolean;
   error: any | null
 }
+export interface ISearchBar {
+  query: string;
+}

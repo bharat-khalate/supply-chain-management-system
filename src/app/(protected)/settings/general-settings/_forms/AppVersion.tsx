@@ -4,7 +4,7 @@ import { AppVersionFields } from "@/configs/forms";
 import { useAppDispatch } from "@/lib/hooks";
 import { selectConfigSettingError, selectConfigSettingLoader, selectConfigSettings, updateConfigSetting } from "@/redux/slice";
 import { IAppVersion, ISetting } from "@/types/settings";
-import { ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { FormButtonDivClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { AppVersionSchema } from "@/validations";
 import { Button } from "@heroui/react";
 import { useFormik } from "formik";
@@ -34,7 +34,7 @@ export default function AppVersion(): React.ReactNode {
     <form onSubmit={formik.handleSubmit} className="flex flex-col gap-y-6">
       <InputField formik={formik} fieldConstant={AppVersionFields.androidVersion} />
       <InputField formik={formik} fieldConstant={AppVersionFields.iosVersion} />
-      <div className="flex flex-row justify-end gap-5 mt-5">
+      <div className={FormButtonDivClass}>
         <Button
           type="submit"
           className={

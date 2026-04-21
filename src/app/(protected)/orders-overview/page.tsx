@@ -9,7 +9,7 @@ import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-export default function ProductsPage() {
+export default function OrderPage() {
     const dispatch = useAppDispatch();
     const { data, loading } = useSelector((store: RootState) => store.orderSlice);
     useEffect(() => {

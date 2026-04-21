@@ -9,7 +9,7 @@ import { useAppDispatch } from "@/lib/hooks";
 import { selectPageSetting, selectPageSettingError, selectPageSettingLoader } from "@/redux/slice";
 import { fetchAllPageSetting, updateAllPageSetting } from "@/redux/slice/page.setting";
 import { IPageSetting, ITermsAndConditions } from "@/types/settings";
-import { ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { FormButtonDivClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { TermsAndConditionsSchema } from "@/validations";
 import { Button } from "@heroui/react";
 import { FormikProps, useFormik } from "formik";
@@ -49,7 +49,7 @@ export default function ManageTermsConditions() {
             <Tiptap formik={formik}
               fieldKey={TermsAndConditionsField.termsAndConditions.key} />
           </div>
-          <div className="flex justify-end gap-3 mt-8">
+          <div className={FormButtonDivClass}>
             <Button
               className={ResetFormButtonClass}
               onPress={() => formik.resetForm()}

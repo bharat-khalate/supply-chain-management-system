@@ -7,13 +7,13 @@ import AppDotLoader from "@/components/common/NavigationDotloader";
 import { useAppDispatch } from "@/lib/hooks";
 import { addBuyer } from "@/redux/slice";
 import { IBuyer } from "@/types";
-import { InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { FormButtonDivClass, InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { shouldShowError } from "@/utils/validations";
 import { BuyerSchema } from "@/validations";
 import {
   Button,
-  FieldError, Input, Label,
-  ListBox, RadioGroup, Select, TextArea, TextField
+  FieldError, Label,
+  ListBox, RadioGroup, Select
 } from "@heroui/react";
 import {
   BasicInformationIcon,
@@ -216,7 +216,7 @@ export default function OnBoardVendor() {
             </Card.Content>
           </Card>
         </div>
-        <div className="flex justify-end gap-4">
+        <div className={FormButtonDivClass}>
           <Button
             variant="ghost"
             onPress={() => formik.resetForm()}

@@ -9,7 +9,7 @@ import { addVendor, getAllVendors, removeVendor } from "@/redux/slice";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
-export default function ProductsPage() {
+export default function VendorsPage() {
   const { data, loading } = useSelector((store: RootState) => store.vendorSlice)
   const dispatch = useAppDispatch();
   useEffect(() => {

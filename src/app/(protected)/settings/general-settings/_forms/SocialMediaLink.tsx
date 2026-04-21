@@ -3,7 +3,7 @@ import { SocialMediaLinkFormFieldConstants } from "@/configs/forms";
 import { useAppDispatch } from "@/lib/hooks";
 import { selectConfigSettings, updateConfigSetting } from "@/redux/slice";
 import { ISetting, ISocialMediaLinkSettings } from "@/types/settings";
-import { ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { FormButtonDivClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { SocialMediaLinkFormSchema } from "@/validations";
 import { Button } from "@heroui/react";
 import { useFormik } from "formik";
@@ -35,7 +35,7 @@ export default function SocialMediaLinkForm(): React.ReactNode {
       <InputField formik={formik} fieldConstant={SocialMediaLinkFormFieldConstants.twitterLink} />
       <InputField formik={formik} fieldConstant={SocialMediaLinkFormFieldConstants.instagramLink} />
       <InputField formik={formik} fieldConstant={SocialMediaLinkFormFieldConstants.facebookLink} />
-      <div className="flex justify-end gap-5 mt-5">
+      <div className={FormButtonDivClass}>
         <Button
           type="submit"
           className={SubmitButtonClass}
