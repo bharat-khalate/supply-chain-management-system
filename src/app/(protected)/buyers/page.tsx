@@ -16,7 +16,9 @@ import { IPaginationResponse } from "@/types/global.types";
 import { IFetchServiceParams } from "@/types/service/service.types";
 import { RedirectButtonClass } from "@/utils/tailwindCssClassConstant";
 import { Button } from "@heroui/react";
-export default function ProductsPage() {
+import { Suspense } from "react";
+
+function BuyersPageContent() {
   const dispatch = useAppDispatch();
   const buyersData: IBuyer[] = useSelector(selectBuyers);
   const loading = useSelector(selectBuyerLoading);
@@ -178,4 +180,12 @@ export default function ProductsPage() {
       />
     </div>
   );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<div className="flex justify-center p-8"><AppDotLoader /></div>}>
+      <BuyersPageContent />
+    </Suspense>
+  )
 }
