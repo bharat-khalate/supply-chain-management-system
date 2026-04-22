@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   pageExtensions: ["ts", "tsx"],
+  basePath: "/supplychain_erp",
   experimental: {},
   turbopack: {
     rules: {
