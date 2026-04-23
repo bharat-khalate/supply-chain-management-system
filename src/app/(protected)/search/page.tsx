@@ -4,11 +4,9 @@ import { IBuyer } from "@/types";
 import { ISearchType } from "@/types/search.type";
 import { SearchResult } from "@/utils/data";
 import { Chip } from "@heroui/react";
-import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { buyerColumns } from "../buyers/page";
 export default function Page() {
-    const params = useSearchParams();
     const type: Record<ISearchType, ISearchType> = {
         buyer: "buyer",
         enquiry: "enquiry",

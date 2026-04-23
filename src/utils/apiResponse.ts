@@ -2,10 +2,6 @@ import { NextResponse } from 'next/server';
 import type { IApiResponse, IPaginatedResponse } from '@/types/global.types';
 import { HTTP_STATUS } from './constants';
 
-/**
- * Function-based API Response Handler
- */
-
 export function createSuccessResponse<T = any>(
   data: T,
   message: string = 'Success',
@@ -40,21 +36,26 @@ export function createPaginatedResponse<T = any>(
   message: string = 'Fetched',
   statusCode: number = HTTP_STATUS.OK
 ): NextResponse<IPaginatedResponse<T>> {
+  const formattedPagination = {
+    totalCount: pagination.total,
+    currentPage: pagination.page,
+    lastPage: pagination.pages,
+    canNextPage: pagination.page < pagination.pages,
+    canPreviousPage: pagination.page > 1,
+  };
+
   return NextResponse.json(
     {
       success: true,
       statusCode,
       message,
       data,
-      pagination,
+      pagination: formattedPagination,
     },
     { status: statusCode }
   );
 }
 
-/**
- * Backwards compatibility aliases (use new names above)
- */
 export const ApiResponse = {
   success: createSuccessResponse,
   created: createCreatedResponse,

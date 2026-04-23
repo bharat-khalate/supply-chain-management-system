@@ -46,7 +46,7 @@ export default function Page() {
   const breadCrumbItems = [
     { label: "Dashboard", path: "/dashboard" },
     { label: "Buyers", path: "/buyers" },
-    { label: "Add", path: "/buyers/add" },
+    { label: "Add", path: "/buyers/create" },
   ];
   const initialValues = {
     buyerName: "",

@@ -24,7 +24,7 @@ export const getEnquiryById = createAsyncThunk(
     }
 );
 export const addEnquiry = createAsyncThunk(
-    "enquiries/add",
+    "enquiries/create",
     async (enquiry: IEnquiry, { rejectWithValue }) => {
         try {
             return await enquiryService.add(enquiry);

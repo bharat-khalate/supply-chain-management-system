@@ -28,7 +28,7 @@ export const getSampleById = createAsyncThunk(
   }
 );
 export const addSample = createAsyncThunk(
-  "sample/add",
+  "sample/createateate",
   async (sample: ISample, { rejectWithValue }) => {
     try {
       return await sampleService.add(sample);

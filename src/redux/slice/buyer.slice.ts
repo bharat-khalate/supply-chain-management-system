@@ -24,7 +24,7 @@ export const fetchBuyerById = createAsyncThunk(
     }
 );
 export const addBuyer = createAsyncThunk(
-    "buyers/add",
+    "buyers/create",
     async (newBuyer: IBuyer, { rejectWithValue }) => {
         try {
             return await buyerService.add(newBuyer);
