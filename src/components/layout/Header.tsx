@@ -7,13 +7,15 @@ import { CloseButton, InputGroup, Spinner, TextField } from "@heroui/react";
 import { HeaderBellIcon, HeaderSearchIcon, HeaderUserIcon } from "@icons/header-icons";
 import { BuyersIcon, SalesEnquiryIcon, SamplingIcon, VendorsIcon } from "@icons/sidebaricons";
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Card from "../common/AppCard";
 import { X } from "lucide-react";
 export default function DashboardHeader() {
   const initialValue: ISearchBar = {
     query: ""
   }
+  const [isOpen, setIsOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: SearchBarValidationSchema,
@@ -21,6 +23,20 @@ export default function DashboardHeader() {
       console.log(_value)
     }
   })
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   const isInvalid = shouldShowError<ISearchBar>(formik);
   const debounced = useDebounce<ISearchBar>(formik.values, 300);
   const isTyping = formik.values.query !== debounced.query;
@@ -31,7 +47,7 @@ export default function DashboardHeader() {
   return (
     <div className="w-full bg-gray-100 ">
       <div className="flex flex-col-reverse sm:flex-row items-center justify-between px-4 sm:px-6 py-3 gap-4 sm:gap-6">
-        <div className=" w-full flex-1 sm:max-w-105 min-w-0 relative">
+        <div ref={wrapperRef} className=" w-full flex-1 sm:max-w-105 min-w-0 relative">
           <TextField className="w-full">
             <InputGroup className="w-full bg-gray-200 rounded-sm p-1 text-sm text-gray-700 flex items-center min-w-0">
               <InputGroup.Prefix className="shrink-0">
@@ -42,7 +58,10 @@ export default function DashboardHeader() {
                 placeholder="Search buyers, regions, or segments..."
                 name={SearchBarConfig.query.key}
                 aria-label={SearchBarConfig.query.label}
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  formik.handleChange(e)
+                  setIsOpen(true);
+                }}
                 onBlur={formik.handleBlur}
                 className="flex-1 min-w-0 placeholder:text-gray-400 outline-none"
               />
@@ -63,7 +82,7 @@ export default function DashboardHeader() {
               {formik.errors[SearchBarConfig.query.key]}
             </p>
           )}
-          {formik.values.query && (
+          {formik.values.query && isOpen && (
             <Card className="absolute top-full left-0 mt-2 w-full z-50 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden">
               <Card.Content className="max-h-80 overflow-y-auto py-2">
                 {[

@@ -4,10 +4,10 @@ import Card from "@/components/common/AppCard";
 import { BuyerFormConfig } from "@/configs/forms";
 import InputField from "@/components/common/InputField";
 import AppDotLoader from "@/components/common/NavigationDotloader";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useGlobalRedirect } from "@/lib/hooks";
 import { addBuyer } from "@/redux/slice";
 import { IBuyer } from "@/types";
-import { FormButtonDivClass, InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { FormButtonDivClass, InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, RedirectButtonClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { shouldShowError } from "@/utils/validations";
 import { BuyerSchema } from "@/validations";
 import {
@@ -26,7 +26,7 @@ import { Ban, CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-const BUYER_TYPES = [
+export const BUYER_TYPES = [
   { id: "Retailer", name: "Retailer" },
   { id: "Wholesaler", name: "Wholesaler" },
   { id: "Brand", name: "Brand" },
@@ -35,19 +35,20 @@ const BUYER_TYPES = [
   { id: "Enterprise", name: "Enterprise" },
   { id: "Misc", name: "Misc" },
 ];
+export const statusOptions = [
+  { value: "Active", label: "Active", icon: <CheckCircle size={18} /> },
+  { value: "Inactive", label: "Inactive", icon: <Ban size={18} /> },
+];
 export default function Page() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [showValidation, setShowValidation] = useState(false);
-  const statusOptions = [
-    { value: "Active", label: "Active", icon: <CheckCircle size={18} /> },
-    { value: "Inactive", label: "Inactive", icon: <Ban size={18} /> },
-  ];
   const breadCrumbItems = [
     { label: "Dashboard", path: "/dashboard" },
     { label: "Buyers", path: "/buyers" },
     { label: "Add", path: "/buyers/create" },
   ];
+  const { navigate, isRedirecting } = useGlobalRedirect();
   const initialValues = {
     buyerName: "",
     email: "",
@@ -75,11 +76,22 @@ export default function Page() {
   const isInvalid = shouldShowError(formik);
   return (
     <div className="space-y-6 my-6 max-w-3xl ">
-      <div className="flex items-center justify-start my-6">
+      <div className="flex items-center justify-between my-6">
         <div className="flex flex-col gap-3">
           <AppBreadcrumb items={breadCrumbItems} />
-          <h1 className="text-2xl font-bold text-[#0040A1]">Add Buyer</h1>
+          <h1 className="text-2xl font-bold text-[#0040A1]">Edit Buyer</h1>
         </div>
+        <Button
+          onPress={() => navigate({ action: "back" })}
+          isDisabled={isRedirecting}
+          className={RedirectButtonClass}
+        >
+          {isRedirecting ? (
+            <AppDotLoader />
+          ) : (
+            <span>Back</span>
+          )}
+        </Button>
       </div>
       <form onSubmit={formik.handleSubmit} className="space-y-6 ">
         <Card>

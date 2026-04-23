@@ -24,7 +24,7 @@ export const fetchBuyerById = createAsyncThunk(
     }
 );
 export const addBuyer = createAsyncThunk(
-    "buyers/create",
+    "buyers/add",
     async (newBuyer: IBuyer, { rejectWithValue }) => {
         try {
             return await buyerService.add(newBuyer);
@@ -56,7 +56,7 @@ export const removeBuyer = createAsyncThunk(
 const initialState: IPaginatedState<IBuyer> = {
     data: [],
     selected: null,
-    loading: false,
+    loading: true,
     error: null,
     pagination: {
         currentPage: 0,
@@ -83,6 +83,7 @@ const buyerSlice = createSlice({
             })
             .addCase(fetchBuyerById.fulfilled, (state, action) => {
                 state.selected = action.payload;
+                state.loading = false;
             })
             .addCase(addBuyer.fulfilled, (state, action) => {
                 state.loading = false;

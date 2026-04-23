@@ -5,7 +5,7 @@ import { ISearchType } from "@/types/search.type";
 import { SearchResult } from "@/utils/data";
 import { Chip } from "@heroui/react";
 import { useState } from "react";
-import { buyerColumns } from "../buyers/page";
+import { BuyerColumns } from "../buyers/page";
 export default function Page() {
     const type: Record<ISearchType, ISearchType> = {
         buyer: "buyer",
@@ -26,7 +26,7 @@ export default function Page() {
                 })}
             </div>
             <DataTable
-                columns={buyerColumns()}
+                columns={BuyerColumns()}
                 data={(selected?.result.data ?? []) as IBuyer[]}
                 loading={false}
                 emptyMessage="No Buyers yet."

@@ -1,3 +1,5 @@
+import { IRedirectOptions } from "../hook.types";
+
 export interface IColumn<T> {
   key: keyof T | string;
   header: string;
@@ -25,5 +27,6 @@ export interface IDataTableProps<T extends object> {
   visiblePageCount?: number;
 }
 export interface IColumnDefProps {
-  deleteCustomer?: (id: string) => void
+  deleteCustomer?: (id: string) => void;
+  navigate?: ({ action, href }: IRedirectOptions) => void;
 }
