@@ -35,7 +35,7 @@ const BUYER_TYPES = [
   { id: "Enterprise", name: "Enterprise" },
   { id: "Misc", name: "Misc" },
 ];
-export default function OnBoardVendor() {
+export default function Page() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [showValidation, setShowValidation] = useState(false);

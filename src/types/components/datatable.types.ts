@@ -24,3 +24,6 @@ export interface IDataTableProps<T extends object> {
   goToPage?: (page: number) => void;
   visiblePageCount?: number;
 }
+export interface IColumnDefProps {
+  deleteCustomer?: (id: string) => void
+}

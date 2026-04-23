@@ -4,7 +4,7 @@ import { DataTable } from "@/components/common/table/DataTable";
 import TableHeader from "@/components/common/table/TableHeader";
 import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
 import { useSelector } from "react-redux";
-import { IBuyer, IColumn, IFilterFields } from "@/types";
+import { IBuyer, IColumn, IColumnDefProps, IFilterFields } from "@/types";
 import toast from "react-hot-toast";
 import { useAppDispatch, useGlobalRedirect } from "@/lib/hooks";
 import { fetchBuyers, selectBuyers, selectBuyerLoading, removeBuyer, selectBuyerPagination } from "@/redux/slice";
@@ -16,6 +16,80 @@ import { IPaginationResponse } from "@/types/global.types";
 import { IFetchServiceParams } from "@/types/service/service.types";
 import { RedirectButtonClass } from "@/utils/tailwindCssClassConstant";
 import { Button } from "@heroui/react";
+export const buyerColumns: (props?: IColumnDefProps) => IColumn<IBuyer>[] = (props?: IColumnDefProps) => [
+  {
+    key: "vendorAndOrigin",
+    header: "Vendor & Origin",
+    render: (r) => {
+      const initials = r.buyerName
+        .split(" ")
+        .map((w) => w[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase();
+      return (
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 flex items-center justify-center rounded bg-blue-100 text-blue-700 font-semibold">
+            {initials}
+          </div>
+          <div className="flex flex-col">
+            <span className="font-medium">{r.buyerName}</span>
+            <span className="text-xs text-gray-500 flex items-center gap-1">
+              📍 {r.buyerAddress}
+            </span>
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    key: "id",
+    header: "Code",
+    render: (r) => <div className="truncate w-32" title={r.id}>
+      {r.id}
+    </div>
+  },
+  {
+    key: "type",
+    header: "Type",
+    render: (r) => <span className="capitalize">{r.buyerType.toLowerCase()}</span>,
+  },
+  {
+    key: "contactPerson",
+    header: "Contact Person",
+  },
+  {
+    key: "isActive",
+    header: "Active",
+    render: (r) => (
+      r.status == "Active" ?
+        (
+          <AppBadge variant="success" >Active</AppBadge>
+        )
+        :
+        (
+          <AppBadge variant="destructive">inActive</AppBadge>
+        )
+    ),
+  },
+  {
+    key: "actions",
+    header: "Actions",
+    render: (r) => (
+      <div className="flex gap-3 text-blue-600 cursor-pointer">
+        <span title="View">
+          <ViewIcon />
+        </span>
+        <span title="Edit">
+          <EditIcon />
+        </span>
+        <span title="Delete">
+          <DeleteIcon onClick={() => props?.deleteCustomer && props.deleteCustomer(r.id)} />
+        </span>
+      </div>
+    ),
+  },
+];
 export default function BuyersPage() {
   const dispatch = useAppDispatch();
   const buyersData: IBuyer[] = useSelector(selectBuyers);
@@ -67,80 +141,6 @@ export default function BuyersPage() {
     dispatch(removeBuyer(customerId));
     toast.success("Customer removed")
   }
-  const columns: IColumn<IBuyer>[] = [
-    {
-      key: "vendorAndOrigin",
-      header: "Vendor & Origin",
-      render: (r) => {
-        const initials = r.buyerName
-          .split(" ")
-          .map((w) => w[0])
-          .join("")
-          .slice(0, 2)
-          .toUpperCase();
-        return (
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 flex items-center justify-center rounded bg-blue-100 text-blue-700 font-semibold">
-              {initials}
-            </div>
-            <div className="flex flex-col">
-              <span className="font-medium">{r.buyerName}</span>
-              <span className="text-xs text-gray-500 flex items-center gap-1">
-                📍 {r.buyerAddress}
-              </span>
-            </div>
-          </div>
-        );
-      },
-    },
-    {
-      key: "id",
-      header: "Code",
-      render: (r) => <div className="truncate w-32" title={r.id}>
-        {r.id}
-      </div>
-    },
-    {
-      key: "type",
-      header: "Type",
-      render: (r) => <span className="capitalize">{r.buyerType.toLowerCase()}</span>,
-    },
-    {
-      key: "contactPerson",
-      header: "Contact Person",
-    },
-    {
-      key: "isActive",
-      header: "Active",
-      render: (r) => (
-        r.status == "Active" ?
-          (
-            <AppBadge variant="success" >Active</AppBadge>
-          )
-          :
-          (
-            <AppBadge variant="destructive">inActive</AppBadge>
-          )
-      ),
-    },
-    {
-      key: "actions",
-      header: "Actions",
-      render: (r) => (
-        <div className="flex gap-3 text-blue-600 cursor-pointer">
-          <span title="View">
-            <ViewIcon />
-          </span>
-          <span title="Edit">
-            <EditIcon />
-          </span>
-          <span title="Delete">
-            <DeleteIcon onClick={() => deleteCustomer(r.id)} />
-          </span>
-        </div>
-      ),
-    },
-  ];
   return (
     <div >
       <div className="flex items-center justify-between my-6">
@@ -160,7 +160,7 @@ export default function BuyersPage() {
         </Button>
       </div>
       <DataTable
-        columns={columns}
+        columns={buyerColumns({ deleteCustomer })}
         data={buyersData}
         loading={loading}
         emptyMessage="No Buyers yet."

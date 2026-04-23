@@ -1,0 +1,39 @@
+'use client'
+import { DataTable } from "@/components/common/table/DataTable";
+import { IBuyer } from "@/types";
+import { ISearchType } from "@/types/search.type";
+import { SearchResult } from "@/utils/data";
+import { Chip } from "@heroui/react";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { buyerColumns } from "../buyers/page";
+export default function Page() {
+    const params = useSearchParams();
+    const type: Record<ISearchType, ISearchType> = {
+        buyer: "buyer",
+        enquiry: "enquiry",
+        vendor: "vendor",
+        sample: "sample",
+        order: "order"
+    }
+    const [categoryType, setCategoryType] = useState<ISearchType>(type.buyer);
+    const selected = SearchResult.find(
+        (res) => res.type === categoryType
+    );
+    return (
+        <div className="p-5 mt-5  ">
+            <div className="flex flex-row gap-2 mb-5">
+                {SearchResult.map(({ type, result }, idx) => {
+                    return <Chip key={type + idx} className={categoryType == type ? "text-green-500 bg-green-100" : "text-pink-500 bg-pink-100"} onClick={() => setCategoryType(type)}>{type}</Chip>
+                })}
+            </div>
+            <DataTable
+                columns={buyerColumns()}
+                data={(selected?.result.data ?? []) as IBuyer[]}
+                loading={false}
+                emptyMessage="No Buyers yet."
+            />
+        </div>
+    )
+}
+

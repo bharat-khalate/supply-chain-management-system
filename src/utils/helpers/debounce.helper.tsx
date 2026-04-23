@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export const debounce = <T extends (...args: any[]) => void>(
   callback: T,
   delay: number,
@@ -12,3 +14,11 @@ export const debounce = <T extends (...args: any[]) => void>(
   };
   return debounced;
 };
+export const useDebounce = <T,>(data: T, delay = 300) => {
+  const [debounced, setDebounced] = useState<T>(data);
+  useEffect(() => {
+    const timer: ReturnType<typeof setTimeout> = setTimeout(() => setDebounced(data), delay)
+    return () => clearTimeout(timer);
+  }, [data, delay])
+  return debounced;
+}

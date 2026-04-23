@@ -2,7 +2,7 @@
 import AppDotLoader from "@/components/common/NavigationDotloader";
 import SettingShell from "@/components/common/settings-layout/SettingsShell";
 import AppSpinner from "@/components/common/Spinner";
-import Tiptap from "@/components/ui/dashboard/TipTapEditor";
+import Tiptap from "@/components/ui/TipTapEditor";
 import { AboutUsFields } from "@/configs/forms/settings/aboutUs.form";
 import { useAppDispatch } from "@/lib/hooks";
 import { fetchAllPageSetting, selectPageSetting, selectPageSettingError, selectPageSettingLoader, updateAllPageSetting } from "@/redux/slice/page.setting";

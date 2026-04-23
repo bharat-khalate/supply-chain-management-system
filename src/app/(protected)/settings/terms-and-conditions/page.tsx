@@ -3,7 +3,7 @@
 import AppDotLoader from "@/components/common/NavigationDotloader";
 import SettingShell from "@/components/common/settings-layout/SettingsShell";
 import AppSpinner from "@/components/common/Spinner";
-import Tiptap from "@/components/ui/dashboard/TipTapEditor";
+import Tiptap from "@/components/ui/TipTapEditor";
 import { TermsAndConditionsField } from "@/configs/forms/settings/termsAndCondition.form";
 import { useAppDispatch } from "@/lib/hooks";
 import { selectPageSetting, selectPageSettingError, selectPageSettingLoader } from "@/redux/slice";
