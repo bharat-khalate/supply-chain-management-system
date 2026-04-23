@@ -18,13 +18,13 @@ export default function Page() {
     }
     const [categoryType, setCategoryType] = useState<ISearchType>(type.buyer);
     const selected = SearchResult.find(
-        (res) => res.type === categoryType
+        (res) => res.type === "buyer"
     );
     return (
         <div className="p-5 mt-5  ">
             <div className="flex flex-row gap-2 mb-5">
                 {SearchResult.map(({ type, result }, idx) => {
-                    return <Chip key={type + idx} className={categoryType == type ? "text-green-500 bg-green-100" : "text-pink-500 bg-pink-100"} onClick={() => setCategoryType(type)}>{type}</Chip>
+                    return <Chip key={type + idx} className={categoryType == type ? "text-green-500 bg-green-100 cursor-pointer" : "cursor-pointer"} onClick={() => setCategoryType(type)}>{type}</Chip>
                 })}
             </div>
             <DataTable

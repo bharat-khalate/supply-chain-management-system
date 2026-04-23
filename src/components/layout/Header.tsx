@@ -33,7 +33,7 @@ export default function DashboardHeader() {
       <div className="flex flex-col-reverse sm:flex-row items-center justify-between px-4 sm:px-6 py-3 gap-4 sm:gap-6">
         <div className=" w-full flex-1 sm:max-w-105 min-w-0 relative">
           <TextField className="w-full">
-            <InputGroup className="w-full bg-gray-200 rounded-lg p-1 text-sm text-gray-700 flex items-center min-w-0">
+            <InputGroup className="w-full bg-gray-200 rounded-sm p-1 text-sm text-gray-700 flex items-center min-w-0">
               <InputGroup.Prefix className="shrink-0">
                 <HeaderSearchIcon size={18} className="text-gray-500 mr-2" />
               </InputGroup.Prefix>
