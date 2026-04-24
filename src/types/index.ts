@@ -14,7 +14,8 @@ import {
 import { IRedirectOptions } from "./hook.types"
 import { TFormFieldConfig } from "./formfield.config.types";
 import { ISearchBar } from "./global.types";
-import { ISearchType, ISearchResultItem, ISearchResult } from '@/types/search.type'
+import { ISearchType, ISearchResultItem, ISearchResult, ISearchState } from '@/types/search.type'
+import { ISearchServiceParam } from "./service/service.types";
 //component types import
 import { IAlert, IColumnDefProps } from "./components";
 import { IBadgeProps, IBadgeVariant } from "./components";
@@ -52,6 +53,7 @@ export type {
 export type { IRedirectOptions }
 export type { TFormFieldConfig }
 export type { ISearchType, ISearchResultItem, ISearchResult };
+export type { ISearchServiceParam, ISearchState   }
 //component type export
 export type { IAlert };
 export type { IBadgeProps, IBadgeVariant };

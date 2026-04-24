@@ -1,7 +1,7 @@
 "use client";
 import { AppBreadcrumb } from "@/components/common/AppBreadCrumb";
 import Card from "@/components/common/AppCard";
-import { BuyerFormConfig } from "@/configs/forms";
+import { BUYER_TYPES, BuyerFormConfig } from "@/configs/forms";
 import InputField from "@/components/common/InputField";
 import AppDotLoader from "@/components/common/NavigationDotloader";
 import { useAppDispatch, useGlobalRedirect } from "@/lib/hooks";
@@ -26,15 +26,6 @@ import { Ban, CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-export const BUYER_TYPES = [
-  { id: "Retailer", name: "Retailer" },
-  { id: "Wholesaler", name: "Wholesaler" },
-  { id: "Brand", name: "Brand" },
-  { id: "Corporate", name: "Corporate" },
-  { id: "Institutional", name: "Institutional" },
-  { id: "Enterprise", name: "Enterprise" },
-  { id: "Misc", name: "Misc" },
-];
 export const statusOptions = [
   { value: "Active", label: "Active", icon: <CheckCircle size={18} /> },
   { value: "Inactive", label: "Inactive", icon: <Ban size={18} /> },
@@ -104,7 +95,7 @@ export default function Page() {
             </div>
           </Card.Header>
           <Card.Content className="space-y-6  p-6">
-            <div className="flex flex-row w-full gap-1">
+            <div className="flex flex-row w-full gap-2">
               <InputField formik={formik} fieldConstant={BuyerFormConfig.buyerName} />
               <InputField formik={formik} fieldConstant={BuyerFormConfig.contactPerson} />
             </div>

@@ -9,17 +9,16 @@ import { fetchBuyerById, selectBuyerLoading } from "@/redux/slice/buyer.slice";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-
-import {
-    ProductionSpecificationIcon,
-    ProductStatusIcon,
-    ConfigurationIcon,
-} from "@icons/form-icons";
-import { Mail, Phone, User, MapPin, Briefcase, UserCheck } from "lucide-react";
 import AppDotLoader from "@/components/common/NavigationDotloader";
+import { InfoItem } from "@/components/ui/Common";
 import { RedirectButtonClass } from "@/utils/tailwindCssClassConstant";
 import { Button } from "@heroui/react";
-
+import {
+    ConfigurationIcon,
+    ProductionSpecificationIcon,
+    ProductStatusIcon,
+} from "@icons/form-icons";
+import { Briefcase, Mail, MapPin, Phone, User } from "lucide-react";
 export default function Page() {
     const dispatch = useAppDispatch();
     const buyer = useSelector(selectBuyer);
@@ -40,9 +39,7 @@ export default function Page() {
         { label: "Buyers", path: "/buyers" },
         { label: "View Details", path: "" },
     ];
-
     if (loading || !buyer) return <AppSpinner />;
-
     return (
         <div className="p-6 max-w-6xl mx-auto space-y-8">
             <div className="flex items-center justify-between my-6">
@@ -77,7 +74,6 @@ export default function Page() {
                         </span>
                     </div>
                     <span className="flex items-center gap-1.5 text-xs ms-1 text-olive-500 italic">
-
                         {buyer.id}
                     </span>
                 </div>
@@ -117,20 +113,6 @@ export default function Page() {
                         </Card.Content>
                     </Card>
                 </div>
-
-            </div>
-        </div>
-    );
-}
-
-// Helper component for clean key-value pairs
-function InfoItem({ icon, label, value }: { icon: any, label: string, value: string }) {
-    return (
-        <div className="flex items-start gap-3">
-            <div className="mt-1 text-slate-400">{icon}</div>
-            <div>
-                <p className="text-xs font-medium text-slate-400 uppercase tracking-tight">{label}</p>
-                <span className="text-slate-700 font-semibold break-all">{value || "N/A"}</span>
             </div>
         </div>
     );

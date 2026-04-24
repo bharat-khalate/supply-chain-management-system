@@ -1,6 +1,6 @@
 'use client'
 import { configureStore } from "@reduxjs/toolkit";
-import { buyerSlice, enquirySlice, configSettingSlice, orderSlice, pageSettingSlice, sampleSlice, vendorSlice } from "@/redux/slice";
+import { buyerSlice, enquirySlice, configSettingSlice, orderSlice, pageSettingSlice, sampleSlice, vendorSlice, searchSlice } from "@/redux/slice";
 import { Provider } from "react-redux"
 const store = configureStore({
     reducer: {
@@ -10,7 +10,8 @@ const store = configureStore({
         sampleSlice: sampleSlice,
         vendorSlice: vendorSlice,
         configSettingSlice: configSettingSlice,
-        pageSettingSlice: pageSettingSlice
+        pageSettingSlice: pageSettingSlice,
+        searchSlice: searchSlice
     }
 })
 export default function StoreProvider({ children }: { children: React.ReactNode }) {

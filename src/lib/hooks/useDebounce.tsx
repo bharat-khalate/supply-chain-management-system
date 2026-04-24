@@ -1,5 +1,5 @@
+'use client'
 import { useEffect, useState } from "react";
-
 export const debounce = <T extends (...args: any[]) => void>(
   callback: T,
   delay: number,

@@ -9,30 +9,8 @@ import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-export default function SalesEnquiryPage() {
-  const { loading, data } = useSelector((store: RootState) => store.enquirySlice);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(getAllEnquiries(defaultPaginationConfig))
-  }, [])
-  const openCreate = () => {
-    const enquiry: IEnquiry = {
-      enquiryId: "ENQ001",
-      date: "25/3/2026",
-      customerName: "Aniket Patil",
-      contactPerson: "Amit Sharma",
-      qty: 10000,
-      expPrice: 10000,
-      status: "Active"
-    }
-    dispatch(addEnquiry(enquiry))
-    toast.success("Added Enquiry.")
-  };
-  const deleteEnquiry = (enquiryId: string) => {
-    dispatch(removeEnquiry(enquiryId))
-    toast.success("Deleted Enquiry.")
-  }
-  const columns: IColumn<IEnquiry>[] = [
+export const SalesColumns:()=>IColumn<IEnquiry>[]=()=>{
+  return [
     {
       key: "enquiryId",
       header: "Enquiry Id",
@@ -88,12 +66,37 @@ export default function SalesEnquiryPage() {
             <EditIcon />
           </span>
           <span title="Delete">
-            <DeleteIcon onClick={() => deleteEnquiry(r.enquiryId)} />
+            <DeleteIcon onClick={() => {}} />
           </span>
         </div>
       ),
     },
   ];
+}
+export default function SalesEnquiryPage() {
+  const { loading, data } = useSelector((store: RootState) => store.enquirySlice);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getAllEnquiries(defaultPaginationConfig))
+  }, [])
+  const openCreate = () => {
+    const enquiry: IEnquiry = {
+      enquiryId: "ENQ001",
+      date: "25/3/2026",
+      customerName: "Aniket Patil",
+      contactPerson: "Amit Sharma",
+      qty: 10000,
+      expPrice: 10000,
+      status: "Active"
+    }
+    dispatch(addEnquiry(enquiry))
+    toast.success("Added Enquiry.")
+  };
+  const deleteEnquiry = (enquiryId: string) => {
+    dispatch(removeEnquiry(enquiryId))
+    toast.success("Deleted Enquiry.")
+  }
+
   return (
     <div>
       <div className="flex items-center justify-between my-6">
@@ -108,7 +111,7 @@ export default function SalesEnquiryPage() {
         </button>
       </div>
       <DataTable
-        columns={columns}
+        columns={SalesColumns()}
         data={data}
         loading={loading}
         emptyMessage="No Buyers yet."

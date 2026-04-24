@@ -544,18 +544,7 @@ export const SearchResult: ISearchResult = [
   {
     "type": "buyer",
     "result": {
-      "data": [
-        { "id": "B001", "buyerName": "Apex Retail", "buyerAddress": "Mumbai", "phone": "9876543210", "email": "apex@test.com", "contactPerson": "Rohit", "buyerType": "Retailer", "requirementCategory": "Textiles", "status": "Active" },
-        { "id": "B002", "buyerName": "Global Mart", "buyerAddress": "Delhi", "phone": "9876543211", "email": "global@test.com", "contactPerson": "Ankit", "buyerType": "Wholesaler", "requirementCategory": "Electronics", "status": "Active" },
-        { "id": "B003", "buyerName": "Urban Brand", "buyerAddress": "Bangalore", "phone": "9876543212", "email": "urban@test.com", "contactPerson": "Neha", "buyerType": "Brand", "requirementCategory": "Fashion", "status": "Inactive" },
-        { "id": "B004", "buyerName": "Corp Hub", "buyerAddress": "Pune", "phone": "9876543213", "email": "corp@test.com", "contactPerson": "Amit", "buyerType": "Corporate", "requirementCategory": "Office", "status": "Active" },
-        { "id": "B005", "buyerName": "Edu Supplies", "buyerAddress": "Chennai", "phone": "9876543214", "email": "edu@test.com", "contactPerson": "Priya", "buyerType": "Institutional", "requirementCategory": "Stationery", "status": "Active" },
-        { "id": "B006", "buyerName": "Mega Ent", "buyerAddress": "Hyderabad", "phone": "9876543215", "email": "mega@test.com", "contactPerson": "Rahul", "buyerType": "Enterprise", "requirementCategory": "Machinery", "status": "Active" },
-        { "id": "B007", "buyerName": "City Retail", "buyerAddress": "Ahmedabad", "phone": "9876543216", "email": "city@test.com", "contactPerson": "Mehul", "buyerType": "Retailer", "requirementCategory": "Groceries", "status": "Inactive" },
-        { "id": "B008", "buyerName": "Quick Supply", "buyerAddress": "Kolkata", "phone": "9876543217", "email": "quick@test.com", "contactPerson": "Sourav", "buyerType": "Wholesaler", "requirementCategory": "FMCG", "status": "Active" },
-        { "id": "B009", "buyerName": "Trendz", "buyerAddress": "Surat", "phone": "9876543218", "email": "trendz@test.com", "contactPerson": "Kiran", "buyerType": "Brand", "requirementCategory": "Clothing", "status": "Active" },
-        { "id": "B010", "buyerName": "Misc Traders", "buyerAddress": "Jaipur", "phone": "9876543219", "email": "misc@test.com", "contactPerson": "Vikas", "buyerType": "Misc", "requirementCategory": "General", "status": "Inactive" }
-      ],
+      "data": buyers,
       "pagination": { "currentPage": 1, "lastPage": 1, "totalCount": 10, "canNextPage": false, "canPreviousPage": false }
     }
   },
@@ -563,18 +552,7 @@ export const SearchResult: ISearchResult = [
   {
     "type": "vendor",
     "result": {
-      "data": [
-        { "id": "V001", "name": "Steel Corp", "origin": "India", "code": "ST01", "type": "Manufacturer", "category": "Steel", "status": "Active" },
-        { "id": "V002", "name": "TexFab", "origin": "India", "code": "TX02", "type": "Supplier", "category": "Textiles", "status": "Active" },
-        { "id": "V003", "name": "ElectroHub", "origin": "China", "code": "EL03", "type": "Manufacturer", "category": "Electronics", "status": "Inactive" },
-        { "id": "V004", "name": "ChemSource", "origin": "Germany", "code": "CH04", "type": "Supplier", "category": "Chemicals", "status": "Active" },
-        { "id": "V005", "name": "AutoParts", "origin": "Japan", "code": "AP05", "type": "Manufacturer", "category": "Automobile", "status": "Active" },
-        { "id": "V006", "name": "PaperWorks", "origin": "India", "code": "PW06", "type": "Supplier", "category": "Stationery", "status": "Active" },
-        { "id": "V007", "name": "AgroFarm", "origin": "India", "code": "AF07", "type": "Manufacturer", "category": "Agri", "status": "Inactive" },
-        { "id": "V008", "name": "PackRight", "origin": "USA", "code": "PK08", "type": "Supplier", "category": "Packaging", "status": "Active" },
-        { "id": "V009", "name": "BuildMax", "origin": "UAE", "code": "BM09", "type": "Manufacturer", "category": "Construction", "status": "Active" },
-        { "id": "V010", "name": "FoodChain", "origin": "India", "code": "FC10", "type": "Supplier", "category": "FMCG", "status": "Active" }
-      ],
+      "data": vendors,
       "pagination": { "currentPage": 1, "lastPage": 1, "totalCount": 10, "canNextPage": false, "canPreviousPage": false }
     }
   },
@@ -582,18 +560,7 @@ export const SearchResult: ISearchResult = [
   {
     "type": "enquiry",
     "result": {
-      "data": [
-        { "enquiryId": "E001", "date": "2026-04-01", "customerName": "Apex Retail", "contactPerson": "Rohit", "qty": 100, "expPrice": 500, "status": "Active" },
-        { "enquiryId": "E002", "date": "2026-04-02", "customerName": "Global Mart", "contactPerson": "Ankit", "qty": 200, "expPrice": 300, "status": "Pending" },
-        { "enquiryId": "E003", "date": "2026-04-03", "customerName": "Urban Brand", "contactPerson": "Neha", "qty": 150, "expPrice": 700, "status": "Closed" },
-        { "enquiryId": "E004", "date": "2026-04-04", "customerName": "Corp Hub", "contactPerson": "Amit", "qty": 500, "expPrice": 250, "status": "Active" },
-        { "enquiryId": "E005", "date": "2026-04-05", "customerName": "Edu Supplies", "contactPerson": "Priya", "qty": 300, "expPrice": 150, "status": "Pending" },
-        { "enquiryId": "E006", "date": "2026-04-06", "customerName": "Mega Ent", "contactPerson": "Rahul", "qty": 1000, "expPrice": 900, "status": "Active" },
-        { "enquiryId": "E007", "date": "2026-04-07", "customerName": "City Retail", "contactPerson": "Mehul", "qty": 120, "expPrice": 400, "status": "Closed" },
-        { "enquiryId": "E008", "date": "2026-04-08", "customerName": "Quick Supply", "contactPerson": "Sourav", "qty": 250, "expPrice": 350, "status": "Active" },
-        { "enquiryId": "E009", "date": "2026-04-09", "customerName": "Trendz", "contactPerson": "Kiran", "qty": 600, "expPrice": 800, "status": "Pending" },
-        { "enquiryId": "E010", "date": "2026-04-10", "customerName": "Misc Traders", "contactPerson": "Vikas", "qty": 90, "expPrice": 200, "status": "Closed" }
-      ],
+      "data": enquiries,
       "pagination": { "currentPage": 1, "lastPage": 1, "totalCount": 10, "canNextPage": false, "canPreviousPage": false }
     }
   },
@@ -601,18 +568,7 @@ export const SearchResult: ISearchResult = [
   {
     "type": "order",
     "result": {
-      "data": [
-        { "orderId": "O001", "date": "2026-04-01", "qty": 100, "customerName": "Apex Retail", "deliveryDate": "2026-04-10", "status": "Active" },
-        { "orderId": "O002", "date": "2026-04-02", "qty": 200, "customerName": "Global Mart", "deliveryDate": "2026-04-12", "status": "Inactive" },
-        { "orderId": "O003", "date": "2026-04-03", "qty": 150, "customerName": "Urban Brand", "deliveryDate": "2026-04-15", "status": "Active" },
-        { "orderId": "O004", "date": "2026-04-04", "qty": 500, "customerName": "Corp Hub", "deliveryDate": "2026-04-20", "status": "Active" },
-        { "orderId": "O005", "date": "2026-04-05", "qty": 300, "customerName": "Edu Supplies", "deliveryDate": "2026-04-18", "status": "Inactive" },
-        { "orderId": "O006", "date": "2026-04-06", "qty": 1000, "customerName": "Mega Ent", "deliveryDate": "2026-04-25", "status": "Active" },
-        { "orderId": "O007", "date": "2026-04-07", "qty": 120, "customerName": "City Retail", "deliveryDate": "2026-04-14", "status": "Inactive" },
-        { "orderId": "O008", "date": "2026-04-08", "qty": 250, "customerName": "Quick Supply", "deliveryDate": "2026-04-16", "status": "Active" },
-        { "orderId": "O009", "date": "2026-04-09", "qty": 600, "customerName": "Trendz", "deliveryDate": "2026-04-22", "status": "Active" },
-        { "orderId": "O010", "date": "2026-04-10", "qty": 90, "customerName": "Misc Traders", "deliveryDate": "2026-04-13", "status": "Inactive" }
-      ],
+      "data": orders,
       "pagination": { "currentPage": 1, "lastPage": 1, "totalCount": 10, "canNextPage": false, "canPreviousPage": false }
     }
   },
@@ -620,18 +576,7 @@ export const SearchResult: ISearchResult = [
   {
     "type": "sample",
     "result": {
-      "data": [
-        { "sampleId": "S001", "date": "2026-04-01", "enquiryId": "E001", "customerName": "Apex Retail", "productCategory": "Textiles", "status": "Active" },
-        { "sampleId": "S002", "date": "2026-04-02", "enquiryId": "E002", "customerName": "Global Mart", "productCategory": "Electronics", "status": "Pending" },
-        { "sampleId": "S003", "date": "2026-04-03", "enquiryId": "E003", "customerName": "Urban Brand", "productCategory": "Fashion", "status": "Completed" },
-        { "sampleId": "S004", "date": "2026-04-04", "enquiryId": "E004", "customerName": "Corp Hub", "productCategory": "Office", "status": "Active" },
-        { "sampleId": "S005", "date": "2026-04-05", "enquiryId": "E005", "customerName": "Edu Supplies", "productCategory": "Stationery", "status": "Pending" },
-        { "sampleId": "S006", "date": "2026-04-06", "enquiryId": "E006", "customerName": "Mega Ent", "productCategory": "Machinery", "status": "Completed" },
-        { "sampleId": "S007", "date": "2026-04-07", "enquiryId": "E007", "customerName": "City Retail", "productCategory": "Groceries", "status": "Active" },
-        { "sampleId": "S008", "date": "2026-04-08", "enquiryId": "E008", "customerName": "Quick Supply", "productCategory": "FMCG", "status": "Pending" },
-        { "sampleId": "S009", "date": "2026-04-09", "enquiryId": "E009", "customerName": "Trendz", "productCategory": "Clothing", "status": "Completed" },
-        { "sampleId": "S010", "date": "2026-04-10", "enquiryId": "E010", "customerName": "Misc Traders", "productCategory": "General", "status": "Active" }
-      ],
+      "data": sampleRecords,
       "pagination": { "currentPage": 1, "lastPage": 1, "totalCount": 10, "canNextPage": false, "canPreviousPage": false }
     }
   }

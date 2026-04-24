@@ -4,12 +4,12 @@ import Card from "@/components/common/AppCard";
 import InputField from "@/components/common/InputField";
 import AppDotLoader from "@/components/common/NavigationDotloader";
 import AppSpinner from "@/components/common/Spinner";
-import { BuyerFormConfig } from "@/configs/forms";
+import { BUYER_TYPES, BuyerFormConfig } from "@/configs/forms";
 import { useAppDispatch, useGlobalRedirect } from "@/lib/hooks";
 import { selectBuyer } from "@/redux/slice";
 import { fetchBuyerById, selectBuyerLoading, updateBuyer } from "@/redux/slice/buyer.slice";
 import { IBuyer } from "@/types";
-import { FormButtonDivClass, InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, RedirectButtonClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { InputFieldClass, InputFieldErrorMessageClass, InputLabelClass, RedirectButtonClass } from "@/utils/tailwindCssClassConstant";
 import { shouldShowError } from "@/utils/validations";
 import { BuyerSchema } from "@/validations";
 import {
@@ -25,10 +25,10 @@ import {
 } from "@icons/form-icons";
 import { useFormik } from "formik";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { BUYER_TYPES, statusOptions } from "../../create/page";
+import { statusOptions } from "../../create/page";
 export default function Page() {
     const dispatch = useAppDispatch();
     const buyer = useSelector(selectBuyer);
@@ -42,7 +42,6 @@ export default function Page() {
         }
         dispatch(fetchBuyerById(id as string))
     }, [id])
-    const [showValidation, setShowValidation] = useState(false);
     const breadCrumbItems = [
         { label: "Dashboard", path: "/dashboard" },
         { label: "Buyers", path: "/buyers" },
