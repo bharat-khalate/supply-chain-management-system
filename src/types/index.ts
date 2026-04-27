@@ -1,4 +1,4 @@
-import { IBuyer, IBuyerState, IBuyerFields } from "./buyer.types";
+import { IBuyer, IBuyerState, IBuyerFields, TBuyerStatusOptions } from "./buyer.types";
 import { IVendor, IVendorState } from "./vendor.types";
 import { IEnquiry, IEnquiryState } from "./enquiry.types";
 import { IOrder, IOrderState } from "./orders.types";
@@ -41,6 +41,7 @@ export type {
   ISampleState,
   IVendorState,
   IBuyerFields,
+  TBuyerStatusOptions
 };
 export type {
   IApiError,
@@ -53,7 +54,7 @@ export type {
 export type { IRedirectOptions }
 export type { TFormFieldConfig }
 export type { ISearchType, ISearchResultItem, ISearchResult };
-export type { ISearchServiceParam, ISearchState   }
+export type { ISearchServiceParam, ISearchState }
 //component type export
 export type { IAlert };
 export type { IBadgeProps, IBadgeVariant };

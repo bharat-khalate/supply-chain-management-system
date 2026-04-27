@@ -116,11 +116,9 @@ const buyerSlice = createSlice({
             );
     }
 });
-
 export const selectBuyers = (state: RootState) => state.buyerSlice.data;
 export const selectBuyer = (state: RootState) => state.buyerSlice.selected;
 export const selectBuyerLoading = (state: RootState) => state.buyerSlice.loading;
 export const selectBuyerError = (state: RootState) => state.buyerSlice.error;
 export const selectBuyerPagination = (state: RootState) => state.buyerSlice.pagination;
-
 export default buyerSlice.reducer;

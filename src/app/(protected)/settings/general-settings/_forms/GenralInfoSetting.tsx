@@ -4,7 +4,6 @@ import { useAppDispatch } from "@/lib/hooks";
 import { selectConfigSettings, updateConfigSetting } from "@/redux/slice";
 import { IGeneralInfoSetting, ISetting } from "@/types/settings";
 import { FormButtonDivClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
-import { shouldShowError } from "@/utils/validations";
 import { GeneralInfoSchema } from "@/validations";
 import { Button } from "@heroui/react";
 import { useFormik } from "formik";

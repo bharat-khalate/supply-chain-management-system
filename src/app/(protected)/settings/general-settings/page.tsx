@@ -11,7 +11,7 @@ import AppVersion from "./_forms/AppVersion";
 import GeneralInfoSettingForm from "./_forms/GenralInfoSetting";
 import SocialMediaLinkForm from "./_forms/SocialMediaLink";
 import Card from "@/components/common/AppCard";
-export default function AboutUsSettingPage() {
+export default function Page() {
   const dispatch = useAppDispatch();
   const loading = useSelector(selectConfigSettingLoader);
   useEffect(() => {
@@ -64,7 +64,6 @@ export default function AboutUsSettingPage() {
     },
   ];
   return (
-
     <SettingShell title="Manage Settings">
       {loading ? <AppSpinner /> : (
         <Card className="bg-transparent shadow-transparent">
@@ -94,9 +93,7 @@ export default function AboutUsSettingPage() {
             })}
           </Tabs>
         </Card>
-
       )}
-
     </SettingShell>
   );
 }

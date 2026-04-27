@@ -16,7 +16,7 @@ import { FormikProps, useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function ManageTermsConditions() {
+export default function Page() {
   const pageSetting: IPageSetting | null = useSelector(selectPageSetting);
   const loading: boolean = useSelector(selectPageSettingLoader);
   const error: string | null = useSelector(selectPageSettingError);

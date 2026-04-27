@@ -6,7 +6,7 @@ import { AsyncThunk, AsyncThunkConfig } from "@reduxjs/toolkit";
 import { IPaginatedData } from "@/types";
 import { IFetchServiceParams } from "@/types/service/service.types";
 import { buildSearchParams, getSanitizedPagination, parseSearchParams } from "@/utils/helpers/queryParams.helper";
-import { Preahvihear } from "next/font/google";
+
 
 type TFetchAction<T> = AsyncThunk<
     IPaginatedData<T>,

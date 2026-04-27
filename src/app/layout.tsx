@@ -5,7 +5,6 @@ import Store from '@/redux/Store';
 import type { Metadata } from 'next';
 import localFont from "next/font/local";
 import { Toaster } from 'react-hot-toast';
-
 const inter = localFont({
   src: [
     {

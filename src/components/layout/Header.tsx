@@ -1,3 +1,4 @@
+'use client'
 import { SearchBarConfig } from "@/configs/forms/searchBar";
 import { ISearchBar } from "@/types";
 import { useDebounce } from "@/lib/hooks/useDebounce";
@@ -7,7 +8,7 @@ import { InputGroup, Spinner, TextField } from "@heroui/react";
 import { HeaderBellIcon, HeaderSearchIcon, HeaderUserIcon } from "@icons/header-icons";
 import { BuyersIcon, SalesEnquiryIcon, SamplingIcon, VendorsIcon } from "@icons/sidebaricons";
 import { useFormik } from "formik";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Card from "../common/AppCard";
 import { X } from "lucide-react";
 import { useAppDispatch, useGlobalRedirect } from "@/lib/hooks";
@@ -16,7 +17,7 @@ import { buildSearchParams, getSearchItemRoute, parseSearchParams } from "@/util
 import { useSelector } from "react-redux";
 import { getSearchResult, selectSearchData, selectSearchDataLoading } from "@/redux/slice";
 import AppSpinner from "../common/Spinner";
-export default function DashboardHeader() {
+export function Header() {
   const searchResult = useSelector(selectSearchData);
   const searchLoading = useSelector(selectSearchDataLoading);
   const dispatch = useAppDispatch();
@@ -178,4 +179,10 @@ export default function DashboardHeader() {
       </div>
     </div>
   );
+}
+
+export default function DashBoardHeader() {
+  return <Suspense fallback={<span>...Loading</span>}>
+    <Header />
+  </Suspense>
 }

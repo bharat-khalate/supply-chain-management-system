@@ -13,7 +13,6 @@ const enquiryService = {
         return new Promise((resolve, reject) => {
             setTimeout(() => {  
                 const enquiry = enquiries[0]; enquiries.find((e) => e.enquiryId === id);
-                console.log(enquiry)
                 if (!enquiry) {
                     reject(new Error("Enquiry not found"));
                 } else {

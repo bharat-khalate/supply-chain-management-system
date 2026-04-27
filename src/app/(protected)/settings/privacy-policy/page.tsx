@@ -14,7 +14,7 @@ import { Button } from "@heroui/react";
 import { FormikProps, useFormik } from "formik";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-export default function ManagePrivacyPolicy() {
+export default function Page() {
   const pageSetting: IPageSetting | null = useSelector(selectPageSetting);
   const loading: boolean = useSelector(selectPageSettingLoader);
   const error: string | null = useSelector(selectPageSettingError);

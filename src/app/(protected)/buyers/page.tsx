@@ -191,8 +191,7 @@ export function BuyersPageContent() {
     </div>
   );
 }
-
-export default function ProductsPage() {
+export default function Page() {
   return (
     <Suspense fallback={<div className="flex justify-center p-8"><AppDotLoader /></div>}>
       <BuyersPageContent />

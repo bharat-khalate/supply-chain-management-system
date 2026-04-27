@@ -73,7 +73,7 @@ export const SalesColumns:()=>IColumn<IEnquiry>[]=()=>{
     },
   ];
 }
-export default function SalesEnquiryPage() {
+export default function Page() {
   const { loading, data } = useSelector((store: RootState) => store.enquirySlice);
   const dispatch = useAppDispatch();
   useEffect(() => {

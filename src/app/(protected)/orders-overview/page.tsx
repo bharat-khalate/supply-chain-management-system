@@ -66,7 +66,7 @@ export const OrdersColumn: () => IColumn<IOrder>[] = () => {
         },
     ];
 }
-export default function OrderPage() {
+export default function Page() {
     const dispatch = useAppDispatch();
     const { data, loading } = useSelector((store: RootState) => store.orderSlice);
     useEffect(() => {

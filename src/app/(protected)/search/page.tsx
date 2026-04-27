@@ -7,12 +7,12 @@ import { ISearchType } from "@/types/search.type";
 import { buildSearchParams, isValidUrlCategory, parseSearchParams } from "@/utils/helpers/queryParams.helper";
 import { Chip } from "@heroui/react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { Suspense, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { BuyerColumns } from "../buyers/page";
 import { OrdersColumn } from "../orders-overview/page";
 import { SalesColumns } from "../sales-enquiry/page";
-export default function Page() {
+export function Search() {
     const searchParam = useSearchParams();
     const searchResult = useSelector(selectSearchData)
     const loading = useSelector(selectSearchDataLoading)
@@ -95,3 +95,10 @@ export default function Page() {
     )
 }
 
+export default function Page() {
+    return (
+        <Suspense fallback={<p>...Loading</p>}>
+            <Search />
+        </Suspense>
+    )
+}
