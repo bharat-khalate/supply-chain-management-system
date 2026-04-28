@@ -1,4 +1,4 @@
-import { IBuyer, IBuyerState, IBuyerFields, TBuyerStatusOptions } from "./buyer.types";
+import { IBuyer, IBuyerFields, TBuyerStatusOptions } from "./buyer.types";
 import { IVendor, IVendorState } from "./vendor.types";
 import { IEnquiry, IEnquiryState } from "./enquiry.types";
 import { IOrder, IOrderState } from "./orders.types";
@@ -16,6 +16,7 @@ import { TFormFieldConfig } from "./formfield.config.types";
 import { ISearchBar } from "./global.types";
 import { ISearchType, ISearchResultItem, ISearchResult, ISearchState } from '@/types/search.type'
 import { ISearchServiceParam } from "./service/service.types";
+import { IFAQ, TEntities, TFAQStatus } from "./faq.types";
 //component types import
 import { IAlert, IColumnDefProps } from "./components";
 import { IBadgeProps, IBadgeVariant } from "./components";
@@ -35,7 +36,6 @@ import { ICustomEditorProps, IAppEditorProps } from "./components";
 import { TInputFieldProps } from "./components";
 export type { IBuyer, IVendor, ISample, IEnquiry, IOrder };
 export type {
-  IBuyerState,
   IEnquiryState,
   IOrderState,
   ISampleState,
@@ -55,6 +55,7 @@ export type { IRedirectOptions }
 export type { TFormFieldConfig }
 export type { ISearchType, ISearchResultItem, ISearchResult };
 export type { ISearchServiceParam, ISearchState }
+export type { IFAQ, TEntities, TFAQStatus }
 //component type export
 export type { IAlert };
 export type { IBadgeProps, IBadgeVariant };

@@ -1,4 +1,4 @@
-import { IPaginatedData } from "@/types";
+import { IFAQ, IPaginatedData } from "@/types";
 import { IBuyer } from "@/types/buyer.types";
 import { IEnquiry } from "@/types/enquiry.types";
 import { IOrder } from "@/types/orders.types";
@@ -539,7 +539,6 @@ export const pageSetting: IPageSetting = {
     <p><strong>Contact:</strong> For any questions, please reach out to our support team.</p>
   `,
 };
-
 export const SearchResult: ISearchResult = [
   {
     "type": "buyer",
@@ -581,3 +580,96 @@ export const SearchResult: ISearchResult = [
     }
   }
 ]
+export const FAQ: IFAQ[] = [
+  {
+    id: "faq-1",
+    question: "How to create a new buyer?",
+    answer: "Navigate to buyer section and click on create buyer.",
+    sequence: 1,
+    category: "BUYER",
+    createdOn:"2024-01-01",
+    status: "Active",
+  },
+  {
+    id: "faq-2",
+    question: "How to update buyer details?",
+    answer: "Go to buyer list, select a buyer and click edit.",
+    sequence: 2,
+    category: "BUYER",
+    createdOn:  "2024-01-02",
+    status: "Active",
+  },
+  {
+    id: "faq-3",
+    question: "How to delete a vendor?",
+    answer: "Select vendor and click delete button.",
+    sequence: 3,
+    category: "VENDOR",
+    createdOn:  "2024-01-03",
+    status: "Inactive",
+  },
+  {
+    id: "faq-4",
+    question: "How to create a vendor?",
+    answer: "Go to vendor page and fill the create form.",
+    sequence: 4,
+    category: "VENDOR",
+    createdOn:  "2024-01-04",
+    status: "Active",
+  },
+  {
+    id: "faq-5",
+    question: "How to place an order?",
+    answer: "Navigate to order section and click create order.",
+    sequence: 5,
+    category: "ORDER",
+    createdOn:  "2024-01-05",
+    status: "Active",
+  },
+  {
+    id: "faq-6",
+    question: "How to cancel an order?",
+    answer: "Open the order details and click cancel.",
+    sequence: 6,
+    category: "ORDER",
+    createdOn:  "2024-01-06",
+    status: "Inactive",
+  },
+  {
+    id: "faq-7",
+    question: "What is a sample request?",
+    answer: "Sample request is used to request product samples.",
+    sequence: 7,
+    category: "SAMPLE",
+    createdOn:  "2024-01-07",
+    status: "Active",
+  },
+  {
+    id: "faq-8",
+    question: "How to create a sample?",
+    answer: "Go to sample section and create a new sample.",
+    sequence: 8,
+    category: "SAMPLE",
+    createdOn:  "2024-01-08",
+    status: "Active",
+  },
+  {
+    id: "faq-9",
+    question: "How to raise an enquiry?",
+    answer: "Navigate to enquiry and fill the enquiry form.",
+    sequence: 9,
+    category: "ENQUIRY",
+    createdOn:  "2024-01-09",
+    status: "Active",
+  },
+  {
+    id: "faq-10",
+    question: "How to close an enquiry?",
+    answer: "Open enquiry details and mark it as closed.",
+    sequence: 10,
+    category: "ENQUIRY",
+    createdOn:  "2024-01-10",
+    status: "Inactive",
+  },
+  
+];

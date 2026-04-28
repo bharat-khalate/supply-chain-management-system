@@ -11,7 +11,7 @@ import { buildSearchParams, getSanitizedPagination, parseSearchParams } from "@/
 type TFetchAction<T> = AsyncThunk<
     IPaginatedData<T>,
     IFetchServiceParams,
-    AsyncThunkConfig
+    { rejectValue: string } & AsyncThunkConfig
 >;
 
 /**

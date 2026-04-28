@@ -36,7 +36,9 @@ export function Header() {
       console.log(_value)
     }
   })
+  const pathName = usePathname();
   useEffect(() => {
+    console.log(pathName);
     const handleClickOutside = (event: MouseEvent) => {
       if (
         wrapperRef.current &&
@@ -49,10 +51,10 @@ export function Header() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+
+  }, [pathName]);
   const isInvalid = shouldShowError<ISearchBar>(formik);
   const debounced = useDebounce<ISearchBar>(formik.values, 300);
-  const pathName = usePathname();
   useEffect(() => {
     if (Object.keys(formik.errors).length > 0) return;
     if (!debounced.query || debounced.query.length < 2) return;
@@ -74,8 +76,8 @@ export function Header() {
   };
   return (
     <div className="w-full bg-gray-100 ">
-      <div className="flex flex-col-reverse sm:flex-row items-center justify-between px-4 sm:px-6 py-3 gap-4 sm:gap-6">
-        <div ref={wrapperRef} className=" w-full flex-1 sm:max-w-105 min-w-0 relative">
+      <div className={`flex flex-col-reverse sm:flex-row items-center ${(pathName.startsWith("/dashboard") || pathName.startsWith("/search")) ? "justify-between" : "justify-end"} px-4 sm:px-6 py-3 gap-4 sm:gap-6`}>
+        {(pathName.startsWith("/dashboard") || pathName.startsWith("/search")) && (<div ref={wrapperRef} className=" w-full flex-1 sm:max-w-105 min-w-0 relative">
           <TextField className="w-full">
             <InputGroup className="w-full bg-gray-200 rounded-sm p-1 text-sm text-gray-700 flex items-center min-w-0">
               <InputGroup.Prefix className="shrink-0">
@@ -162,7 +164,7 @@ export function Header() {
               )}
             </Card>)
           }
-        </div>
+        </div>)}
         <div className="flex items-center justify-end w-full sm:w-auto shrink-0 gap-4 sm:gap-6">
           <HeaderBellIcon className="text-gray-600 cursor-pointer shrink-0" />
           <div className="h-6 w-px bg-gray-300" />
@@ -180,7 +182,6 @@ export function Header() {
     </div>
   );
 }
-
 export default function DashBoardHeader() {
   return <Suspense fallback={<span>...Loading</span>}>
     <Header />

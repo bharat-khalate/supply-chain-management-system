@@ -6,10 +6,10 @@ export type TInputFieldProps<T> = {
     formik: FormikProps<T>;
     fieldConstant: FieldConstant<T>
 }
-export type TBuyerType = { id: string, name: string }
-export type TAppSelectInputFieldProps<T, O extends TBuyerType, M extends "single" | "multiple" = "single"> = {
+export type TSelectOption = { label: string, key: string }
+export type TAppSelectInputFieldProps<T, O extends TSelectOption, M extends "single" | "multiple" = "single"> = {
     fieldConstant: FieldConstant<T>;
-    options: TBuyerType[];
+    options: TSelectOption[];
     selectProps?: SelectProps<O[], M>;
     labelProps?: LabelProps;
     selectTriggerProps?: SelectTriggerProps;

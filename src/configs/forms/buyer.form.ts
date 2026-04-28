@@ -1,4 +1,5 @@
 import { IBuyerFields, TFormFieldConfig } from "@/types";
+import { TSelectOption } from "@/types/components";
 
 export const BuyerFormConfig: TFormFieldConfig<IBuyerFields> = {
   buyerName: {
@@ -43,12 +44,12 @@ export const BuyerFormConfig: TFormFieldConfig<IBuyerFields> = {
   }
 }
 
-export const BUYER_TYPES = [
-  { id: "Retailer", name: "Retailer" },
-  { id: "Wholesaler", name: "Wholesaler" },
-  { id: "Brand", name: "Brand" },
-  { id: "Corporate", name: "Corporate" },
-  { id: "Institutional", name: "Institutional" },
-  { id: "Enterprise", name: "Enterprise" },
-  { id: "Misc", name: "Misc" },
+export const BUYER_TYPES:TSelectOption[] = [
+  { label: "Retailer", key: "Retailer" },
+  { label: "Wholesaler", key: "Wholesaler" },
+  { label: "Brand", key: "Brand" },
+  { label: "Corporate", key: "Corporate" },
+  { label: "Institutional", key: "Institutional" },
+  { label: "Enterprise", key: "Enterprise" },
+  { label: "Misc", key: "Misc" },
 ];

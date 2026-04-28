@@ -73,6 +73,16 @@ export const buyerTypeValidation = (fieldName: string) => {
       `${fieldName} is invalid`,
     );
 };
+export const faqCategoryValidation = (fieldName: string) => {
+  return Yup.string()
+    .required(`${fieldName} is required`)
+    .oneOf(
+      [
+        "BUYER", "VENDOR", "ORDER", "SAMPLE", "ENQUIRY",
+      ],
+      `${fieldName} is invalid`,
+    );
+};
 export const searchFieldValidator = Yup.string().min(SearchBarConfig.query.min || 6, "Please type at least 6 characters to search");
 export const commonAlphaNumericValidation = (
   fieldName: string,

@@ -9,15 +9,6 @@ export interface IBuyer {
     requirementCategory: string;
     status: TBuyerStatusOptions;
 }
-export interface IBuyerState {
-    data: IBuyer[];
-    selected: IBuyer | null;
-    loading: boolean;
-    error: string | null;
-    page: number;
-    limit: number;
-    total: number;
-}
 export interface IBuyerFields {
     buyerName: string;
     email: string,

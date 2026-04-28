@@ -27,7 +27,8 @@ const buyerService = {
                 resolve(newBuyer);
             }, 300);
         });
-    }, update: async (updatedBuyer: IBuyer): Promise<IBuyer> => {
+    },
+    update: async (updatedBuyer: IBuyer): Promise<IBuyer> => {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(updatedBuyer);

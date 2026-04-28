@@ -9,6 +9,7 @@ import { AboutUsSchema } from "./settings/aboutUs.validation";
 import { TermsAndConditionsSchema } from "./settings/termsAndConditions";
 import { PrivacyPolicySchema } from "./settings/privacyPolicy.validation";
 import { SearchBarValidationSchema } from "./searchBar.validation";
+import { FaqSchema } from "./faq.validation";
 export {
   GeneralInfoSchema,
   SocialMediaLinkFormSchema,
@@ -19,4 +20,5 @@ export { BuyerSchema };
 export { AboutUsSchema };
 export { TermsAndConditionsSchema };
 export { PrivacyPolicySchema };
-export {SearchBarValidationSchema}
+export { SearchBarValidationSchema }
+export { FaqSchema }

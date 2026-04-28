@@ -45,7 +45,7 @@ export function CreateBuyers() {
       <div className="flex items-center justify-between my-6">
         <div className="flex flex-col gap-3">
           <AppBreadcrumb items={breadCrumbItems} />
-          <h1 className="text-2xl font-bold text-[#0040A1]">Edit Buyer</h1>
+          <h1 className="text-2xl font-bold text-[#0040A1]">Create Buyer</h1>
         </div>
         <Button
           onPress={() => navigate({ action: "back" })}

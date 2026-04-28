@@ -1,4 +1,4 @@
-import { TBuyerStatusOptions } from "@/types";
+import { TBuyerStatusOptions, TFAQStatus } from "@/types";
 import { TRadioOption } from "@/types/components";
 import { Ban, CheckCircle } from "lucide-react";
 function RequiredAsterisk() {
@@ -55,4 +55,44 @@ const StatusOptions: TRadioOption<TBuyerStatusOptions>[] = [
     }
   },
 ];
-export { RequiredAsterisk, InfoItem, StatusOptions };
+const FAQStatusOptions: TRadioOption<TFAQStatus>[] = [
+  {
+    value: "Active", label: "Active", icon: <CheckCircle size={18} />, render: ({ isSelected, option, onSelect }: { isSelected: boolean, option: TRadioOption<TBuyerStatusOptions>, onSelect: () => void }) => {
+      return (<div
+        key={option.value}
+        onClick={() => onSelect()}
+        className={`flex flex-col items-center justify-center gap-2 
+                                            w-full sm:basis-1/2 h-20 rounded-lg border cursor-pointer transition-all
+                                             ${isSelected
+            ? "border-blue-600 bg-blue-50 text-blue-700"
+            : "border-gray-200 bg-white text-gray-500 hover:border-gray-300"
+          }`}
+      >
+        <div>{option?.icon}</div>
+        <span className="text-sm font-medium w-full text-center">
+          {option?.label}
+        </span>
+      </div>)
+    }
+  },
+  {
+    value: "Inactive", label: "Inactive", icon: <Ban size={18} />, render: ({ isSelected, option, onSelect }: { isSelected: boolean, option:TRadioOption<TBuyerStatusOptions>, onSelect: () => void }) => {
+      return (<div
+        key={option.value}
+        onClick={() => onSelect()}
+        className={`flex flex-col items-center justify-center gap-2 
+                                            w-full sm:basis-1/2 h-20 rounded-lg border cursor-pointer transition-all
+                                             ${isSelected
+            ? "border-blue-600 bg-blue-50 text-blue-700"
+            : "border-gray-200 bg-white text-gray-500 hover:border-gray-300"
+          }`}
+      >
+        <div>{option?.icon}</div>
+        <span className="text-sm font-medium w-full text-center">
+          {option?.label}
+        </span>
+      </div>)
+    }
+  },
+];
+export { RequiredAsterisk, InfoItem, StatusOptions, FAQStatusOptions };

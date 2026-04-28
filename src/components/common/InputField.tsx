@@ -1,7 +1,7 @@
 'use client'
 import { BUYER_TYPES } from "@/configs/forms";
 import { TInputFieldProps } from "@/types";
-import { TAppRadioFieldProps, TAppSelectInputFieldProps, TAppTextFieldProps, TBuyerType } from "@/types/components";
+import { TAppRadioFieldProps, TAppSelectInputFieldProps, TAppTextFieldProps, TSelectOption } from "@/types/components";
 import { InputFieldClass, InputFieldErrorMessageClass, InputLabelClass } from "@/utils/tailwindCssClassConstant";
 import { shouldShowError } from "@/utils/validations";
 import type { ButtonProps } from "@heroui/react";
@@ -138,14 +138,14 @@ export function RadioInputField<T, K extends keyof T>({ fieldConstants, options,
         </RadioGroup>
     )
 }
-export function AppSelectInputField<T, O extends TBuyerType, M extends "single" | "multiple" = "single">({ fieldConstant: fieldConfig, options, ...props }: TAppSelectInputFieldProps<T, O, M>) {
+export function AppSelectInputField<T, O extends TSelectOption, M extends "single" | "multiple" = "single">({ fieldConstant: fieldConfig, options, ...props }: TAppSelectInputFieldProps<T, O, M>) {
     const formik = useFormikContext<T>();
     const showError = shouldShowError<T>(formik);
     return (
         <Select
             {...props}
             isRequired
-            className={` w-full space-y-2 basis-1/3 `}
+            className={` w-full space-y-2 basis-1/3 ${props.selectProps?.className && props.selectProps.className} `}
             value={formik.values[fieldConfig.key] as string}
             name={fieldConfig.key as string}
             placeholder="Select one"
@@ -155,7 +155,7 @@ export function AppSelectInputField<T, O extends TBuyerType, M extends "single" 
             }}
             aria-label={fieldConfig.label ?? "Type"}
             onOpenChange={(isOpen) => {
-                if (!isOpen) {
+                if (!isOpen) {  
                     formik.setFieldTouched(fieldConfig.key as string, true);
                 }
             }}
@@ -173,13 +173,13 @@ export function AppSelectInputField<T, O extends TBuyerType, M extends "single" 
                     {BUYER_TYPES.map((type) => (
                         <ListBox.Item
                             {...props.listBoxItemProps}
-                            key={type.id}
-                            id={type.id}
-                            textValue={type.name}
+                            key={type.key}
+                            id={type.key}
+                            textValue={type.key}
                             className={`px-2 py-1.5 text-sm rounded-sm cursor-pointer outline-none hover:bg-slate-100 focus:bg-slate-100 ${props.listBoxItemProps?.className}`}
                         >
-                            {type.name}
-                            <ListBox.ItemIndicator key={type.id} />
+                            {type.label}
+                            <ListBox.ItemIndicator key={type.key} />
                         </ListBox.Item>
                     ))}
                 </ListBox>

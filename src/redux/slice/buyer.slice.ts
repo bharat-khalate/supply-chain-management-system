@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk, UnknownAction } from "@reduxjs/toolkit";
 import { RootState } from "../Store";
-import { IBuyer, IPaginatedState } from "@/types";
+import { IBuyer, IPaginatedData, IPaginatedState } from "@/types";
 import { buyerService } from "@/service";
 import { IFetchServiceParams } from "@/types/service/service.types";
-export const fetchBuyers = createAsyncThunk(
+export const fetchBuyers = createAsyncThunk<IPaginatedData<IBuyer>, IFetchServiceParams, { rejectValue: string }>(
     "buyers/fetchAll",
     async (props: IFetchServiceParams, { rejectWithValue }) => {
         try {
@@ -87,7 +87,7 @@ const buyerSlice = createSlice({
             })
             .addCase(addBuyer.fulfilled, (state, action) => {
                 state.loading = false;
-                state.selected = action.payload; 
+                state.selected = action.payload;
             })
             .addCase(updateBuyer.fulfilled, (state, action) => {
                 state.loading = false;

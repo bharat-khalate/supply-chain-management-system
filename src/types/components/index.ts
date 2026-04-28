@@ -8,7 +8,7 @@ import { TAppCardProps, TAppCardHeaderProps } from "./appcard.types";
 import { IModalProps } from "./appmodal.types";
 import { IAppStatusBadgeProps } from "./statusbadge"
 import { ICustomEditorProps, IAppEditorProps } from "./customEditor";
-import { TInputFieldProps, TBuyerType, TAppSelectInputFieldProps, TAppTextFieldProps, TRadioOption, TAppRadioFieldProps, TAppFormProps } from "./inputField.types";
+import { TInputFieldProps, TSelectOption, TAppSelectInputFieldProps, TAppTextFieldProps, TRadioOption, TAppRadioFieldProps, TAppFormProps } from "./inputField.types";
 export type { IAlert }
 export type { IBadgeProps, IBadgeVariant }
 export type { ISubmenuItem, INavItem, ISidebarProps }
@@ -19,4 +19,4 @@ export type { TAppCardProps, TAppCardHeaderProps }
 export type { IModalProps }
 export type { IAppStatusBadgeProps }
 export type { ICustomEditorProps, IAppEditorProps }
-export type { TInputFieldProps, TBuyerType, TAppSelectInputFieldProps, TAppTextFieldProps, TRadioOption, TAppRadioFieldProps, TAppFormProps }
+export type { TInputFieldProps, TSelectOption, TAppSelectInputFieldProps, TAppTextFieldProps, TRadioOption, TAppRadioFieldProps, TAppFormProps }
