@@ -8,6 +8,6 @@ import * as Yup from "yup";
 export const TermsAndConditionsSchema: Yup.ObjectSchema<ITermsAndConditions> =
   Yup.object({
     termsAndConditions: CommonRichTextRequiredValidator(
-      TermsAndConditionsField.termsAndConditions.label
+      TermsAndConditionsField.termsAndConditions.label || ""
     ),
   })

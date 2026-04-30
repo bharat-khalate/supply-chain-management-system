@@ -1,75 +1,25 @@
 "use client";
-import { usePathname } from "next/navigation";
+import AppDotLoader from "@/components/common/NavigationDotloader";
+import AppBadge from "@/components/common/StatusBadge";
 import { DataTable } from "@/components/common/table/DataTable";
 import TableHeader from "@/components/common/table/TableHeader";
-import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
-import { useSelector } from "react-redux";
-import { IBuyer, IColumn, IFilterFields } from "@/types";
-import toast from "react-hot-toast";
-import { useAppDispatch, useGlobalRedirect } from "@/lib/hooks";
-import { fetchBuyers, selectBuyers, selectBuyerLoading, removeBuyer, selectBuyerPagination } from "@/redux/slice";
-import { useQueryFilters } from "@/lib/hooks";
-import AppBadge from "@/components/common/StatusBadge";
-import AppDotLoader from "@/components/common/NavigationDotloader";
 import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
+import { useAppDispatch, useGlobalRedirect, useQueryFilters } from "@/lib/hooks";
+import { fetchBuyers, removeBuyer, selectBuyerLoading, selectBuyerPagination, selectBuyers } from "@/redux/slice";
+import { IBuyer, IColumn, IColumnDefProps, IFilterFields } from "@/types";
 import { IPaginationResponse } from "@/types/global.types";
 import { IFetchServiceParams } from "@/types/service/service.types";
 import { RedirectButtonClass } from "@/utils/tailwindCssClassConstant";
 import { Button } from "@heroui/react";
+import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
+import { usePathname } from "next/navigation";
 import { Suspense } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
-function BuyersPageContent() {
-  const dispatch = useAppDispatch();
-  const buyersData: IBuyer[] = useSelector(selectBuyers);
-  const loading = useSelector(selectBuyerLoading);
-  const paginationConfig: IPaginationResponse = useSelector(selectBuyerPagination)
-  const { isRedirecting, navigate } = useGlobalRedirect();
+export const BuyerColumns: (props?: IColumnDefProps) => IColumn<IBuyer>[] = (props?: IColumnDefProps) => {
   const pathname = usePathname();
-  const {
-    filterValues,
-    handleInputChange,
-    applyFilters,
-    clearFilters } = useQueryFilters<IBuyer>(fetchBuyers);
-  const getNextPage = () => {
-    if (!(paginationConfig.canNextPage)) return;
-    const meta: IFetchServiceParams = {
-      page: paginationConfig.currentPage + 1,
-      limit: defaultPaginationConfig.limit
-    }
-    dispatch(fetchBuyers(meta));
-  }
-  const getPreviousPage = () => {
-    if (!(paginationConfig.canPreviousPage)) return;
-    const meta: IFetchServiceParams = {
-      page: paginationConfig.currentPage - 1,
-      limit: defaultPaginationConfig.limit
-    }
-    dispatch(fetchBuyers(meta));
-  }
-  const filterFields: IFilterFields[] = [
-    {
-      key: "id",
-      type: "select",
-      label: "Code",
-      options: Array.from(
-        new Set(buyersData.map((b) => b.buyerType))
-      ).map((type) => ({
-        label: type,
-        value: type,
-      }))
-    },
-    {
-      key: "status",
-      type: "check",
-      label: "Status",
-      options: Array.from(new Set(buyersData.map((buyer) => buyer.status))).map((status) => ({ label: status.toUpperCase(), value: status }))
-    },
-  ]
-  const deleteCustomer = (customerId: string) => {
-    dispatch(removeBuyer(customerId));
-    toast.success("Customer removed")
-  }
-  const columns: IColumn<IBuyer>[] = [
+  return [
     {
       key: "vendorAndOrigin",
       header: "Vendor & Origin",
@@ -129,20 +79,80 @@ function BuyersPageContent() {
       key: "actions",
       header: "Actions",
       render: (r) => (
-        <div className="flex gap-3 text-blue-600 cursor-pointer">
-          <span title="View">
-            <ViewIcon />
+        <div className="flex gap-3 text-blue-600 ">
+          <span title="View" className="cursor-pointer">
+            <ViewIcon onClick={() => {
+              if (props?.navigate) props.navigate({ href: `${pathname}/view/${r.id}` })
+            }} />
           </span>
-          <span title="Edit">
-            <EditIcon />
+          <span
+            title="Edit"
+            onClick={() => {
+              if (props?.navigate) props.navigate({ href: `${pathname}/edit/${r.id}` })
+            }}
+            className="cursor-pointer"
+          >
+            <EditIcon className="pointer-events-none" />
           </span>
           <span title="Delete">
-            <DeleteIcon onClick={() => deleteCustomer(r.id)} />
+            <DeleteIcon onClick={() => props?.deleteCustomer && props.deleteCustomer(r.id)} />
           </span>
         </div>
       ),
     },
   ];
+}
+export function BuyersPageContent() {
+  const dispatch = useAppDispatch();
+  const buyersData: IBuyer[] = useSelector(selectBuyers);
+  const loading = useSelector(selectBuyerLoading);
+  const paginationConfig: IPaginationResponse = useSelector(selectBuyerPagination)
+  const { isRedirecting, navigate } = useGlobalRedirect();
+  const pathname = usePathname();
+  const {
+    filterValues,
+    handleInputChange,
+    applyFilters,
+    clearFilters } = useQueryFilters<IBuyer>(fetchBuyers);
+  const getNextPage = () => {
+    if (!(paginationConfig.canNextPage)) return;
+    const meta: IFetchServiceParams = {
+      page: paginationConfig.currentPage + 1,
+      limit: defaultPaginationConfig.limit
+    }
+    dispatch(fetchBuyers(meta));
+  }
+  const getPreviousPage = () => {
+    if (!(paginationConfig.canPreviousPage)) return;
+    const meta: IFetchServiceParams = {
+      page: paginationConfig.currentPage - 1,
+      limit: defaultPaginationConfig.limit
+    }
+    dispatch(fetchBuyers(meta));
+  }
+  const filterFields: IFilterFields[] = [
+    {
+      key: "id",
+      type: "select",
+      label: "Code",
+      options: Array.from(
+        new Set(buyersData.map((b) => b.buyerType))
+      ).map((type) => ({
+        label: type,
+        value: type,
+      }))
+    },
+    {
+      key: "status",
+      type: "check",
+      label: "Status",
+      options: Array.from(new Set(buyersData.map((buyer) => buyer.status))).map((status) => ({ label: status.toUpperCase(), value: status }))
+    },
+  ]
+  const deleteCustomer = (customerId: string) => {
+    dispatch(removeBuyer(customerId));
+    toast.success("Customer removed")
+  }
   return (
     <div >
       <div className="flex items-center justify-between my-6">
@@ -150,7 +160,7 @@ function BuyersPageContent() {
           <h1 className="text-2xl font-bold text-[#0040A1]">Buyers Overview</h1>
         </div>
         <Button
-          onPress={() => navigate({ href: `${pathname}/add` })}
+          onPress={() => navigate({ href: `${pathname}/create` })}
           isDisabled={isRedirecting}
           className={RedirectButtonClass}
         >
@@ -162,7 +172,7 @@ function BuyersPageContent() {
         </Button>
       </div>
       <DataTable
-        columns={columns}
+        columns={BuyerColumns({ deleteCustomer, navigate })}
         data={buyersData}
         loading={loading}
         emptyMessage="No Buyers yet."
@@ -181,8 +191,7 @@ function BuyersPageContent() {
     </div>
   );
 }
-
-export default function ProductsPage() {
+export default function Page() {
   return (
     <Suspense fallback={<div className="flex justify-center p-8"><AppDotLoader /></div>}>
       <BuyersPageContent />

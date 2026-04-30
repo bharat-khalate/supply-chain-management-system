@@ -3,8 +3,7 @@ import { GeneralSettingConstant } from "@/configs/forms";
 import { useAppDispatch } from "@/lib/hooks";
 import { selectConfigSettings, updateConfigSetting } from "@/redux/slice";
 import { IGeneralInfoSetting, ISetting } from "@/types/settings";
-import { ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
-import { shouldShowError } from "@/utils/validations";
+import { FormButtonDivClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { GeneralInfoSchema } from "@/validations";
 import { Button } from "@heroui/react";
 import { useFormik } from "formik";
@@ -38,7 +37,7 @@ export default function GeneralInfoSettingForm(): React.ReactNode {
       <InputField formik={formik} fieldConstant={GeneralSettingConstant.systemEmail} />
       <InputField formik={formik} fieldConstant={GeneralSettingConstant.phone} />
       <InputField formik={formik} fieldConstant={GeneralSettingConstant.websiteVideoUrl} />
-      <div className="flex justify-end gap-5 mt-5">
+      <div className={FormButtonDivClass}>
         <Button
           type="submit"
           className={SubmitButtonClass}

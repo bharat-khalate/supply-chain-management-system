@@ -4,7 +4,7 @@ import { AppLinkFields } from "@/configs/forms";
 import { useAppDispatch } from "@/lib/hooks";
 import { selectConfigSettingError, selectConfigSettingLoader, selectConfigSettings, updateConfigSetting } from "@/redux/slice";
 import { IAppLink, ISetting } from "@/types/settings";
-import { ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { FormButtonDivClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { AppLinkSchema } from "@/validations";
 import { Button } from "@heroui/react";
 import { useFormik } from "formik";
@@ -39,7 +39,7 @@ export default function AppLink(): React.ReactNode {
       <p className="text-sm text-red-600">
         *Note: Please do not change this value until confirmed by developers
       </p>
-      <div className="flex flex-row justify-end gap-2">
+      <div className={FormButtonDivClass}>
         <Button
           type="submit"
           className={

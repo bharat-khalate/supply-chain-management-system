@@ -4,8 +4,8 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   pageExtensions: ["ts", "tsx"],
-  basePath: "/supplychain_erp",
-  trailingSlash: true,
+  // basePath: "/supplychain_erp",
+  // trailingSlash: true,
   experimental: {},
   turbopack: {
     rules: {

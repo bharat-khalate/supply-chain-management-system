@@ -24,7 +24,7 @@ export const getEnquiryById = createAsyncThunk(
     }
 );
 export const addEnquiry = createAsyncThunk(
-    "enquiries/add",
+    "enquiries/create",
     async (enquiry: IEnquiry, { rejectWithValue }) => {
         try {
             return await enquiryService.add(enquiry);
@@ -85,7 +85,7 @@ const enquirySlice = createSlice({
             })
             .addCase(addEnquiry.fulfilled, (state, action) => {
                 state.loading = false;
-                state.selected = action.payload; 
+                state.selected = action.payload;
             })
             .addCase(updateEnquiry.fulfilled, (state, action) => {
                 state.loading = false;

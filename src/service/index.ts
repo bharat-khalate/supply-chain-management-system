@@ -5,7 +5,7 @@ import sampleService, { TSampleService } from "./sample.service";
 import vendorService, { TVendorService } from "./vendor.service";
 import configSettingService, { TSettingService } from "./config.setting.service";
 import pageSettingService, { TPageSettingService } from "./page.setting.service";
-
+import { searchService, TSearchService } from "@/service/search.service"
 export { buyerService };
 export { enquiryService }
 export { orderService }
@@ -13,6 +13,7 @@ export { sampleService }
 export { vendorService }
 export { configSettingService }
 export { pageSettingService }
+export { searchService }
 //types export
 export type { TSettingService };
 export type { TBuyerService }
@@ -21,3 +22,4 @@ export type { TOrderService }
 export type { TSampleService }
 export type { TVendorService }
 export type { TPageSettingService }
+export type { TSearchService }

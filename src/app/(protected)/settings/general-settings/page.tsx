@@ -10,7 +10,8 @@ import AppLink from "./_forms/AppLink";
 import AppVersion from "./_forms/AppVersion";
 import GeneralInfoSettingForm from "./_forms/GenralInfoSetting";
 import SocialMediaLinkForm from "./_forms/SocialMediaLink";
-export default function AboutUsSettingPage() {
+import Card from "@/components/common/AppCard";
+export default function Page() {
   const dispatch = useAppDispatch();
   const loading = useSelector(selectConfigSettingLoader);
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function AboutUsSettingPage() {
       label: "Social Media Links",
       render: (key: string) => (
         <Tabs.Panel key={key} id={key}>
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-500 w-full min-w-0 overflow-hidden">
             <SocialMediaLinkForm />
           </div>
         </Tabs.Panel>
@@ -65,33 +66,34 @@ export default function AboutUsSettingPage() {
   return (
     <SettingShell title="Manage Settings">
       {loading ? <AppSpinner /> : (
-        <Tabs orientation="vertical" className="w-full">
-          <Tabs.ListContainer>
-            <Tabs.List className="bg-inherit text-inherit gap-3">
-              {sideBarOptions.map(({ key, label }) => (
-                <Tabs.Tab
-                  key={key}
-                  id={key}
-                  className={`min-w-48 p-5 rounded-sm transition-colors text-blue-600 hover:bg-gray-100 aria-selected:text-white`}
-                >
-                  <p className="w-full text-left flex flex-row  m-2 ">{label}</p>
-                  <Tabs.Indicator className=" rounded-sm bg-blue-900 " />
-                </Tabs.Tab>
-              ))}
-            </Tabs.List>
-          </Tabs.ListContainer>
-          {sideBarOptions.map(({ key, render }) => {
-            return render != undefined ? (
-              render(key)
-            ) : (
-              <Tabs.Panel key={key} id={key}>
-                <div className="text-sm text-gray-500">content goes here...</div>
-              </Tabs.Panel>
-            );
-          })}
-        </Tabs>
+        <Card className="bg-transparent shadow-transparent">
+          <Tabs orientation="vertical" className="flex-col md:flex-row">
+            <Tabs.ListContainer className="">
+              <Tabs.List className="bg-inherit text-inherit gap-3  w-full md:min-w-48">
+                {sideBarOptions.map(({ key, label }) => (
+                  <Tabs.Tab
+                    key={key}
+                    id={key}
+                    className={`  p-5 rounded-sm transition-colors text-blue-600 hover:bg-gray-100 aria-selected:text-white`}
+                  >
+                    <p className="text-center md:text-left  m-2 ">{label}</p>
+                    <Tabs.Indicator className=" rounded-sm bg-blue-900 " />
+                  </Tabs.Tab>
+                ))}
+              </Tabs.List>
+            </Tabs.ListContainer>
+            {sideBarOptions.map(({ key, render }) => {
+              return render != undefined ? (
+                render(key)
+              ) : (
+                <Tabs.Panel key={key} id={key}>
+                  <div className="text-sm text-gray-500">content goes here...</div>
+                </Tabs.Panel>
+              );
+            })}
+          </Tabs>
+        </Card>
       )}
-
     </SettingShell>
   );
 }

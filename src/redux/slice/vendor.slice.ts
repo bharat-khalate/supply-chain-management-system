@@ -27,7 +27,7 @@ export const getVendorById = createAsyncThunk(
   }
 );
 export const addVendor = createAsyncThunk(
-  "vendors/add",
+  "vendors/create",
   async (vendor: IVendor, { rejectWithValue }) => {
     try {
       return await vendorService.add(vendor);

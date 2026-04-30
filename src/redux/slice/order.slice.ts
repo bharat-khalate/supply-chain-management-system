@@ -27,7 +27,7 @@ export const getOrderById = createAsyncThunk(
     }
 );
 export const addOrder = createAsyncThunk(
-    "orders/add",
+    "orders/createateate",
     async (order: IOrder, { rejectWithValue }) => {
         try {
             return await orderService.add(order);

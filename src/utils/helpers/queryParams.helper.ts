@@ -1,4 +1,5 @@
 import { defaultPaginationConfig } from "@/configs/feature/pagination.config";
+import { ISearchType } from "@/types";
 export const parseSearchParams = (
   searchParams: URLSearchParams
 ): Record<string, string | string[]> => {
@@ -47,4 +48,24 @@ export const getSanitizedPagination = (params: Record<string, string | string[]>
     page: safePage.toString(),
     limit: safeLimit.toString(),
   };
+};
+
+export const isValidUrlCategory = (value: string, validValue: Record<ISearchType, ISearchType>) => {
+  return value in validValue;
+}
+
+
+export const getSearchItemRoute = (
+  type: ISearchType,
+  item: any
+): string => {
+  const routeMap = {
+    buyer: `/buyers/view/${item.id}`,
+    vendor: `/vendor/view/${item.id}`,
+    enquiry: `/enquiry/view/${item.enquiryId}`,
+    order: `/order/view/${item.orderId}`,
+    sample: `/sample/view/${item.sampleId}`,
+  };
+
+  return routeMap[type] ?? "/";
 };

@@ -22,8 +22,8 @@ export const SocialMediaLinkFormSchema = Yup.object<ISocialMediaLinkSettings>({
   twitterLink: commonUrlValidation,
 });
 export const AppVersionSchema: Yup.ObjectSchema<IAppVersion> = Yup.object({
-  androidVersion: commonNumberValidation(AppVersionFields.androidVersion.label),
-  iosVersion: commonNumberValidation(AppVersionFields.iosVersion.label),
+  androidVersion: commonNumberValidation(AppVersionFields.androidVersion.label||""),
+  iosVersion: commonNumberValidation(AppVersionFields.iosVersion.label || ""),
 });
 export const AppLinkSchema: Yup.ObjectSchema<IAppLink> = Yup.object({
   androidLink: commonUrlValidation,

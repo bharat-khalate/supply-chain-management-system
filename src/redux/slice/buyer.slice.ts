@@ -56,7 +56,7 @@ export const removeBuyer = createAsyncThunk(
 const initialState: IPaginatedState<IBuyer> = {
     data: [],
     selected: null,
-    loading: false,
+    loading: true,
     error: null,
     pagination: {
         currentPage: 0,
@@ -83,6 +83,7 @@ const buyerSlice = createSlice({
             })
             .addCase(fetchBuyerById.fulfilled, (state, action) => {
                 state.selected = action.payload;
+                state.loading = false;
             })
             .addCase(addBuyer.fulfilled, (state, action) => {
                 state.loading = false;
@@ -115,11 +116,9 @@ const buyerSlice = createSlice({
             );
     }
 });
-
 export const selectBuyers = (state: RootState) => state.buyerSlice.data;
 export const selectBuyer = (state: RootState) => state.buyerSlice.selected;
 export const selectBuyerLoading = (state: RootState) => state.buyerSlice.loading;
 export const selectBuyerError = (state: RootState) => state.buyerSlice.error;
 export const selectBuyerPagination = (state: RootState) => state.buyerSlice.pagination;
-
 export default buyerSlice.reducer;

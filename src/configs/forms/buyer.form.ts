@@ -42,3 +42,13 @@ export const BuyerFormConfig: TFormFieldConfig<IBuyerFields> = {
     key: "status"
   }
 }
+
+export const BUYER_TYPES = [
+  { id: "Retailer", name: "Retailer" },
+  { id: "Wholesaler", name: "Wholesaler" },
+  { id: "Brand", name: "Brand" },
+  { id: "Corporate", name: "Corporate" },
+  { id: "Institutional", name: "Institutional" },
+  { id: "Enterprise", name: "Enterprise" },
+  { id: "Misc", name: "Misc" },
+];

@@ -7,7 +7,7 @@ export interface IBuyer {
     contactPerson: string;
     buyerType: "Retailer" | "Wholesaler" | "Brand" | "Corporate" | "Institutional" | "Enterprise" | "Misc";
     requirementCategory: string;
-    status: "Active" | "Inactive";
+    status: TBuyerStatusOptions;
 }
 export interface IBuyerState {
     data: IBuyer[];
@@ -26,5 +26,7 @@ export interface IBuyerFields {
     contactPerson: string,
     requirementCategory: string,
     buyerType: string,
-    status: "Active" | "Inactive",
+    status: TBuyerStatusOptions,
 }
+
+export type TBuyerStatusOptions = "Active" | "Inactive"

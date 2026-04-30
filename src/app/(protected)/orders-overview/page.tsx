@@ -9,29 +9,9 @@ import { DeleteIcon, EditIcon, ViewIcon } from "@icons/table-icons/actions";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-export default function ProductsPage() {
-    const dispatch = useAppDispatch();
-    const { data, loading } = useSelector((store: RootState) => store.orderSlice);
-    useEffect(() => {
-        dispatch(getAllOrders(defaultPaginationConfig));
-    }, [])
-    const openCreate = () => {
-        const order: IOrder = {
-            orderId: "ORD001",
-            date: "25/3/2026",
-            qty: 2000,
-            customerName: "Amit Sharma",
-            deliveryDate: "15/4/2026",
-            status: "Active",
-        }
-        dispatch(addOrder(order));
-        toast.success("Order placed.")
-    };
-    const handleDelete = (orderId: string) => {
-        dispatch(removeOrder(orderId));
-        toast.success("Order Deleted.")
-    }
-    const columns: IColumn<IOrder>[] = [
+export const OrdersColumn: () => IColumn<IOrder>[] = () => {
+
+    return [
         {
             key: "orderId",
             header: "Order Id",
@@ -79,12 +59,35 @@ export default function ProductsPage() {
                         <EditIcon />
                     </span>
                     <span title="Delete">
-                        <DeleteIcon onClick={() => handleDelete(r.orderId)} />
+                        <DeleteIcon onClick={() => { }} />
                     </span>
                 </div>
             ),
         },
     ];
+}
+export default function Page() {
+    const dispatch = useAppDispatch();
+    const { data, loading } = useSelector((store: RootState) => store.orderSlice);
+    useEffect(() => {
+        dispatch(getAllOrders(defaultPaginationConfig));
+    }, [])
+    const openCreate = () => {
+        const order: IOrder = {
+            orderId: "ORD001",
+            date: "25/3/2026",
+            qty: 2000,
+            customerName: "Amit Sharma",
+            deliveryDate: "15/4/2026",
+            status: "Active",
+        }
+        dispatch(addOrder(order));
+        toast.success("Order placed.")
+    };
+    const handleDelete = (orderId: string) => {
+        dispatch(removeOrder(orderId));
+        toast.success("Order Deleted.")
+    }
     return (
         <div>
             <div className="flex items-center justify-between my-6">
@@ -99,7 +102,7 @@ export default function ProductsPage() {
                 </button>
             </div>
             <DataTable
-                columns={columns}
+                columns={OrdersColumn()}
                 data={data}
                 loading={loading}
                 emptyMessage="No Buyers yet."

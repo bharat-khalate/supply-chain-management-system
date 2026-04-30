@@ -3,20 +3,20 @@
 import AppDotLoader from "@/components/common/NavigationDotloader";
 import SettingShell from "@/components/common/settings-layout/SettingsShell";
 import AppSpinner from "@/components/common/Spinner";
-import Tiptap from "@/components/ui/dashboard/TipTapEditor";
+import Tiptap from "@/components/ui/TipTapEditor";
 import { TermsAndConditionsField } from "@/configs/forms/settings/termsAndCondition.form";
 import { useAppDispatch } from "@/lib/hooks";
 import { selectPageSetting, selectPageSettingError, selectPageSettingLoader } from "@/redux/slice";
 import { fetchAllPageSetting, updateAllPageSetting } from "@/redux/slice/page.setting";
 import { IPageSetting, ITermsAndConditions } from "@/types/settings";
-import { ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
+import { FormButtonDivClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { TermsAndConditionsSchema } from "@/validations";
 import { Button } from "@heroui/react";
 import { FormikProps, useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function ManageTermsConditions() {
+export default function Page() {
   const pageSetting: IPageSetting | null = useSelector(selectPageSetting);
   const loading: boolean = useSelector(selectPageSettingLoader);
   const error: string | null = useSelector(selectPageSettingError);
@@ -49,7 +49,7 @@ export default function ManageTermsConditions() {
             <Tiptap formik={formik}
               fieldKey={TermsAndConditionsField.termsAndConditions.key} />
           </div>
-          <div className="flex justify-end gap-3 mt-8">
+          <div className={FormButtonDivClass}>
             <Button
               className={ResetFormButtonClass}
               onPress={() => formik.resetForm()}

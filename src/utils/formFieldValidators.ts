@@ -1,3 +1,4 @@
+import { SearchBarConfig } from "@/configs/forms/searchBar";
 import * as Yup from "yup";
 
 export const emailValidation = (maxLength: number) =>
@@ -72,7 +73,7 @@ export const buyerTypeValidation = (fieldName: string) => {
       `${fieldName} is invalid`,
     );
 };
-
+export const searchFieldValidator = Yup.string().min(SearchBarConfig.query.min || 6, "Please type at least 6 characters to search");
 export const commonAlphaNumericValidation = (
   fieldName: string,
   maxLength: number,
@@ -98,9 +99,9 @@ export const commonRequiredStringValidation = (value: string) => {
 };
 
 export const CommonRichTextRequiredValidator = (label: string) =>
-   Yup.string()
+  Yup.string()
     .required(`${label} is required`)
-    .defined() 
+    .defined()
     .test("not-empty", `${label} is required`, (value) => {
       if (!value) return false;
 
@@ -111,7 +112,7 @@ export const CommonRichTextRequiredValidator = (label: string) =>
         .trim();
 
       return text.length > 0;
-  });
+    });
 
 export const commonStringValidationWithoutSpace = (value: string) =>
   Yup.string()
@@ -267,7 +268,7 @@ export const isRequiredConfirmPasswordValidation = (isEdit: boolean) =>
     )
     .oneOf([Yup.ref("password")], "Passwords must match")
     .when("password", {
-      is: (val: string) => !!val && !isEdit,  
+      is: (val: string) => !!val && !isEdit,
       then: (schema) => schema.required("Confirm Password is required"),
       otherwise: (schema) => schema.notRequired(),
     });

@@ -1,4 +1,4 @@
-import { BuyerFormConfig } from "./buyer.form";
+import { BuyerFormConfig, BUYER_TYPES } from "./buyer.form";
 import {
   GeneralSettingConstant,
   SocialMediaLinkFormFieldConstants,
@@ -6,5 +6,5 @@ import {
   AppLinkFields
 } from "./settings/settings.form";
 
-export {BuyerFormConfig };
+export {BuyerFormConfig, BUYER_TYPES };
 export { GeneralSettingConstant, SocialMediaLinkFormFieldConstants, AppVersionFields, AppLinkFields };

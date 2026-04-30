@@ -1,7 +1,8 @@
 export interface FieldConstant<T> {
-  label: string;
+  label?: string;
   min?: number;
   max?: number;
   length: number;
-  key: keyof T
+  key: keyof T;
+  placeHolder?: string;
 }
