@@ -1,20 +1,13 @@
 import { AppForm } from "@/components/common/AppForm";
 import { AppSelectInputField, RadioInputField, ResetFormButton, SaveFormButton, TextInputField } from "@/components/common/InputField";
 import { FAQStatusOptions } from "@/components/ui/Common";
-import { BuyerFormConfig, FaqConfig } from "@/configs/forms";
+import { FaqConfig } from "@/configs/forms";
 import { FAQ_CATEGORY } from "@/configs/forms/faq.cnfig";
-import { IFAQ } from "@/types";
-import { TSelectOption } from "@/types/components";
+import { IFaqFormProps, TSelectOption } from "@/types/components";
 import { FormButtonDivClass, ResetFormButtonClass, SubmitButtonClass } from "@/utils/tailwindCssClassConstant";
 import { FaqSchema } from "@/validations";
 import { Card } from "@heroui/react";
 import { BasicInformationIcon, ProductionSpecificationIcon, ProductStatusIcon } from "@icons/form-icons";
-
-export interface IFaqFormProps {
-    id?: string,
-    initialValues: Omit<IFAQ, "id">;
-    onSubmit: (_params: Omit<IFAQ, "id">) => Promise<void>
-}
 export default function FaqForm({ id, initialValues, onSubmit }: IFaqFormProps) {
     return (
         <AppForm formikProps={{ initialValues, onSubmit, enableReinitialize: true, validationSchema: FaqSchema }} className="space-y-6 ">
@@ -51,7 +44,7 @@ export default function FaqForm({ id, initialValues, onSubmit }: IFaqFormProps) 
                     <Card.Content className="space-y-6  p-6">
                         <div className="flex flex-row gap-2">
                             {/* Fixed Select Placeholder & Trigger styling */}
-                            <AppSelectInputField options={FAQ_CATEGORY as unknown as TSelectOption[]} fieldConstant={BuyerFormConfig.buyerType} selectProps={{ className: "!basis-1/2" }} />
+                            <AppSelectInputField options={FAQ_CATEGORY as unknown as TSelectOption[]} fieldConstant={FaqConfig.category} selectProps={{ className: "!basis-1/2" }} />
                             <TextInputField fieldConstant={FaqConfig.createdOn} textFieldProps={{ className: "!basis-1/2" }} />
                         </div>
                     </Card.Content>
@@ -87,7 +80,7 @@ export default function FaqForm({ id, initialValues, onSubmit }: IFaqFormProps) 
                 <SaveFormButton
                     className={SubmitButtonClass}
                 >
-                    Save Buyer
+                    Save FAQ
                 </SaveFormButton>
             </div>
         </AppForm>

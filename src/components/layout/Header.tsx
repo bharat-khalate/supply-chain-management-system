@@ -33,12 +33,10 @@ export function Header() {
     validationSchema: SearchBarValidationSchema,
     validateOnChange: true,
     onSubmit: async (_value) => {
-      console.log(_value)
     }
   })
   const pathName = usePathname();
   useEffect(() => {
-    console.log(pathName);
     const handleClickOutside = (event: MouseEvent) => {
       if (
         wrapperRef.current &&

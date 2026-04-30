@@ -28,7 +28,6 @@ export default function Page() {
     validationSchema: PrivacyPolicySchema,
     enableReinitialize: true,
     onSubmit: async (_values) => {
-      console.log(_values);
       dispatch(updateAllPageSetting({ ...pageSetting, ..._values } as IPageSetting))
     },
   });

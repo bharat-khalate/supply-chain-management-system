@@ -26,7 +26,6 @@ export default function AppVersion(): React.ReactNode {
     initialValues: initialValues,
     validationSchema: AppVersionSchema,
     onSubmit: async (_values) => {
-      console.log(_values);
       dispatch(updateConfigSetting({ ...settings, ..._values } as ISetting))
     },
   });

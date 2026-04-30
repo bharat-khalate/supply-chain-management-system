@@ -113,9 +113,9 @@ export default function Page() {
                 visiblePageCount={3}
                 canPreviousPage={false}
                 canNextPage={true}
-                previousPage={() => console.log("prev")}
-                nextPage={() => console.log("next")}
-                handleLimitChange={(val) => console.log("limit:", val)}
+                previousPage={() => {}}
+                nextPage={() => {}}
+                handleLimitChange={(val) => {}}
             />
         </div>
     );

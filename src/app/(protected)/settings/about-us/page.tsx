@@ -27,7 +27,6 @@ export default function Page() {
     enableReinitialize: true,
     validationSchema: AboutUsSchema,
     onSubmit: async (_values) => {
-      console.log(_values);
       if (!pageSetting) return;
       dispatch(updateAllPageSetting({ ...pageSetting, ..._values }))
     },

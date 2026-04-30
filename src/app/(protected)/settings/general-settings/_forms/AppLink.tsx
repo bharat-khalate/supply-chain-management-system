@@ -28,7 +28,6 @@ export default function AppLink(): React.ReactNode {
     initialValues: initialValues,
     validationSchema: AppLinkSchema,
     onSubmit: async (_values) => {
-      console.log(_values);
       dispatch(updateConfigSetting({ ...settings, ..._values } as ISetting))
     },
   });

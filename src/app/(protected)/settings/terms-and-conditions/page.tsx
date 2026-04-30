@@ -32,7 +32,6 @@ export default function Page() {
       enableReinitialize: true,
       onSubmit: async (_values) => {
         if (!pageSetting) return;
-        console.log(_values);
         dispatch(updateAllPageSetting({ ...pageSetting, ..._values }))
       },
     });

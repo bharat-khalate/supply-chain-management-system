@@ -45,7 +45,6 @@ export default function Page() {
     };
     const onSubmit = async (_values: IBuyer | IBuyerFields) => {
         await new Promise((res, rej) => setTimeout(() => res(""), 3000));
-        console.log(_values);
         return;
     }
     if (!defaultBuyer) {

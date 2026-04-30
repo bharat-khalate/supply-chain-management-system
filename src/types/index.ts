@@ -34,6 +34,7 @@ import { IModalProps } from "./components";
 import { IAppStatusBadgeProps } from "./components";
 import { ICustomEditorProps, IAppEditorProps } from "./components";
 import { TInputFieldProps } from "./components";
+import { IFaqFormProps } from "./components";
 export type { IBuyer, IVendor, ISample, IEnquiry, IOrder };
 export type {
   IEnquiryState,
@@ -69,3 +70,4 @@ export type { IAppStatusBadgeProps };
 export type { ICustomEditorProps, IAppEditorProps };
 export type { TInputFieldProps }
 export type { ISearchBar }
+export type { IFaqFormProps }

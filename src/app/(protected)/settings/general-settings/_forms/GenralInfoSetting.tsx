@@ -27,7 +27,6 @@ export default function GeneralInfoSettingForm(): React.ReactNode {
     initialValues,
     validationSchema: GeneralInfoSchema,
     onSubmit: async (_values) => {
-      console.log(_values);
       dispatch(updateConfigSetting({ ...setting, ..._values } as ISetting));
     },
   });

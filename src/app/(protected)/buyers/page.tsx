@@ -185,7 +185,7 @@ export function BuyersPageContent() {
         canNextPage={paginationConfig.canNextPage}
         previousPage={getPreviousPage}
         nextPage={getNextPage}
-        handleLimitChange={(val) => console.log("limit:", val)}
+        handleLimitChange={(val) => {}}
         Header={<TableHeader values={filterValues} onApply={applyFilters} onClear={clearFilters} onChange={handleInputChange} fields={filterFields} />}
       />
     </div>
